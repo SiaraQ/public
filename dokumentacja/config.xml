@@ -1,0 +1,455 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <appname>SBI</appname>
+  <enviroment>QTP</enviroment>
+  <driver>QTPDriverV1</driver>
+  <version>1</version>
+  <block>
+    <name>Doładowanie Telefonu</name>
+	<description>Dla operatorów: Lycamobile, orange, Virgin Mobile. Telefon doładuje się o 50 zł.</description>
+    <method>DoladowanieTelefonu</method>
+    <data>Login</data>
+    <data>Hasło</data>
+    <data datasource="dataset" values="Rachunek">Rachunek_nadawcy</data>
+	<data datasource="keyboard" description="Numer telefonu w formacie 789123456">Nr_tel_komórkowy</data>
+	<data datasource="select" values="36.6;Cyfrowy Polsat;Heyah;Lycamobile;MixPlus;Orange;Play;Plus na kartę;Simplus;T-Mobile;Virgin Mobile;wRodzinie">GSM_Operator</data>
+	<data datasource="keyboard" description="Limity dolny = 5zł, limit górny w zależności od operatora, max 500. sugerowana wartość doładowania 50 PLN.Kwoty muszą być kwotami całkowitymi np. 25, 50, 75">Kwota_doładowania</data>
+	<data datasource="keyboard" status="hidden" values="1111">Hasło_sms</data>
+  </block>
+  <block>
+    <name>Dodaj odbiorcę krajowego</name>
+	<description>Skrypt dodaje odbiorcę krajowego, wykonuje asercje oraz go usuwa.</description>
+    <method>DodajUsunOdbiorceKrajowego</method>
+    <data>Login</data>
+    <data>Hasło</data>
+	<data datasource="dataset" values="Rachunek">Rachunek_nadawcy</data>
+	<data datasource="keyboard" status="optional" description="Jeżeli pole nie zostanie wypełnione, to wartość uzupełniona w teście będzie: &apos;Nazwa.odbiorcy&apos; oraz godzina i minuta w której skrypt się wykonuje">Nazwa_odbiorcy</data>
+	<data datasource="dataset" values="Rachunek">Rachunek_odbiorcy</data>
+	<data datasource="keyboard" status="optional" description="Jeżeli pole nie zostanie wypełnione, to wartość uzupełniona w teście będzie: &apos;Dane.odbiorcy&apos; oraz godzina i minuta w której skrypt się wykonuje">Dane_odbiorcy</data>
+	<data datasource="keyboard" status="optional" description="Jeżeli pole nie zostanie wypełnione, to wartość uzupełniona w teście będzie: &apos;Tytuł.przelewu&apos; oraz godzina i minuta w której skrypt się wykonuje">Tytuł_przelewu</data>
+	<data datasource="keyboard" status="hidden" values="1111">Hasło_sms</data>
+  </block>
+  <block>
+	<name>Dodaj odbiorcę zagranicznego</name>
+	<description>Skrypt dodaje odbiorcę zagranicznego, wykonuje asercje oraz go usuwa</description>
+	<method>DodajUsunOdbiorceZagranicznego</method>
+	<data>Login</data>
+	<data>Hasło</data>
+	<data datasource="keyboard" status="optional" description="Jeżeli pole nie zostanie wypełnione, to wartość uzupełniona w teście będzie: &apos;Nazwa.odbiorcy&apos; oraz godzina i minuta w której skrypt się wykonuje">Nazwa_odbiorcy_zagranicznego</data>
+	<data datasource="dataset" values="Rachunek" description="Z listy rozwijanej należy wybrać rachunek zagraniczny">Rachunek_odbiorcy_zagranicznego</data>	
+	<data datasource="keyboard" status="optional" description="Jeżeli pole nie zostanie wypełnione, to wartość uzupełniona w teście będzie: &apos;Dane.odbiorcy&apos; oraz godzina i minuta w której skrypt się wykonuje">Dane_odbiorcy</data>
+	<data datasource="select" values="Ukraina;Francja;Niemcy;Chorwacja;Lotwa;Polska;Wielka Brytania;Australia;Stany Zjednoczone Ameryki;Włochy;Hiszpania;Rosja;Japonia;Szwajcaria;Węgry">Kraj</data>
+	<data description="Swift musi być pasujący do rachunku bankowego zagranicznego">SWIFT</data>
+	<data datasource="keyboard" status="optional" description="Jeżeli pole nie zostanie wypełnione, to wartość uzupełniona w teście będzie: &apos;Tytuł.przelewu&apos; oraz godzina i minuta w której skrypt się wykonuje">Tytuł_przelewu</data>
+	<data datasource="keyboard" status="hidden" values="1111">Hasło_sms</data>
+  </block>
+  <block>
+    <name>Dodanie odbiorcy krajowego oraz wykonanie przelewu</name>
+	<description>Skrypt dodaje odbiorce krajowego, wykonuje do niego przelew, usuwa odbiorce oraz wykonuje asercje na wykonanym przelewie</description>
+    <method>DodanieOdbiorcyKrajowegoOrazWykonaniePrzelewu</method>
+    <data>Login</data>
+    <data>Hasło</data>
+	<data datasource="dataset" values="Rachunek">Rachunek_nadawcy</data>
+	<data datasource="keyboard" status="optional" description="Jeżeli pole nie zostanie wypełnione, to wartość uzupełniona w teście będzie: &apos;Nazwa.odbiorcy&apos; oraz godzina i minuta w której skrypt się wykonuje">Nazwa_odbiorcy</data>
+	<data datasource="dataset" values="Rachunek">Rachunek_odbiorcy</data>
+	<data datasource="keyboard" status="optional" description="Jeżeli pole nie zostanie wypełnione, to wartość uzupełniona w teście będzie: &apos;Dane.odbiorcy&apos; oraz godzina i minuta w której skrypt się wykonuje">Dane_odbiorcy</data>
+	<data datasource="keyboard" status="optional" description="Jeżeli pole nie zostanie wypełnione, to wartość uzupełniona w teście będzie: &apos;Tytuł.przelewu&apos; oraz godzina i minuta w której skrypt się wykonuje">Tytuł_przelewu</data>
+	<data datasource="keyboard">Kwota_przelewu</data>
+	<data datasource="keyboard" status="hidden" values="1111">Hasło_sms</data>
+  </block>
+  <block>
+	<name>Dodanie odbiorcy zagranicznego oraz wykonanie przelewu euroregulowanego</name>
+	<description>Skrypt dodaje odbiorce zagranicznego, wykonuje do niego przelew euroregulowany, usuwa odbiorce oraz wykonuje asercje na wykonanym przelewie</description>
+	<method>DodanieOdbiorcyZagranicznegoOrazWykonaniePrzelewu</method>
+    <data>Login</data>
+    <data>Hasło</data>
+	<data datasource="dataset" values="Rachunek">Rachunek_nadawcy</data>
+	<data datasource="keyboard" status="optional" description="Jeżeli pole nie zostanie wypełnione, to wartość uzupełniona w teście będzie: &apos;Nazwa.odbiorcy&apos; oraz godzina i minuta w której skrypt się wykonuje">Nazwa_odbiorcy_zagranicznego</data>
+	<data datasource="dataset" values="Rachunek" description="Z listy rozwijanej należy wybrać rachunek zagraniczny">Rachunek_odbiorcy_zagranicznego</data>	
+	<data datasource="keyboard" status="optional" description="Jeżeli pole nie zostanie wypełnione, to wartość uzupełniona w teście będzie: &apos;Dane.odbiorcy&apos; oraz godzina i minuta w której skrypt się wykonuje">Dane_odbiorcy</data>
+	<data datasource="select" values="Ukraina;Francja;Niemcy;Chorwacja;Lotwa;Polska;Wielka Brytania;Australia;Stany Zjednoczone Ameryki;Włochy;Hiszpania;Rosja;Japonia;Szwajcaria;Węgry">Kraj</data>
+	<data description="Swift musi pasować do banku rachunku zagranicznego">SWIFT</data>
+	<data datasource="keyboard" status="optional" description="Jeżeli pole nie zostanie wypełnione, to wartość uzupełniona w teście będzie: &apos;Tytuł.przelewu&apos; oraz godzina i minuta w której skrypt się wykonuje">Tytuł_przelewu</data>
+	<data datasource="keyboard">Kwota_przelewu</data>
+	<data datasource="keyboard" status="hidden" values="1111">Hasło_sms</data>
+  </block>
+  <block>
+    <name>Dodanie oraz modyfikacja odbiorcy krajowego</name>
+	<description>Skrypt dodaje odbiorcę krajowego, modyfikuje go oraz usuwa.</description>
+    <method>DodanieOrazModyfikacjaOdbiorcyKrajowego</method>
+    <data>Login</data>
+    <data>Hasło</data>
+	<data datasource="dataset" values="Rachunek">Rachunek_nadawcy</data>
+	<data datasource="keyboard" status="optional" description="Jeżeli pole nie zostanie wypełnione, to wartość uzupełniona w teście będzie: &apos;Nazwa.odbiorcy&apos; oraz godzina i minuta w której skrypt się wykonuje">Nazwa_odbiorcy</data>
+	<data datasource="dataset" values="Rachunek">Rachunek_odbiorcy</data>
+	<data datasource="keyboard" status="optional" description="Jeżeli pole nie zostanie wypełnione, to wartość uzupełniona w teście będzie: &apos;Dane.odbiorcy&apos; oraz godzina i minuta w której skrypt się wykonuje">Dane_odbiorcy</data>
+	<data datasource="keyboard" status="optional" description="Jeżeli pole nie zostanie wypełnione, to wartość uzupełniona w teście będzie: &apos;Tytuł.przelewu&apos; oraz godzina i minuta w której skrypt się wykonuje">Tytuł_przelewu</data>
+	<data datasource="keyboard" status="optional" description="Jeżeli pole nie zostanie wypełnione, to wartość uzupełniona w teście będzie: &apos;Nazwa.odbiorcy.edycja&quot; oraz godzina i minuta w której skrypt się wykonuje">Nazwa_Odbiorcy_Edycja</data>
+	<data datasource="dataset" values="Rachunek">Rachunek_odbiorcy_edycja</data>	
+	<data datasource="keyboard" status="optional" description="Jeżeli pole nie zostanie wypełnione, to wartość uzupełniona w teście będzie: &apos;Dane.odbiorcy.edycja&quot; oraz godzina i minuta w której skrypt się wykonuje">Dane_odbiorcy_edycja</data>	
+	<data datasource="keyboard" status="optional" description="Jeżeli pole nie zostanie wypełnione, to wartość uzupełniona w teście będzie: &apos;Tytul.edycja&quot; oraz godzina i minuta w której skrypt się wykonuje">Tytuł_przelewu_edycja</data>	
+	<data datasource="keyboard" status="hidden" values="1111">Hasło_sms</data>
+  </block>
+  <block>
+	<name>Dodanie oraz modyfikacja odbiorcy zagranicznego</name>
+	<description>Skrypt dodaje odbiorce zagranicznego, modyfikuje go oraz usuwa.</description>
+	<method>DodanieOrazModyfikacjaOdbiorcyZagranicznego</method>
+    <data>Login</data>
+    <data>Hasło</data>
+	<data datasource="keyboard" status="optional" description="Jeżeli pole nie zostanie wypełnione, to wartość uzupełniona w teście będzie: &apos;Nazwa.odbiorcy&apos; oraz godzina i minuta w której skrypt się wykonuje">Nazwa_odbiorcy_zagranicznego</data>
+	<data datasource="dataset" values="Rachunek" description="Z listy rozwijanej należy wybrać rachunek zagraniczny">Rachunek_odbiorcy_zagranicznego</data>	
+	<data datasource="keyboard" status="optional" description="Jeżeli pole nie zostanie wypełnione, to wartość uzupełniona w teście będzie: &apos;Dane.odbiorcy&apos; oraz godzina i minuta w której skrypt się wykonuje">Dane_odbiorcy</data>
+	<data datasource="select" values="Ukraina;Francja;Niemcy;Chorwacja;Lotwa;Polska;Wielka Brytania;Australia;Stany Zjednoczone Ameryki;Włochy;Hiszpania;Rosja;Japonia;Szwajcaria;Węgry">Kraj</data>
+	<data description="Swift musi pasować do banku rachunku zagranicznego">SWIFT</data>
+	<data datasource="keyboard" status="optional" description="Jeżeli pole nie zostanie wypełnione, to wartość uzupełniona w teście będzie: &apos;Tytuł.przelewu&apos; oraz godzina i minuta w której skrypt się wykonuje">Tytuł_przelewu</data>
+    <data datasource="keyboard" status="optional" description="Jeżeli pole nie zostanie wypełnione, to wartość uzupełniona w teście będzie: &apos;Nazwa.odbiorcy.edycja&apos; oraz godzina i minuta w której skrypt się wykonuje">Nazwa_Odbiorcy_Edycja</data>	
+	<data datasource="dataset" values="Rachunek" description="Z listy rozwijanej należy wybrać rachunek zagraniczny">Rachunek_odbiorcy_zagranicznego_edycja</data>		
+	<data datasource="keyboard" status="optional" description="Jeżeli pole nie zostanie wypełnione, to wartość uzupełniona w teście będzie: &apos;Dane.odbiorcy.edycja&apos; oraz godzina i minuta w której skrypt się wykonuje">Dane_odbiorcy_edycja</data>	
+	<data datasource="keyboard" status="optional" description="Jeżeli pole nie zostanie wypełnione, to wartość uzupełniona w teście będzie: &apos;Tytul.edycja&apos; oraz godzina i minuta w której skrypt się wykonuje">Tytuł_przelewu_edycja</data>	
+	<data datasource="select" values="Ukraina;Francja;Niemcy;Chorwacja;Lotwa;Polska;Wielka Brytania;Australia;Stany Zjednoczone Ameryki;Włochy;Hiszpania;Rosja;Japonia;Szwajcaria;Węgry">Kraj_odbiorcy_edycja</data>
+	<data description="Swift musi pasować do banku rachunku zagranicznego">SWIFT_edycja</data>	
+	<data datasource="keyboard" status="hidden" values="1111">Hasło_sms</data>
+  </block>
+  <block>
+	<name>Dodanie oraz usunięcie zlecenia stałego</name>
+	<description>Skrypt dodaje zlecenie stałe oraz je usuwa</description>
+	<method>DodajUsuńZlecenieStałe</method>
+	<data>Login</data>
+    <data>Hasło</data>
+	<data datasource="keyboard" status="optional" description="Jeżeli pole nie zostanie wypełnione, to wartość uzupełniona w teście będzie: &apos;Zlecenie.stale&apos; oraz godzina i minuta w której skrypt się wykonuje">Nazwa_zlecenia_stałego</data>
+	<data datasource="dataset" values="Rachunek">Rachunek_nadawcy</data>
+	<data datasource="dataset" values="Rachunek">Rachunek_odbiorcy</data>
+	<data datasource="keyboard" status="optional" description="Jeżeli pole nie zostanie wypełnione, to wartość uzupełniona w teście będzie: &apos;Dane.odbiorcy&apos; oraz godzina i minuta w której skrypt się wykonuje">Dane_odbiorcy</data>
+	<data datasource="keyboard" status="optional" description="Jeżeli pole nie zostanie wypełnione, to wartość uzupełniona w teście będzie: &apos;Tytul&apos; oraz godzina i minuta w której skrypt się wykonuje">Tytuł_przelewu</data>
+	<data datasource="keyboard">Kwota_przelewu</data>	
+	<data datasource="dataset" status="optional" values="Data" description="Format daty musi być dd-mm-yyy">Data_pierwszej_realizacji</data>
+	<data datasource="dataset" status="optional" values="Data" description="Domyślnie '3'. Działą tylko jeśłi pole 'Data_pierwszej_realizacji' jest puste">Liczba_dni_do_pierwszej_realizacji</data>
+	<data datasource="keyboard" description="Częstotliwość, co ile ma być wykonywany przelew. Wartość numeryczna">Częstotliwość_wartość</data>
+	<data datasource="select" values="miesiąc/miesięcy;tydzień/tygodni;każdego dnia roboczego">Częstotliwość_okres</data>
+	<data datasource="dataset" values="Data" status="optional" description="Jeżeli nie zostanie wybrana data, zlecenie stałe nie będzie miało daty zakończenia. Format daty musi być dd-mm-yyy">Data_zakonczenia_realizacji</data>
+	<data datasource="dataset" status="optional" values="Data" description="Liczba dni do zakończenia liczona od daty dzisiejszej">Liczba_dni_do_zakonczenia</data>
+	<data datasource="keyboard" status="hidden" values="1111">Hasło_sms</data>
+  </block>
+  <block>
+	<name>Dodanie oraz modyfikacja zlecenia stałego</name>
+	<description>Skrypt dodaje zlecenie stałe, modyfikuje je, a później je usuwa</description>
+	<method>DodanieOrazModyfikacjaZleceniaStałego</method>
+	<data>Login</data>
+    <data>Hasło</data>
+	<data datasource="keyboard" status="optional" description="Jeżeli pole nie zostanie wypełnione, to wartość uzupełniona w teście będzie: &apos;Zlecenie.stale&apos; oraz godzina i minuta w której skrypt się wykonuje">Nazwa_zlecenia_stałego</data>
+	<data datasource="dataset" values="Rachunek">Rachunek_nadawcy</data>
+	<data datasource="dataset" values="Rachunek">Rachunek_odbiorcy</data>
+	<data datasource="keyboard" status="optional" description="Jeżeli pole nie zostanie wypełnione, to wartość uzupełniona w teście będzie: &apos;Dane.odbiorcy&apos; oraz godzina i minuta w której skrypt się wykonuje">Dane_odbiorcy</data>
+	<data datasource="keyboard" status="optional" description="Jeżeli pole nie zostanie wypełnione, to wartość uzupełniona w teście będzie: &apos;Tytul&apos; oraz godzina i minuta w której skrypt się wykonuje">Tytuł_przelewu</data>
+	<data datasource="keyboard">Kwota_przelewu</data>	
+	<data datasource="dataset" values="Data" description="Format daty musi być dd-mm-yyy">Data_pierwszej_realizacji</data>
+	<data datasource="keyboard" description="Częstotliwość, co ile ma być wykonywany przelew. Wartość numeryczna">Częstotliwość_wartość</data>
+	<data datasource="select" values="miesiąc/miesięcy;tydzień/tygodni;każdego dnia roboczego">Częstotliwość_okres</data>
+	<data datasource="dataset" values="Data" status="optional" description="Jeżeli nie zostanie wybrana data, zlecenie stałe nie będzie miało daty zakończenia. Format daty musi być dd-mm-yyy">Data_zakonczenia_realizacji</data>
+	<data datasource="keyboard" status="optional" description="Jeżeli pole nie zostanie wypełnione, to wartość uzupełniona w teście będzie: &apos;Zlecenie.stale&apos; oraz godzina i minuta w której skrypt się wykonuje">Nazwa_zlecenia_stałego_po_edycji</data>
+	<data datasource="dataset" values="Rachunek">Rachunek_odbiorcy_edycja</data>
+	<data datasource="keyboard" status="optional" description="Jeżeli pole nie zostanie wypełnione, to wartość uzupełniona w teście będzie: &apos;Dane.odbiorcy.edycja&apos; oraz godzina i minuta w której skrypt się wykonuje">Dane_odbiorcy_edycja</data>
+	<data datasource="keyboard" status="optional" description="Jeżeli pole nie zostanie wypełnione, to wartość uzupełniona w teście będzie: &apos;Tytul.edycja&apos; oraz godzina i minuta w której skrypt się wykonuje">Tytuł_przelewu_edycja</data>
+	<data datasource="keyboard">Kwota_przelewu_edycja</data>		
+	<data datasource="dataset" values="Data" description="Format daty musi być dd-mm-yyy">Data_pierwszej_realizacji_po_edycji</data>	
+	<data datasource="keyboard" description="Częstotliwość, co ile ma być wykonywany przelew. Wartość numeryczna">Częstotliwość_wartość_po_edycji</data>
+	<data datasource="select" values="miesiąc/miesięcy;tydzień/tygodni;każdego dnia roboczego">Częstotliwość_okres_po_edycji</data>	
+	<data datasource="dataset" values="Data" status="optional" description="Jeżeli nie zostanie wybrana data, data zostanie automatycznie uzupełniona na +1 dzień od daty pierwszej realizacji. Format daty musi być dd-mm-yyy">Data_zakonczenia_realizacji_po_edycji</data>
+	<data datasource="keyboard" status="hidden" values="1111">Hasło_sms</data>
+  </block>
+  <block>
+	<name>Dodanie oraz usunięcie operacji zaplanowanej</name>
+	<description>Skrypt dodaje oraz usuwa operacje zaplanowaną. Operacja zaplanowana jest dodawana z formatki przelew krajowy</description>
+	<method>DodanieOrazUsuniecieOperacjiZaplanowanej</method>
+	<data>Login</data>
+    <data>Hasło</data>
+	<data datasource="dataset" values="Rachunek">Rachunek_nadawcy</data>	
+	<data datasource="dataset" values="Rachunek">Rachunek_odbiorcy</data>
+	<data datasource="keyboard" status="optional" description="Jeżeli pole nie zostanie wypełnione, to wartość uzupełniona w teście będzie: &apos;Dane.odbiorcy&apos; oraz godzina i minuta w której skrypt się wykonuje">Dane_odbiorcy</data>	
+	<data datasource="keyboard" status="optional" description="Jeżeli pole nie zostanie wypełnione, to wartość uzupełniona w teście będzie: &apos;Tytul&apos; oraz godzina i minuta w której skrypt się wykonuje">Tytuł_przelewu</data>	
+	<data datasource="keyboard">Kwota_przelewu</data>	
+	<data datasource="dataset" values="Data" status="optional" description= "Jeżeli pole nie zostanie wypełnione, to wartość uzupełniona w teście będzie: &apos;Dzień dzisiejszy +3 dni&apos;">Data_przelewu</data>
+	<data datasource="keyboard" value="Data" status="optional" description= "Liczba dni po jakich ma się wykonać przelew. Działa tylko w przypadku braku daty w polu 'data_przelewu'. Domyślna wartość '3'">Liczba_dni_do_przelewu</data>
+	<data datasource="keyboard" status="hidden" values="1111">Hasło_sms</data>
+  </block>
+  <block>
+	<name>Dodanie oraz modyfikacja operacji zaplanowanej</name>
+	<description>Skrypt dodaje oraz modyfikuje operacje zaplanowaną, a później ją usuwa. Operacja zaplanowana jest dodawana z formatki przelew krajowy</description>
+	<method>DodanieOrazModyfikacjaOperacjiZaplanowanej</method>
+	<data>Login</data>
+    <data>Hasło</data>
+	<data datasource="dataset" values="Rachunek">Rachunek_nadawcy</data>	
+	<data datasource="dataset" values="Rachunek">Rachunek_odbiorcy</data>
+	<data datasource="keyboard" status="optional" description="Jeżeli pole nie zostanie wypełnione, to wartość uzupełniona w teście będzie: &apos;Dane.odbiorcy&apos; oraz godzina i minuta w której skrypt się wykonuje">Dane_odbiorcy</data>	
+	<data datasource="keyboard">Kwota_przelewu</data>
+	<data datasource="keyboard" status="optional" description="Jeżeli pole nie zostanie wypełnione, to wartość uzupełniona w teście będzie: &apos;Tytul&apos; oraz godzina i minuta w której skrypt się wykonuje">Tytuł_przelewu</data>	
+	<data datasource="dataset" values="Data" status="optional" description= "Jeżeli pole nie zostanie wypełnione, to wartość uzupełniona w teście będzie: &apos;Dzień dzisiejszy +3 dni&apos;">Data_przelewu</data>
+	<data datasource="keyboard" value="Data" status="optional" description= "Liczba dni po jakich ma się wykonać przelew. Działa tylko w przypadku braku daty w polu 'data_przelewu'. Domyślna wartość '3'">Liczba_dni_do_przelewu</data>
+	<data datasource="keyboard" status="optional" description="Jeżeli pole nie zostanie wypełnione, to wartość uzupełniona w teście będzie: &apos;Dane.odbiorcy.edycja&apos; oraz godzina i minuta w której skrypt się wykonuje">Dane_odbiorcy_edycja</data>	
+	<data datasource="keyboard" status="optional" description="Jeżeli pole nie zostanie wypełnione, to wartość uzupełniona w teście będzie: &apos;Tytul.edycja&apos; oraz godzina i minuta w której skrypt się wykonuje">Tytuł_przelewu</data>	
+	<data datasource="keyboard">Kwota_przelewu_edycja</data>	
+	<data datasource="keyboard" status="optional" description="Jeżeli pole nie zostanie wypełnione, to wartość uzupełniona w teście będzie: &apos;Tytul&apos; oraz godzina i minuta w której skrypt się wykonuje">Tytuł_przelewu_edycja</data>	
+	<data datasource="dataset" values="Data" status="optional" description= "Jeżeli pole nie zostanie wypełnione, to wartość uzupełniona w teście będzie: &apos;Dzień wskazany w polu Data przelewu +1 dni&apos; lub +1 dzień do wpisanej daty jeśli pdamy datę w tym polu">Data_przelewu_edycja</data>
+	<data datasource="keyboard" value="Data" status="optional" description= "Liczba dni po jakich ma się wykonać przelew. Działa tylko w przypadku braku daty w polu 'data_przelewu_edycja'. Domyślna wartość '+1' do pola 'liczba dni do przelewu'">Liczba_dni_do_przelewu_edycja</data>
+	<data datasource="keyboard" status="hidden" values="1111">Hasło_sms</data>
+  </block>
+  <block>
+    <name>Przelew krajowy</name>
+	<description>Skrypt wykonuje przelew krajowy</description>
+    <method>PrzelewKrajowy</method>
+    <data>Login</data>
+    <data>Hasło</data>
+	<data datasource="dataset" values="Rachunek">Rachunek_nadawcy</data>	
+	<data datasource="dataset" values="Rachunek">Rachunek_odbiorcy</data>
+	<data datasource="keyboard" status="optional" description="Jeżeli pole nie zostanie wypełnione, to wartość uzupełniona w teście będzie: &apos;Dane.odbiorcy&apos; oraz godzina i minuta w której skrypt się wykonuje">Dane_odbiorcy</data>	
+	<data datasource="keyboard" status="optional" description="Jeżeli pole nie zostanie wypełnione, to wartość uzupełniona w teście będzie: &apos;Tytul&apos; oraz godzina i minuta w której skrypt się wykonuje">Tytuł_przelewu</data>	
+	<data datasource="keyboard">Kwota_przelewu</data>	
+	<data datasource="keyboard" status="hidden" values="1111">Hasło_sms</data>
+  </block>   
+  <block>
+	<name>Przelew krajowy z przyszła datą</name>
+	<description>Skrypt wykonuje przelew krajowy z datą przyszłą</description>
+	<method>PrzelewKrajowyDataPrzyszła</method>
+	<data>Login</data>
+    <data>Hasło</data>
+	<data datasource="dataset" values="Rachunek">Rachunek_nadawcy</data>	
+	<data datasource="dataset" values="Rachunek">Rachunek_odbiorcy</data>
+	<data datasource="keyboard" status="optional" description="Jeżeli pole nie zostanie wypełnione, to wartość uzupełniona w teście będzie: &apos;Dane.odbiorcy&apos; oraz godzina i minuta w której skrypt się wykonuje">Dane_odbiorcy</data>	
+	<data datasource="keyboard" status="optional" description="Jeżeli pole nie zostanie wypełnione, to wartość uzupełniona w teście będzie: &apos;Tytul&apos; oraz godzina i minuta w której skrypt się wykonuje">Tytuł_przelewu</data>	
+	<data datasource="keyboard">Kwota_przelewu</data>	
+	<data datasource="dataset" value="Data" status="optional" description= "Jeżeli pole nie zostanie wypełnione, to wartość uzupełniona w teście będzie: &apos;Dzień dzisiejszy +3 dni&apos;">Data_przelewu</data>
+	<data datasource="keyboard" value="Data" status="optional" description= "Liczba dni po jakich ma się wykonać przelew. Działa tylko w przypadku braku daty w polu 'data_przelewu'. Domyślna wartość '3'">Liczba_dni_do_przelewu</data>
+	<data datasource="keyboard" status="hidden" values="1111">Hasło_sms</data>
+  </block>
+  <block>
+    <name>Przelew własny</name>
+	<description>Przelew własny, między rachunkami klienta</description>
+    <method>PrzelewWlasny</method>
+    <data>Login</data>
+    <data>Hasło</data>
+	<data datasource="dataset" values="Rachunek">Rachunek_nadawcy</data>	
+	<data datasource="dataset" values="Rachunek">Rachunek_odbiorcy</data>
+	<data datasource="keyboard" status="optional" description="Jeżeli pole nie zostanie wypełnione, to wartość uzupełniona w teście będzie: &apos;Tytul&apos; oraz godzina i minuta w której skrypt się wykonuje">Tytuł_przelewu</data>	
+	<data datasource="keyboard">Kwota_przelewu</data>	
+  </block>   
+  <block>
+	<name>Przelew własny z przyszła datą</name>
+	<description>Przelew własny, między rachunkami klienta wykonany z datą przyszłą</description>
+	<method>PrzelewWłasnyPrzyszłaData</method>
+	<data>Login</data>
+    <data>Hasło</data>
+	<data datasource="dataset" values="Rachunek">Rachunek_nadawcy</data>	
+	<data datasource="dataset" values="Rachunek">Rachunek_odbiorcy</data>
+	<data datasource="keyboard" status="optional" description="Jeżeli pole nie zostanie wypełnione, to wartość uzupełniona w teście będzie: &apos;Tytul&apos; oraz godzina i minuta w której skrypt się wykonuje">Tytuł_przelewu</data>	
+	<data datasource="keyboard">Kwota_przelewu</data>
+	<data datasource="dataset" value="Data" status="optional" description= "Jeżeli pole nie zostanie wypełnione, to wartość uzupełniona w teście będzie: &apos;Dzień dzisiejszy +3 dni&apos;">Data_przelewu</data>	
+	<data datasource="keyboard" value="Data" status="optional" description= "Liczba dni po jakich ma się wykonać przelew. Działa tylko w przypadku braku daty w polu 'data_przelewu'. Domyślna wartość '3'">Liczba_dni_do_przelewu</data>
+	</block>
+  <block>
+	<name>Przelew własny - przewalutowanie</name>
+	<description>Przelew własny, między rachunkami walutowymi klienta</description>
+	<method>PrzelewWłasnyPrzewalutowanie</method>
+	<data>Login</data>
+	<data>Hasło</data>
+	<data datasource="dataset" values="Rachunek">Rachunek_nadawcy</data>	
+	<data datasource="dataset" values="Rachunek">Rachunek_odbiorcy</data>
+	<data datasource="keyboard" status="optional" description="Jeżeli pole nie zostanie wypełnione, to wartość uzupełniona w teście będzie: &apos;Tytul&apos; oraz godzina i minuta w której skrypt się wykonuje">Tytuł_przelewu</data>	
+	<data datasource="keyboard">Kwota_przelewu</data>
+	<data description="Waluta musi się zgadzać z wybranymi rachunkami walutowymi" datasource="select" values="PLN;EUR;USD;CHF;GBP;JPY;HUF">Waluta_przelewu</data>
+  </block>
+  <block>
+	<name>Przelew do Urzędu Skarbowego</name>
+	<description>Przelew do urzędu skarbowego</description>
+	<method>PrzelewUS</method>
+	<data>Login</data>
+    <data>Hasło</data>
+	<data datasource="dataset" values="Rachunek">Rachunek_nadawcy</data>	
+	<data datasource="dataset" values="Rachunek">Konto_urzędu_skarbowego</data>
+	<data datasource="keyboard" status="optional" description= "Jeżeli pole nie zostanie wypełnione, to wartość uzupełniona w teście będzie: &apos;Nazwa.platnika&apos; oraz godzina i minuta w której skrypt się wykonuje">Nazwa_płatnika</data>
+	<data datasource="select" values="N - NIP;P - PESEL;R - REGON;1 - Dowód osobisty;2 - Paszport;3 - Inny dokument tożsamości">Typ_id_płatnika</data>
+	<data datasource="select" values="AKC;AKC-2;AKC-4B;CIT;CIT-11;CIT2A;INNE;PCC-1;PIT-8A;PIT-37;PIT-38;POG-4D;VAT-10;VAT9M;VAT-7;WZS-1M">Symbol_formularza_płatności</data>
+	<data datasource="select" values="J - dzień;D - dekada;M - miesiąc;K - kwartał;P - półrocze;R - rok">Okres_typ</data>
+	<data status="optional" datasource="keyboard">Okres_dzień</data>
+	<data status="optional" datasource="select" values="0101;0201;0301;0102;0202;0302;0103;0203;0303;0104;0204;0304;0105;0205;0305;0106;0206;0306;0107;0207;0307;0108;0208;0308;0109;0209;0309;0110;0210;0310;0111;0211;0311;0112;0212;0312">Okres_dekada</data>
+	<data status="optional" datasource="select" values="01;02;03;04;05;06;07;08;09;10;11;12">Okres_miesiąc</data>
+	<data status="optional" datasource="select" values="01;02;03;04">Okres_kwartał</data>
+	<data status="optional" datasource="select" values="01;02">Okres_półrocze</data>
+	<data datasource="keyboard">Okres_rok</data>
+	<data datasource="keyboard" status="optional">Id_zobowiązania</data>
+	<data datasource="keyboard">Kwota_przelewu</data>
+	<data datasource="keyboard" status="hidden" values="1111">Hasło_sms</data>
+  </block>
+  <block>
+	<name>Przelew do Urzędu Skarbowego z przyszłą datą</name>
+	<description>Przelew do urzędu skarbowego z datą przyszłą</description>
+	<method>PrzelewUSDataPrzyszła</method>
+	<data>Login</data>
+    <data>Hasło</data>
+	<data datasource="dataset" values="Rachunek">Rachunek_nadawcy</data>	
+	<data datasource="dataset" values="Rachunek">Konto_urzędu_skarbowego</data>
+	<data datasource="keyboard" status="optional" description= "Jeżeli pole nie zostanie wypełnione, to wartość uzupełniona w teście będzie: &apos;Nazwa.platnika&apos; oraz godzina i minuta w której skrypt się wykonuje">Nazwa_płatnika</data>
+	<data datasource="select" values="N - NIP;P - PESEL;R - REGON;1 - Dowód osobisty;2 - Paszport;3 - Inny dokument tożsamości">Typ_id_płatnika</data>
+	<data datasource="select" values="AKC;AKC-2;AKC-4B;CIT;CIT-11;CIT2A;INNE;PCC-1;PIT-8A;PIT-37;PIT-38;POG-4D;VAT-10;VAT9M;VAT-7;WZS-1M">Symbol_formularza_płatności</data>
+	<data datasource="select" values="J - dzień;D - dekada;M - miesiąc;K - kwartał;P - półrocze;R - rok">Okres_typ</data>
+	<data status="optional" datasource="keyboard">Okres_dzień</data>
+	<data status="optional" datasource="select" values="0101;0201;0301;0102;0202;0302;0103;0203;0303;0104;0204;0304;0105;0205;0305;0106;0206;0306;0107;0207;0307;0108;0208;0308;0109;0209;0309;0110;0210;0310;0111;0211;0311;0112;0212;0312">Okres_dekada</data>
+	<data status="optional" datasource="select" values="01;02;03;04;05;06;07;08;09;10;11;12">Okres_miesiąc</data>
+	<data status="optional" datasource="select" values="01;02;03;04">Okres_kwartał</data>
+	<data status="optional" datasource="select" values="01;02">Okres_półrocze</data>
+	<data datasource="keyboard">Okres_rok</data>
+	<data datasource="keyboard" status="optional">Id_zobowiązania</data>
+	<data datasource="keyboard">Kwota_przelewu</data>
+	<data datasource="keyboard" status="hidden" values="1111">Hasło_sms</data>
+	<data datasource="dataset" value="Data" status="optional" description= "Jeżeli pole nie zostanie wypełnione, to wartość uzupełniona w teście będzie: &apos;Dzień dzisiejszy +3 dni&apos;">Data_przelewu</data>	
+	<data datasource="keyboard" value="Data" status="optional" description= "Liczba dni po jakich ma się wykonać przelew. Działa tylko w przypadku braku daty w polu 'data_przelewu'. Domyślna wartość '3'">Liczba_dni_do_przelewu</data>
+	</block>
+  <block>
+    <name>Przelew ZUS</name>
+    <method>PrzelewZUS</method>
+	<description>Konfigurując przelew trzeba uzupełnić co najmniej jedną wartość kwotową</description>
+    <data>Login</data>
+    <data>Hasło</data>
+	<data datasource="dataset" values="Rachunek">Rachunek_nadawcy</data>	
+	<data datasource="keyboard" status="optional" description= "Jeżeli pole nie zostanie wypełnione, to wartość uzupełniona w teście będzie: &apos;Nazwa.platnika&apos; oraz godzina i minuta w której skrypt się wykonuje">Nazwa_płatnika</data>
+    <data datasource="select" values="P - PESEL;R - REGON;1 - Dowód osobisty;2 - Paszport">Typ_id_płatnika</data>
+	<data datasource="select" values="S - Składka za jeden miesiąc;M - Składka dłuższa niż jeden miesiąc;U - Układ ratalny;T - Odroczenie terminu;E - Egzekucja;A - Opłata dodatkowa Płatnika;B - Opłata dodatkowa Pośrednika;D - Opłata dodatkowa">Typ_wpłaty</data>
+	<data datasource="keyboard" description="Numer deklaracji w formacie RRRRMM">Deklaracja</data>
+	<data datasource="keyboard" description="Numer deklaracji powinien mieć format 01,40,51,70 lub 80 dla deklaracji A, B, D, E, T lub U, oraz 01-89 dla deklaracji M lub S.">Numer_deklaracji</data>
+	<data status="optional" datasource="keyboard">Kwota_ubezp_społ</data>
+	<data status="optional" datasource="keyboard">Kwota_ubezp_zdro</data>
+	<data status="optional" datasource="keyboard">Kwota_ubezp_FP</data>
+	<data status="optional" datasource="keyboard">Fundusz_emerytur_pomost</data>
+	<data status="optional" datasource="keyboard" description="wymagane dla typu wpłaty A, B, D, E, T lub U. Puste dla S i M. Informacje dodatkowe muszą zawierać nie więcej 15 znaków bez spacji">Informacje_dodatkowe</data>
+	<data datasource="keyboard" status="hidden" values="1111">Hasło_sms</data>
+  </block>  
+  <block>
+	<name>Przelew ZUS z przyszłą datą</name>
+	<description>Konfigurując przelew trzeba uzupełnić co najmniej jedną wartość kwotową</description>
+    <method>PrzelewZusDataPrzyszła</method>
+    <data>Login</data>
+    <data>Hasło</data>
+	<data datasource="dataset" values="Rachunek">Rachunek_nadawcy</data>	
+	<data datasource="keyboard" status="optional" description= "Jeżeli pole nie zostanie wypełnione, to wartość uzupełniona w teście będzie: &apos;Nazwa.platnika&apos; oraz godzina i minuta w której skrypt się wykonuje">Nazwa_płatnika</data>
+    <data datasource="select" values="P - PESEL;R - REGON;1 - Dowód osobisty;2 - Paszport">Typ_id_płatnika</data>
+	<data datasource="select" values="S - Składka za jeden miesiąc;M - Składka dłuższa niż jeden miesiąc;U - Układ ratalny;T - Odroczenie terminu;E - Egzekucja;A - Opłata dodatkowa Płatnika;B - Opłata dodatkowa Pośrednika;D - Opłata dodatkowa">Typ_wpłaty</data>
+	<data datasource="keyboard" description="Numer deklaracji w formacie RRRRMM">Deklaracja</data>
+	<data datasource="keyboard" description="Numer deklaracji powinien mieć format 01,40,51,70 lub 80 dla deklaracji A, B, D, E, T lub U, oraz 01-89 dla deklaracji M lub S.">Numer_deklaracji</data>
+	<data status="optional" datasource="keyboard">Kwota_ubezp_społ</data>
+	<data status="optional" datasource="keyboard">Kwota_ubezp_zdro</data>
+	<data status="optional" datasource="keyboard">Kwota_ubezp_FP</data>
+	<data status="optional" datasource="keyboard">Fundusz_emerytur_pomost</data>
+	<data status="optional" datasource="keyboard" description="Informacje dodatkowe nie mogą być puste i muszą zawierać nie więcej 15 znaków bez spacji">Informacje_dodatkowe</data>
+	<data datasource="keyboard" status="hidden" values="1111">Hasło_sms</data>
+	<data datasource="dataset" value="Data" status="optional" description= "Jeżeli pole nie zostanie wypełnione, to wartość uzupełniona w teście będzie: &apos;Dzień dzisiejszy +3 dni&apos;">Data_przelewu</data>	
+	<data datasource="keyboard" value="Data" status="optional" description= "Liczba dni po jakich ma się wykonać przelew. Działa tylko w przypadku braku daty w polu 'data_przelewu'. Domyślna wartość '3'">Liczba_dni_do_przelewu</data>
+	</block>
+  <block>
+    <name>Przelew euroregulowany</name>
+	<description>Po wykonaniu przelewu, jest on weryfikowany w historii operacji lub w operacjach zaplanowanych</description>
+    <method>PrzelewEuroregulowany</method>
+    <data>Login</data>
+    <data>Hasło</data>
+	<data datasource="dataset" values="Rachunek">Rachunek_nadawcy</data>
+	<data datasource="dataset" values="Rachunek">Rachunek_odbiorcy_zagranicznego</data>	
+	<data datasource="keyboard" status="optional" description="Jeżeli pole nie zostanie wypełnione, to wartość uzupełniona w teście będzie: &apos;Dane.odbiorcy&apos; oraz godzina i minuta w której skrypt się wykonuje">Dane_odbiorcy</data>
+	<data datasource="select" values="Ukraina;Francja;Niemcy;Chorwacja;Lotwa;Polska;Wielka Brytania;Australia;Stany Zjednoczone Ameryki;Włochy;Hiszpania;Rosja;Japonia;Szwajcaria;Węgry">Kraj</data>
+	<data description="Swift musi pasować do banku rachunku zagranicznego">SWIFT</data>
+	<data datasource="keyboard" status="optional" description="Jeżeli pole nie zostanie wypełnione, to wartość uzupełniona w teście będzie: &apos;Tytuł.przelewu&apos; oraz godzina i minuta w której skrypt się wykonuje">Tytuł_przelewu</data>
+	<data datasource="keyboard">Kwota_przelewu</data>
+	<data datasource="keyboard" status="hidden" values="1111">Hasło_sms</data>
+  </block>  
+  <block>
+	<name>Aktywacja karty debetowej</name>
+	<description>Skrypt aktywuje karte debetową przypisaną do konta</description>
+	<method>AktywacjaKartyDebetowej</method>
+    <data>Login</data>
+    <data>Hasło</data>
+	<data description="karta musi być przypisana do konta, w innym wypadku skrypt nie wykona się">Karta_debetowa</data>
+	<data datasource="keyboard" status="hidden" values="1111">Hasło_sms</data>
+  </block>
+  <block>
+	<name>Zastrzeżenie karty debetowej</name>
+	<description>Skrypt wykonuje zastrzeżenie karty debetowej przypisanej do konta</description>
+	<method>ZastrzeżenieKartyDebetowej</method>
+	<data>Login</data>
+    <data>Hasło</data>
+	<data description="karta musi być przypisana do konta, w innym wypadku skrypt nie wykona się">Karta_debetowa</data>
+	<data datasource="select" values="Karta zagubiona;Karta skradziona">Powód_zastrzeżenia</data>
+  </block>
+  <block>
+	<name>Aktywacja karty kredytowej</name>
+	<description>Skrypt wykonuje aktywacje karty kredytowej przypisanej do konta</description>
+	<method>AktywacjaKartyKredytowej</method>
+	<data>Login</data>
+    <data>Hasło</data>
+	<data description="karta musi być przypisana do konta, w innym wypadku skrypt nie wykona się">Karta_kredytowa</data>
+	<data datasource="keyboard" status="hidden" values="1111">Hasło_sms</data>
+  </block>
+  <block>
+	<name>Zastrzeżenie karty kredytowej</name>
+	<description>Skrypt wykonuje zastrzeżenie karty kredytowej przypisanej do konta</description>
+	<method>ZastrzeżenieKartyKredytowej</method>
+	<data>Login</data>
+    <data>Hasło</data>
+	<data description="karta musi być przypisana do konta, w innym wypadku skrypt nie wykona się">Karta_kredytowa</data>
+	<data datasource="select" values="Karta zagubiona;Karta skradziona">Powód_zastrzeżenia</data>
+  </block>
+  <block>
+	<name>Spłata karty kredytowej</name>
+	<description>Skrypt wykonuje spłatę karty kredotwej przypisanej do konta</description>
+	<method>SpłataKartyKredytowej</method>
+	<data>Login</data>
+    <data>Hasło</data>
+	<data datasource="dataset" values="Rachunek" description="Rachunek nadawcy wybieramy jedynie w przypadku 2 istniejących rachunków dla danego klienta, brak wyboru rachuku spowoduje, że spłata zostanie wykonana z pierwszego">Rachunek_nadawcy</data>
+	<data description="karta musi być przypisana do konta, w innym wypadku skrypt nie wykona się">Karta_kredytowa</data>
+	<data datasource="select" values="Minimalna;Całkowita;Aktualne saldo;Inna">Typ_spłaty</data>
+	<data datasource="keyboard" status="optional">Inna_kwota</data>
+	<data datasource="keyboard" status="optional" description="Jeżeli pole nie zostanie wypełnione, to wartość uzupełniona w teście będzie: &apos;Tytuł.przelewu&apos; oraz godzina i minuta w której skrypt się wykonuje">Tytuł_przelewu</data>
+  </block>
+  <block>
+	<name>Ustalenie PIN dla karty debetowej</name>
+	<description>Skrypt ustala PIN dla karty debetowej oraz weryfikuje komunikat</description>
+	<method>UstaleniePINKartaDebetowa</method>
+	<data>Login</data>
+	<data>Hasło</data>
+	<data description="karta musi być przypisana do konta, w innym wypadku skrypt nie wykona się">Karta_debetowa</data>
+	<data description="nie może składać się z 4 jednakowych lub ciągu kolejnych cyfr (np. 1111, 3333, 1234, 4321 itp.">PIN</data>
+	<data datasource="keyboard" status="hidden" values="1111">Hasło_sms</data>
+  </block>
+  <block>
+	<name>Ustalenie PIN dla karty kredytowej</name>
+	<description>Skrypt ustala PIN dla karty kredytowej oraz weryfikuje komunikat</description>
+	<method>UstaleniePINKartaKredytowa</method>
+	<data>Login</data>
+	<data>Hasło</data>
+	<data description="karta musi być przypisana do konta, w innym wypadku skrypt nie wykona się">Karta_kredytowa</data>
+	<data description="nie może składać się z 4 jednakowych lub ciągu kolejnych cyfr (np. 1111, 3333, 1234, 4321 itp.">PIN</data>
+	<data datasource="keyboard" status="hidden" values="1111">Hasło_sms</data>
+  </block>
+  <block>
+	<name>Zmiana limitów karta debetowa</name>
+	<description>Skrypt zmienia limity dla karty debetowej</description>
+	<method>ZmianaLimitowKartaDebetowa</method>
+	<data>Login</data>
+	<data>Hasło</data>
+	<data description="karta musi być przypisana do konta, w innym wypadku skrypt nie wykona się">Karta_debetowa</data>	
+	<data description="Ilość transakcji bezgotówkowych">Ilość_transakcji</data>
+	<data description="Wartość transakcji bezgotówkowych">Wartość_transakcji</data>
+	<data description="Ilość transakcji gotówkowych">Ilość_transakcji_got</data>
+	<data description="Wartość transakcji gotówkowych">Wartość_transakcji_got</data>
+	<data datasource="keyboard" status="hidden" values="1111">Hasło_sms</data>
+  </block>
+  <block>
+	<name>Zmiana limitów karta kredytowa</name>
+	<description>Skrypt zmienia limity dla karty kredytowej</description>
+	<method>ZmianaLimitowKartaKredytowa</method>
+	<data>Login</data>
+	<data>Hasło</data>
+	<data description="karta musi być przypisana do konta, w innym wypadku skrypt nie wykona się">Karta_kredytowa</data>	
+	<data description="Ilość transakcji bezgotówkowych">Ilość_transakcji</data>
+	<data description="Wartość transakcji bezgotówkowych">Wartość_transakcji</data>
+	<data description="Ilość transakcji gotówkowych">Ilość_transakcji_got</data>
+	<data description="Wartość transakcji gotówkowych">Wartość_transakcji_got</data>
+	<data datasource="keyboard" status="hidden" values="1111">Hasło_sms</data>
+  </block>
+</configuration>
