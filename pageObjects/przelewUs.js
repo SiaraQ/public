@@ -26,7 +26,7 @@ var payments = function () {
 	this.rokOkresu = element(by.model('payment.formData.periodYear'));
 	this.identyfokacjaZobowiazania = element(by.model('payment.formData.obligationId'));
 	this.kwota = element(by.model('payment.formData.amount'));
-	this.dataRealizacji = element(by.model('payment.formData.realizationDate'));
+	this.dataRealizacji = element(by.model('ngModel'));
 	this.KomNazwaPlatnika = element(by.css('[class="eb-validation-messages"]'));  
 	this.Komunikat2 = element(by.css('[class="messages ng-inactive"]'));
 	this.Komunikat3 = element(by.css('[class="validation-message animate-on"]'));
@@ -135,7 +135,7 @@ var payments = function () {
 		// browser.driver.sleep(10000);
 			helpers.waitUntilReady(this.zRachunku);	
 		this.zRachunku.click();
-		// browser.driver.sleep(3000);
+		browser.driver.sleep(3000);
 		helpers.wybierzElementZListyPoTekscie('accountItem in $select.items track by accountItem.accountNo',rachunekNadawcy);
 		// browser.driver.sleep(5000);
 			helpers.waitUntilReady(this.dostepneSrodki);
@@ -159,7 +159,7 @@ var payments = function () {
 		if ((typOkresu!="")&&(numerOkresu!="")&&(rokOkresu!="")) {
 					helpers.waitUntilReady(this.typOkresu);	
                 this.typOkresu.click();
-                // browser.driver.sleep(1000);
+                browser.driver.sleep(2000);
 				helpers.wybierzElementZListyPoTekscie('periodTypeCode in $select.items track by $index',typOkresu);
 				if (typOkresu=='J - dzień') {
                     	this.numerOkresu.sendKeys(numerOkresu);
@@ -178,8 +178,11 @@ var payments = function () {
 			helpers.waitUntilReady(this.kwota);	
 		this.kwota.sendKeys(kwota);
 		// browser.driver.sleep(5000);
-		if (dataRealizacji!="")
-        this.dataRealizacji.sendKeys(dataRealizacjiNew);
+	if (dataRealizacji!=""){
+			this.dataRealizacji.click();
+			this.dataRealizacji.clear();
+			this.dataRealizacji.sendKeys(dataRealizacjiNew);
+		}
    			helpers.waitUntilReady(this.dalej);	
 		this.dalej.click().then(function(){
 			winston.log('info', "Wybranie opcji Zatwierdź - przejście do strony drugiej");
@@ -193,7 +196,8 @@ var payments = function () {
 		});
 		// browser.driver.sleep(5000);
 			helpers.waitUntilReady(this.potwierdzenie);	
-		expect(this.potwierdzenie.getText()).toBe("Przelew/transakcja zrealizowana");
+		expect(this.potwierdzenie.getText()).not.toContain("Przelew/transakcja odrzucona");
+		expect(this.potwierdzenie.getText()).not.toContain("Przelew został odrzucony");
 		if (dataRealizacji=="")
 		rachunki.sprawdzOperacjeNaHistorii(rachunekNadawcy,symbolFormularza,kwota,saldoOczekiwanePo);
 	}

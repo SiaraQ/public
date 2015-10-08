@@ -37,7 +37,7 @@ var przelewZus = function () {
 	this.kwotaubezpieczenieFPiFGSP = element(by.repeater('insuranceType in payment.meta.zusInsuranceTypes').row(2)).element(by.model('payment.formData.insurancePremiums[insuranceType].amount'));
 	this.funduszEmeryturPomostowych = element(by.repeater('insuranceType in payment.meta.zusInsuranceTypes').row(3)).element(by.model('$option.active'));
 	this.kwotafunduszEmeryturPomostowych = element(by.repeater('insuranceType in payment.meta.zusInsuranceTypes').row(3)).element(by.model('payment.formData.insurancePremiums[insuranceType].amount'));
-	this.dataRealizacji = element(by.model('payment.formData.realizationDate'));
+	this.dataRealizacji = element(by.model('ngModel'));
 	this.informacjeDodatkoweNovalidate = element(by.name('additionalInfo'));
 	//komunikaty
 	this.NazwaPlatnikaKomunikat = element(by.css('[class="messages ng-inactive"]'));  
@@ -133,7 +133,8 @@ var przelewZus = function () {
 	        numerTypWplaty = 0;
 		} 
 		if (kwotaubezpieczenieZdrowotne==""&&kwotaUbezpieczenieSpoleczne==""&&kwotaubezpieczenieFPiFGSP==""&&kwotafunduszEmeryturPomostowych=="") kwotaUbezpieczenieSpoleczne=helpers.losujKwote();
-		var kwota = kwotaubezpieczenieZdrowotne + kwotaUbezpieczenieSpoleczne + kwotaubezpieczenieFPiFGSP + kwotafunduszEmeryturPomostowych;
+		var kwotaN = Number(kwotaubezpieczenieZdrowotne) + Number(kwotaUbezpieczenieSpoleczne) + Number(kwotaubezpieczenieFPiFGSP) + Number(kwotafunduszEmeryturPomostowych);
+		var kwota = String(kwotaN);
 
 		winston.log('info', "Dane testu: rachunekNadawcy="+rachunekNadawcy+" nazwaOdbiorcy="+nazwaOdbiorcy+" nipPlatnika="+nipPlatnika+" typDrugiegoIdentyfikatora="+typDrugiegoIdentyfikatora+" drugiIdentyfikator="+drugiIdentyfikator);
 		winston.log('info', "Dane testu: typWpłaty="+typWpłaty+" deklaracja="+deklaracja+" numerDeklaracji="+numerDeklaracji+" informacjeDodatkowe="+nazwaOdbiorcy+" dataRealizacji="+dataRealizacji+" kwotaUbezpieczenieSpoleczne="+kwotaUbezpieczenieSpoleczne);
@@ -158,15 +159,18 @@ var przelewZus = function () {
 		this.nipPlatnika.sendKeys(nipPlatnika);
 		// browser.driver.sleep(2000);
 		this.typDrugiegoIdentyfikatora.click();
-		// browser.driver.sleep(2000);
+		 browser.driver.sleep(2000);
 		helpers.wybierzElementZListyPoNumerze(numerTypDrugiegoIdentyfikatora);
 		// browser.driver.sleep(1000);
+		helpers.waitUntilReady(this.drugiIdentyfikator);
 		this.drugiIdentyfikator.sendKeys(drugiIdentyfikator);
 		// browser.driver.sleep(1000);
+		helpers.waitUntilReady(this.typWpłaty);
 		this.typWpłaty.click();
-		// browser.driver.sleep(1000);
+		 browser.driver.sleep(2000);
 		helpers.wybierzElementZListyPoNumerze(numerTypWplaty);
 		// browser.driver.sleep(1000);
+		helpers.waitUntilReady(this.deklaracja);
 		this.deklaracja.sendKeys(deklaracja);
 		// browser.driver.sleep(1000);
 		this.numerDeklaracji.sendKeys(numerDeklaracji);
@@ -175,10 +179,13 @@ var przelewZus = function () {
 		{	
 			helpers.waitUntilReady(this.informacjeDodatkowe);
             this.informacjeDodatkowe.click();
+            helpers.waitUntilReady(this.informacjeDodatkowe);
             this.informacjeDodatkowe.sendKeys(informacjeDodatkowe);
         }
-		if (dataRealizacji!="")
-		this.dataRealizacji.sendKeys(dataRealizacjiNew);
+        if (dataRealizacji!=""){
+			this.dataRealizacji.clear();
+			this.dataRealizacji.sendKeys(dataRealizacjiNew);
+		}
 				//kwoty
 		this.ubezpieczenieSpoleczne.click();
 		if (kwotaUbezpieczenieSpoleczne!=""){
@@ -194,10 +201,11 @@ var przelewZus = function () {
 			this.ubezpieczenieFPiFGSP.click();
 			this.kwotaubezpieczenieFPiFGSP.sendKeys(kwotaubezpieczenieFPiFGSP);	
 		}
-		if (kwotaubezpieczenieFPiFGSP!=""){
+		if (kwotafunduszEmeryturPomostowych!=""){
 			this.funduszEmeryturPomostowych.click();
-			this.kwotaubezpieczenieFPiFGSP.sendKeys(kwotaubezpieczenieFPiFGSP);
+			this.kwotafunduszEmeryturPomostowych.sendKeys(kwotafunduszEmeryturPomostowych);
 		}
+
 		// browser.driver.sleep(3000);
 			helpers.waitUntilReady(this.dalej);
 		this.dalej.click().then(function(){
@@ -212,7 +220,8 @@ var przelewZus = function () {
 		});
 		// browser.driver.sleep(5000);
 			helpers.waitUntilReady(this.potwierdzenie);
-		expect(this.potwierdzenie.getText()).toBe("Przelew/transakcja zrealizowana");
+		expect(this.potwierdzenie.getText()).not.toContain("Przelew/transakcja odrzucona");
+		expect(this.potwierdzenie.getText()).not.toContain("odrzuc");
 		if (dataRealizacji=="")
 		rachunki.sprawdzOperacjeNaHistorii(rachunekNadawcy,'Ubezpiecz',kwota,saldoOczekiwanePo);
 	};

@@ -1,5 +1,6 @@
 var payments = function () {
 	var helpers = require('../pageObjects/helpers.js');
+	var rachunki = require('../pageObjects/rachunkiMiniApp.js');
 	var winston = require('winston');
 	var deferred = protractor.promise.defer();
 	var promise = deferred.promise;
@@ -21,14 +22,13 @@ var payments = function () {
 	this.kwota = element(by.model('payment.formData.amount'));
 	this.dalej = element(by.css('[ng-click="moveNext()"]'));
 	this.zatwierdz = element(by.buttonText('Zatwierdź'));
-	this.dataRealizacji = element(by.model('payment.formData.realizationDate'));
-	this.datar = this.dataRealizacji.element(by.model('ngModel'));
+	this.dataRealizacji = element(by.model('ngModel'));
 
 	this.tytulKomunikat = element(by.id('description'));
 	this.kwotaKomunikat = element(by.css('[eb-name="amount"]')).element(by.id('amount'));
 	this.dataKomunikat = element(by.id('realizationDate'));
 
-	this.tworzPrzelewWlasny = function (rachunekNadawcy,naRachunek,tytulPrzelewu,kwota,hasloSms) {
+	this.tworzPrzelewWlasny = function (rachunekNadawcy,naRachunek,tytulPrzelewu,kwota,dataRealizacji,hasloSms) {
 		browser.driver.sleep(12000);
 		var saldoPrzed=0;
 		var saldoOczekiwanePo=0;
@@ -37,7 +37,10 @@ var payments = function () {
 		if (hasloSms=="") hasloSms='1111';
 		if (tytulPrzelewu=="")tytulPrzelewu="tytul"+random;
 		if (kwota=="")	kwota=helpers.losujKwote();
+		if (dataRealizacji!="") dataRealizacjiNew=helpers.dataBiezacaPlusDzien(dataRealizacji);
+
 		var rachunekNadawcy = helpers.zamienRachunekNaNrbZeSpacjami(rachunekNadawcy);
+		var naRachunek = helpers.zamienRachunekNaNrbZeSpacjami(naRachunek);
 
 		winston.log('info', "Dane testu: rachunekNadawcy="+rachunekNadawcy+" naRachunek="+naRachunek+" tytulPrzelewu="+tytulPrzelewu+" kwota="+kwota+" hasloSms="+hasloSms);
 		helpers.waitUntilReady(this.platnosci);	
@@ -49,34 +52,26 @@ var payments = function () {
 		this.zRachunku.click();
 		helpers.wybierzElementZListyPoTekscie('accountItem in $select.items track by accountItem.accountNo',rachunekNadawcy);
 		  helpers.waitUntilReady(this.dostepneSrodki);	
-		this.dostepneSrodki.getText().then(function(text) {
-			text=text.replace(/\s+/g, '');
-			text=text.replace(',','.');
-			saldoPrzed=Number(text);
-			console.log("saldoPrzed="+saldoPrzed);
-			kwota=kwota.replace(/\s+/g, '');
-			kwota=kwota.replace(',','.');
-			saldoOczekiwanePo=saldoPrzed-Number(kwota);
-			console.log("saldoOczekiwanePo="+saldoOczekiwanePo);
-			winston.log('info', "saldoOczekiwanePo="+saldoOczekiwanePo);
-			winston.log('info', "saldoPrzed="+saldoPrzed);
-			winston.log('info', "kwota="+kwota);
-			return saldoOczekiwanePo;
-		});
+		saldoOczekiwanePo=helpers.wyliczSaldoOczekiwanePo(this.dostepneSrodki,kwota);
 		helpers.waitUntilReady(this.naRachunek);
-		this.naRachunek.click();
-		  	
+		
+		this.naRachunek.click();  	
 		if (naRachunek=="") {
 			//wybiera pierwszy na liscie
-			helpers.wybierzElementZListyPoNumerze(1);
+			helpers.wybierzElementZListyPoNumerze(0);
 		} else {
 			//szuka konkretnego na liscie
+			browser.driver.sleep(2000);
 			helpers.wybierzElementZListyPoTekscie('accountItem in $select.items track by accountItem.accountNo',naRachunek);
 		}
 		helpers.waitUntilReady(this.tytul);
 		this.tytul.sendKeys(tytulPrzelewu);
 		helpers.waitUntilReady(this.kwota);
 		this.kwota.sendKeys(kwota); 
+		if (dataRealizacji!=""){
+			this.dataRealizacji.clear();
+			this.dataRealizacji.sendKeys(dataRealizacjiNew);
+		}
 		helpers.waitUntilReady(this.dalej);
 		this.dalej.click().then(function(){
 			winston.log('info', "Wybranie opcji Zatwierdź - przejście do strony drugiej");
@@ -87,15 +82,16 @@ var payments = function () {
 			winston.log('info', "Wybranie opcji Zatwierdź - przejście do strony potwierdzenia informacji");
 		});
 		helpers.waitUntilReady(this.potwierdzenie);
-		expect(this.potwierdzenie.getText()).toBe("Przelew/transakcja zrealizowana");
+		expect(this.potwierdzenie.getText()).not.toContain("odrzuc");
 	};
 
 	this.przelewWlasnyWalidacjaTytulem = function () {
+		helpers.waitUntilReady(this.platnosci);	
 		this.platnosci.click();
-		  helpers.waitUntilReady(this.karty);	
+		  helpers.waitUntilReady(this.typPlatnosci);	
 		this.typPlatnosci.click();
 		helpers.wybierzElementZListyPoNumerze(1);
-		  helpers.waitUntilReady(this.karty);	
+		  helpers.waitUntilReady(this.tytul);	
 		this.tytul.click();
 		this.tytul.clear();
 		expect(this.tytulKomunikat.getText()).toEqual('Tytuł przelewu nie może być pusty');
@@ -107,12 +103,12 @@ var payments = function () {
 	};
 
 	this.przelewWlasnyWalidacjaKwoty = function () {
-		// var saldoPrzed = 0;
+		helpers.waitUntilReady(this.platnosci);	
 		this.platnosci.click();
-		  helpers.waitUntilReady(this.karty);	
+		  helpers.waitUntilReady(this.typPlatnosci);	
 		this.typPlatnosci.click();
 		helpers.wybierzElementZListyPoNumerze(1);
-		  helpers.waitUntilReady(this.karty);	
+		  helpers.waitUntilReady(this.kwota);	
 		//funkcja, w której można działać na kwotach
 		element(by.css('[class="bd-amount__value"]')).getText().then(function (value) {
     		this.saldo =  element(by.model('payment.formData.amount'));
@@ -138,11 +134,12 @@ var payments = function () {
 	};
 
 	this.przelewWlasnyWalidacjaDaty = function () {
+		helpers.waitUntilReady(this.platnosci);	
 		this.platnosci.click();
-		  helpers.waitUntilReady(this.karty);	
+		  helpers.waitUntilReady(this.typPlatnosci);	
 		this.typPlatnosci.click();
 		helpers.wybierzElementZListyPoNumerze(1);
-		  helpers.waitUntilReady(this.karty);	
+		  helpers.waitUntilReady(this.dataRealizacji);	
 		helpers.scrollWindow(this.dataRealizacji);
 		this.dataRealizacji.click();
 		this.datar.clear();

@@ -50,10 +50,8 @@ var payments = function () {
 	}
 
 	this.sprawdzDaneOdbiorcyStronaDruga = function(rachunekNadawcy,nazwaOdbiorcy,rachunekOdbiorcy,daneOdbiorcy,tytulPrzelewu) {
-		var rachunekNadawcy = helpers.zamienRachunekNaNrbZeSpacjami(rachunekNadawcy);
 		var rachunekOdbiorcy = helpers.zamienRachunekNaNrbZeSpacjami(rachunekOdbiorcy);
 		expect(this.rachunekOpis.getText()).toContain('Z rachunku');
-		expect(this.rachunekOpis.getText()).toContain(rachunekNadawcy);
 		expect(this.twojaNazwaOdbiorcyOpis.getText()).toEqual('Twoja nazwa odbiorcy\n'+nazwaOdbiorcy);
 		expect(this.numerRachunkuOpis.getText()).toEqual('Numer rachunku\n'+rachunekOdbiorcy);
 		expect(this.daneOdbiorcyOpis.getText()).toEqual('Dane odbiorcy\n'+daneOdbiorcy);
@@ -107,7 +105,8 @@ var payments = function () {
 			winston.log('info', "Wybranie opcji Zatwierdź - przejście do strony potwierdzenia informacji");
 		});
 		helpers.waitUntilReady(this.potwierdzenie);
-		expect(this.potwierdzenie.getText()).toBe("Odbiorca zdefiniowany został utworzony");
+		expect(this.potwierdzenie.getText()).not.toContain("Zlecenie odrzucone");
+		expect(this.potwierdzenie.getText()).not.toContain("odrzuc");
 	};
 
 	this.wyszukajOdbiorce  = function (daneDoSzukania) {
@@ -166,6 +165,7 @@ var payments = function () {
 		});
 		helpers.waitUntilReady(this.potwierdzenie);
 		expect(this.potwierdzenie.getText()).toBe("Odbiorca zdefiniowany został utworzony");
+		expect(this.potwierdzenie.getText()).not.toContain("odrzuc");
 	}
 
 	this.usunOdbiorce = function () {
@@ -180,17 +180,18 @@ var payments = function () {
 		this.kodSms.sendKeys(hasloSms);
 		this.usun.click();
 		helpers.waitUntilReady(this.potwierdzenie);
-		expect(this.potwierdzenie.getText()).toBe("Odbiorca zdefiniowany został usunie");
-
+		expect(this.potwierdzenie.getText()).toBe("Odbiorca zdefiniowany został usuniety");
+		expect(this.potwierdzenie.getText()).not.toContain("odrzuc");
 	}
 
 	this.dodajOdbiorceKrajowegoWalidacjaNazwaOdbiorcy = function () {
+		helpers.waitUntilReady(this.platnosci);
 		this.platnosci.click();
-		browser.driver.sleep(2000);
+		helpers.waitUntilReady(this.odbiorcyZdefiniowani);
 		this.odbiorcyZdefiniowani.click();
-		browser.driver.sleep(2000);
+		helpers.waitUntilReady(this.nowyOdbiorca);
 		this.nowyOdbiorca.click();
-		browser.driver.sleep(2000);
+		helpers.waitUntilReady(this.twojaNazwaOdbiorcy);
 		this.twojaNazwaOdbiorcy.sendKeys('123456789012345678901234567890123456');
 		expect(this.twojaNazwaOdbiorcyKomunikat.getText()).toEqual('Pole Nazwa skrócona odbiorcy nie może być dłuższe niż 35 znaków i powinno zawierać tylko litery, cyfry oraz znaki ! @ # $ % ^ & * ( ) - + [ ] { } : ; < > . ? \\ ~ ` \' , /.');
 		this.twojaNazwaOdbiorcy.clear();
@@ -199,10 +200,10 @@ var payments = function () {
 		this.twojaNazwaOdbiorcy.clear();
 		expect(this.twojaNazwaOdbiorcyKomunikat.getText()).toEqual('Nazwa odbiorcy nie może być pusta');
 		this.twojaNazwaOdbiorcy.clear();
-		this.MojBank.click();
 	};
 
 	this.dodajOdbiorceKrajowegoWalidacjaNumerRachunku = function () {
+		helpers.waitUntilReady(this.twojaNazwaOdbiorcy);
 		this.platnosci.click();
 		browser.driver.sleep(2000);
 		this.odbiorcyZdefiniowani.click();
@@ -217,18 +218,16 @@ var payments = function () {
 		this.numerRachunku.clear();
 		expect(this.numerRachunkuKomunikat.getText()).toEqual('Rachunek odbiorcy nie może być pusty');
 		this.numerRachunku.clear();
-		this.MojBank.click();
 	};
-	//Rach ZUS: 83101010230000261395100000 , 78101010230000261395200000 , 73101010230000261395300000 , 68101010230000261395400000
-	//Rach US: 84101013711411072227000000, 89101017040059332227000000, 58101012380858502224000000
 
 	this.dodajOdbiorceKrajowegoWalidacjaPolaDaneOdbiorcy = function () {
+		helpers.waitUntilReady(this.platnosci);
 		this.platnosci.click();
-		browser.driver.sleep(2000);
+		helpers.waitUntilReady(this.odbiorcyZdefiniowani);
 		this.odbiorcyZdefiniowani.click();
-		browser.driver.sleep(2000);
+		helpers.waitUntilReady(this.nowyOdbiorca);
 		this.nowyOdbiorca.click();
-		browser.driver.sleep(2000);
+		helpers.waitUntilReady(this.daneOdbiorcy);
 		this.daneOdbiorcy.sendKeys('123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901');
 		expect(this.daneOdbiorcyKomunikat.getText()).toEqual('Dane odbiorcy nie mogą przekraczać 132 znaków i powinny zawierać wyłącznie litery, cyfry oraz znaki ! @ # $ % ^ & * ( ) - + [ ] { } : ; < > . ? \\ ~ ` \'  , /');
 		this.daneOdbiorcy.clear();
@@ -237,16 +236,16 @@ var payments = function () {
 		this.daneOdbiorcy.clear();
 		expect(this.daneOdbiorcyKomunikat.getText()).toEqual('Dane odbiorcy nie mogę być puste');
 		this.daneOdbiorcy.clear();
-		this.MojBank.click();
 	};
 
 	this.dodajOdbiorceKrajowegoWalidacjaPolaTytul = function () {
+		helpers.waitUntilReady(this.platnosci);
 		this.platnosci.click();
-		browser.driver.sleep(2000);
+		helpers.waitUntilReady(this.odbiorcyZdefiniowani);
 		this.odbiorcyZdefiniowani.click();
-		browser.driver.sleep(2000);
+		helpers.waitUntilReady(this.nowyOdbiorca);
 		this.nowyOdbiorca.click();
-		browser.driver.sleep(2000);
+		helpers.waitUntilReady(this.tytul);
 		this.tytul.sendKeys('123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901');
 		expect(this.TytulKomunikat.getText()).toEqual('Dane odbiorcy mogą składać się maskymalnie ze 140 znaków');
 		this.tytul.clear();
@@ -255,7 +254,6 @@ var payments = function () {
 		this.tytul.clear();
 		expect(this.TytulKomunikat.getText()).toEqual('Tytuł przelewu nie może być pusty');
 		this.tytul.clear();
-		this.MojBank.click();
 	};
 
 };

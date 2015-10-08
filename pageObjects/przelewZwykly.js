@@ -22,9 +22,9 @@ var payments = function () {
 	this.kwotaKomunikat = element(by.css('[eb-name="amount"]')).element(by.id('amount'));//.element(by.css('[class="messages ng-inactive"]'));
 	this.dataKomunikat = element(by.id('realizationDate'));
 	this.MojBank = element(by.css('[class="rb-header__menu__content"]')).element(by.css('[ui-sref="dashboard"]'));
-	this.dataRealizacji = element(by.model('payment.formData.realizationDate'));
+	this.dataRealizacji = element(by.model('ngModel'));
 	this.KomdataRealizacji = element(by.id('realizationDate'));
-	this.dataRealizacji= element(by.name('realizationDate'));
+	// this.dataRealizacji= element(by.name('realizationDate'));
 	//krok2 przelew krajowy
 	//label="Z rachunku"
 	//label="Właściciel"
@@ -79,8 +79,10 @@ var payments = function () {
 		// browser.driver.sleep(5000);
 		this.kwota.sendKeys(kwota); 
 		// browser.driver.sleep(5000);
-		if (dataRealizacji!="")
-		this.dataRealizacji.sendKeys(dataRealizacjiNew);
+		if (dataRealizacji!=""){
+			this.dataRealizacji.clear();
+			this.dataRealizacji.sendKeys(dataRealizacjiNew);
+		}
 		this.dalej.click().then(function(){
 			winston.log('info', "Wybranie opcji Zatwierdź - przejście do strony drugiej");
 		});
@@ -93,7 +95,8 @@ var payments = function () {
 		});
 		// browser.driver.sleep(3000);
 		helpers.waitUntilReady(this.potwierdzenie);
-		expect(this.potwierdzenie.getText()).toBe("Przelew/transakcja zrealizowana");
+		expect(this.potwierdzenie.getText()).not.toContain("Przelew/transakcja odrzucona");
+		expect(this.potwierdzenie.getText()).not.toContain("odrzuc");
 		this.powrot.click();
 		if (dataRealizacji=="")
 		rachunki.sprawdzOperacjeNaHistorii(rachunekNadawcy,tytulPrzelewu,kwota,saldoOczekiwanePo);
@@ -101,8 +104,9 @@ var payments = function () {
 
 
 	this.przelewKrajowyWalidacjaTytulem = function () {
+		helpers.waitUntilReady(this.platnosci);
 		this.platnosci.click();
-		browser.driver.sleep(1000);
+		helpers.waitUntilReady(this.tytul);
 		this.tytul.click();
 		this.tytul.sendKeys("1");
 		this.tytul.clear();
@@ -111,14 +115,12 @@ var payments = function () {
 		expect(this.tytulKomunikat.getText()).toEqual('Tytuł przelewu nie może przekraczać 132 znaków i powinien zawierać wyłącznie litery, cyfry oraz znaki ! @ # $ % ^ & * ( ) - + [ ] { } : ; < > . ? \\ ~ ` \'  , /');
 		this.tytul.sendKeys('"');
 		expect(this.tytulKomunikat.getText()).toEqual('Tytuł przelewu nie może przekraczać 132 znaków i powinien zawierać wyłącznie litery, cyfry oraz znaki ! @ # $ % ^ & * ( ) - + [ ] { } : ; < > . ? \\ ~ ` \'  , /');
-		this.MojBank.click();
-		browser.driver.sleep(1000);
 	};
 
 	this.przelewKrajowyWalidacjaKwoty = function () {
+		helpers.waitUntilReady(this.platnosci);
 		this.platnosci.click();
-		browser.driver.sleep(1000);
-		this.typPlatnosci.click();
+		helpers.waitUntilReady(this.kwota);
 		this.kwota.sendKeys('12,344');
 		expect(this.kwotaKomunikat.getText()).toEqual('Nieprawidłowa kwota przelewu');
 		this.kwota.clear();
@@ -128,30 +130,28 @@ var payments = function () {
 		expect(this.kwotaKomunikat.getText()).toEqual('Kwota przelewu nie może być pusta');
 		this.kwota.sendKeys('9999999999,99');
 		expect(this.kwotaKomunikat.getText()).toEqual('Kwota przelewu przekracza środki dostępne na rachunku');
-		this.MojBank.click();
-		browser.driver.sleep(1000);
+
 	};
 
 
 	this.przelewKrajowyWalidacjaDaty = function () {
 		var dataBiezacaPlus180 = helpers.dataBiezacaPlusDzien(180);
+		helpers.waitUntilReady(this.platnosci);
 		this.platnosci.click();
-		browser.driver.sleep(1000);
-		helpers.scrollWindow(this.dataRealizacji);
-		this.datar = this.dataRealizacji.element(by.model('ngModel'));
-		this.datar.sendKeys('123');
+		helpers.waitUntilReady(this.dataRealizacji);
+		this.dataRealizacji.sendKeys('123');
 		browser.driver.sleep(1000);
 		expect(this.KomdataRealizacji.getText()).toEqual('Niepoprawna data realizacji przelewu');
-		this.datar.clear();
-		this.datar.sendKeys('01.01.2001');
+		this.dataRealizacji.clear();
+		this.dataRealizacji.sendKeys('01.01.2001');
 		expect(this.KomdataRealizacji.getText()).toEqual('Data realizacji przelewu nie może być wcześniejsza niż data bieżąca');
-		this.datar.clear();
-		this.datar.sendKeys('01.01.2222');
+		this.dataRealizacji.clear();
+		this.dataRealizacji.sendKeys('01.01.2222');
 		expect(this.KomdataRealizacji.getText()).toEqual('Data realizacji przelewu nie może być późniejsza niż '+dataBiezacaPlus180);
-		this.datar.clear();
-		this.datar.sendKeys('');
+		this.dataRealizacji.clear();
+		this.dataRealizacji.sendKeys('');
 		expect(this.KomdataRealizacji.getText()).toEqual('Data realizacji przelewu nie może być pusta');
-		this.MojBank.click();
+
 	};
 
 	

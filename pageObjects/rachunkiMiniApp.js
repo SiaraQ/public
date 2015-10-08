@@ -1,6 +1,8 @@
 var accounts = function () {
 	var helpers = require('./helpers.js');
 	var winston = require('winston');
+	var mobileMenu = require('./mobileMenu.js');
+	var params = browser.params;
 
 	this.rachunki = element(by.css('[class="raiff-icons accounts widget-tile__widget-header__widget-icon"]'));
 	this.rachunekHistoria = element(by.model('table.tableConfig.selectedAccount'));
@@ -37,7 +39,7 @@ var accounts = function () {
 		nrb=helpers.zamienRachunekNaNrbZeSpacjami(nrb);
 		this.rachunki.click();
 		browser.driver.sleep(12000);
-		helpers.klinijPrzyciskPoWyszukaniuTekstu('account in accountList.content',nrb,'SZCZEGÓŁY');
+		helpers.klinijPrzyciskPoWyszukaniuTekstu('account in accountList.content',nrb,'Szczegóły');
 		browser.driver.sleep(4000);
 
 	};
@@ -45,13 +47,17 @@ var accounts = function () {
 	this.sprawdzOperacjeNaHistorii = function (nrb,tekstDoWyszukania,kwota,saldoPoOperacji) {
 		saldoPoOperacji=helpers.formatujKwoteDoWyswietleniaNaStonie(saldoPoOperacji);
 		nrb=helpers.zamienRachunekNaNrbZeSpacjami(nrb);
+		if (params.page.mobile=='true'){
+			mobileMenu.menu.click();
+			mobileMenu.rachunki;
+			helpers.klinijPrzyciskPoWyszukaniuTekstu('account in accountList.content',nrb,'SZCZEGÓŁY');
+		} else {
 			helpers.waitUntilReady(this.mojBank);	
-		this.mojBank.click();
-		// browser.driver.sleep(5000);
+			this.mojBank.click();
 			helpers.waitUntilReady(this.rachunki);	
-		this.rachunki.click();
+			this.rachunki.click();
+		}
 			helpers.waitUntilReady(this.rachunkiHistoriaLista);	
-		// browser.driver.sleep(5000);
 		this.rachunkiHistoriaLista.click();
 			helpers.waitUntilReady(this.rachunekHistoria);	
 		// browser.driver.sleep(10000);

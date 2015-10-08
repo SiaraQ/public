@@ -1,6 +1,7 @@
 var cards = function () {
 	var helpers = require('../pageObjects/helpers.js');
-
+	var winston = require('winston');
+	
 	this.karty = element(by.cssContainingText('.widget-tile__widget-header__title', 'Karty'));
 	this.szczegoly = element(by.buttonText('Szczegóły'));
 	this.dalej = element(by.buttonText('Dalej'));

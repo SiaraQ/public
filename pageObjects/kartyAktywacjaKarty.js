@@ -13,7 +13,7 @@ var cards = function () {
 	this.numerKarty = element(by.model('cardContext.item.card'));
 	this.numerRachunku = element(by.model('cardContext.item.accountFrom'));
 	//splata karty strona 2
-	this.numerKartyPotwierdzenie = element(by.css('[label="Numer karty"]'));
+	this.numerKartyPotwierdzenie = element(by.css('[label="Nazwa karty"]'));
 	this.dataWaznosci = element(by.css('[label="Data ważności"]'));
 
 	this.aktywacjaKarty = function (numerKarty,hasloSms) {
@@ -29,12 +29,12 @@ var cards = function () {
 		this.numerKarty.click();
 		helpers.wybierzElementZListyPoTekscie('cardItem in $select.items track by $index',numerKarty);
 		helpers.waitUntilReady(this.numerKartyPotwierdzenie);
-		expect(this.numerKartyPotwierdzenie.getText()).toEqual('Numer karty\n'+numerKarty);
+		expect(this.numerKartyPotwierdzenie.getText()).toEqual('Nazwa karty\n'+numerKarty);
 		expect(this.dataWaznosci.getText()).toContain('Data ważności');
 		this.dalej.click();
 		//strona 2
 		helpers.waitUntilReady(this.numerKartyPotwierdzenie);
-		expect(this.numerKartyPotwierdzenie.getText()).toEqual('Numer karty\n'+numerKarty);
+		expect(this.numerKartyPotwierdzenie.getText()).toEqual('Nazwa karty\n'+numerKarty);
 		expect(this.dataWaznosci.getText()).toContain('Data ważności');
 		helpers.waitUntilReady(this.kodSms);
 		this.kodSms.sendKeys(hasloSms);

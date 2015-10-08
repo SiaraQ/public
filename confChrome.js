@@ -8,6 +8,7 @@ onPrepare: function(){
     var now = new moment();
         loginDane = require('./daneTestowe/login.json');
         browser.driver.manage().window().maximize();
+        // browser.driver.manage().window().setSize(340, 600);
         require('jasmine-reporters');
         var plik='test_'+String(now.format("YYYY-DD-MM_HH-mm-ss"))+'.log';
         jasmine.getEnv().addReporter(new HtmlReporter({baseDirectory: './logs_protractor_output/'}));
@@ -40,7 +41,7 @@ capabilities: {
     // }],
 
 // specs: ['./tests/test.login.js'],
-specs: ['./tests/test.login.js','./tests/test.przelewZwykly.js',],
+specs: ['./tests/test.login.js','./tests/test.dodanieOdbiorcyKrajowego.js',],
 
 allScriptsTimeout: 960000,
 params: {
@@ -48,7 +49,7 @@ params: {
       // http://10.17.200.155:8080/frontend-web/app/auth.html#/login
       // http://172.25.122.17:8080/frontend-web/app/auth.html#/login
       url: 'http://172.25.122.17:8080/frontend-web/app/auth.html#/login',
-
+      // mobile:'false',
     },
   },
 

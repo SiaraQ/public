@@ -95,8 +95,25 @@
         return (dd[1]?dd:"0"+dd[0]) + '.' + (mm[1]?mm:"0"+mm[0]) + '.' +  yyyy;
    };
 
+   //  this.wyliczSaldoOczekiwanePo= function(element,kwota){
+   //      return element.getText().then(function (text) {
+   //          text=String(text);
+   //          console.log("text="+text);
+   //          text=text.replace(/\s+/g, '');
+   //          text=text.replace(',','.');
+   //          saldoPrzed=Number(text);
+   //          console.log("saldoPrzed="+saldoPrzed);
+   //          kwota=kwota.replace(/\s+/g, '');
+   //          kwota=kwota.replace(',','.');
+   //          text=saldoPrzed-Number(kwota);
+   //          console.log("kwota="+kwota);
+   //          console.log("saldoOczekiwanePo="+text);  
+   //          // text=saldoOczekiwane;  
+   //          return text;
+   //      }) 
+   // };
     this.wyliczSaldoOczekiwanePo= function(element,kwota){
-        var saldoOczekiwane=0;
+        // var saldoOczekiwane=0;
         return element.getText().then(function (text) {
             text=String(text);
             console.log("text="+text);
@@ -111,9 +128,7 @@
             console.log("saldoOczekiwanePo="+saldoOczekiwane);  
             text=saldoOczekiwane;  
             return text;
-        });
-
-        // saldoOczekiwanePo=this.formatujKwoteDoWyswietleniaNaStonie(saldoOczekiwane);   
+        }) 
    };
 
 	this.dataBiezaca = function () {
