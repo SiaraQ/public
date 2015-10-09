@@ -86,19 +86,18 @@ var payments = function () {
 			fkodSms.sendKeys("1111");
 			helpers.waitUntilReady(fzatwierdz);
 			fzatwierdz.click().then(function(){
-			winston.log('info', "Wybranie opcji Zatwierdź - przejście do strony potwierdzenia informacji");
-		});
-		helpers.waitUntilReady(fpotwierdzenie);
-		expect(fpotwierdzenie.getText()).not.toContain("Przelew/transakcja odrzucona");
-		expect(fpotwierdzenie.getText()).not.toContain("odrzuc");
-		fpowrot.click();
-		if (dataRealizacji==""){
-			console.log("value=");
-			console.log(value);
-			rachunki.sprawdzOperacjeNaHistorii(rachunekNadawcy,tytulPrzelewu,kwota,value);
-		}
-		})
-		
+				winston.log('info', "Wybranie opcji Zatwierdź - przejście do strony potwierdzenia informacji");
+			});
+			helpers.waitUntilReady(fpotwierdzenie);
+			expect(fpotwierdzenie.getText()).not.toContain("Przelew/transakcja odrzucona");
+			expect(fpotwierdzenie.getText()).not.toContain("odrzuc");
+			fpowrot.click();
+			if (dataRealizacji==""){
+				console.log("value=");
+				console.log(value);
+				rachunki.sprawdzOperacjeNaHistorii(rachunekNadawcy,tytulPrzelewu,kwota,value);
+			}
+		});	
 	};
 
 

@@ -5,28 +5,28 @@ var payments = function () {
 	var deferred = protractor.promise.defer();
 	var promise = deferred.promise;
 
-	this.platnosci = element(by.cssContainingText('.widget-tile__widget-header__title', 'Płatności'));
-	this.MojBank = element(by.css('[class="rb-header__menu__content"]')).element(by.css('[ui-sref="dashboard"]'));
+	var fplatnosci = element(by.cssContainingText('.widget-tile__widget-header__title', 'Płatności'));
+	var fMojBank = element(by.css('[class="rb-header__menu__content"]')).element(by.css('[ui-sref="dashboard"]'));
 	//powtarzalne
-	this.kodSms = element(by.model('payment.items.credentials'));
-	this.potwierdzenie = element(by.css('[class="bd-msg-panel__message"]'));
+	var fkodSms = element(by.model('payment.items.credentials'));
+	var fpotwierdzenie = element(by.css('[class="bd-msg-panel__message"]'));
 	//krok1 przelew krajowy
-	this.typPlatnosci = element(by.model('payment.type'));
-	this.zRachunku = element(by.model('selection.account'));
-	this.naRachunek = element(by.css('[name="recipientAccountId"]'));
-	this.dostepneSrodki = element(by.css('[class="bd-amount__value"]'));
-	this.tytul = element(by.model('payment.formData.description'));
+	var ftypPlatnosci = element(by.model('payment.type'));
+	var fzRachunku = element(by.model('selection.account'));
+	var fnaRachunek = element(by.css('[name="recipientAccountId"]'));
+	var fdostepneSrodki = element(by.css('[class="bd-amount__value"]'));
+	var ftytul = element(by.model('payment.formData.description'));
 
-	this.rachunekOdbiorcy = element(by.model('payment.formData.recipientAccountNo'));
-	this.nazwaOdbiorcy = element(by.model('payment.formData.recipientName'));
-	this.kwota = element(by.model('payment.formData.amount'));
-	this.dalej = element(by.css('[ng-click="moveNext()"]'));
-	this.zatwierdz = element(by.buttonText('Zatwierdź'));
-	this.dataRealizacji = element(by.model('ngModel'));
+	var frachunekOdbiorcy = element(by.model('payment.formData.recipientAccountNo'));
+	var fnazwaOdbiorcy = element(by.model('payment.formData.recipientName'));
+	var fkwota = element(by.model('payment.formData.amount'));
+	var fdalej = element(by.css('[ng-click="moveNext()"]'));
+	var fzatwierdz = element(by.buttonText('Zatwierdź'));
+	var fdataRealizacji = element(by.model('ngModel'));
 
-	this.tytulKomunikat = element(by.id('description'));
-	this.kwotaKomunikat = element(by.css('[eb-name="amount"]')).element(by.id('amount'));
-	this.dataKomunikat = element(by.id('realizationDate'));
+	var ftytulKomunikat = element(by.id('description'));
+	var fkwotaKomunikat = element(by.css('[eb-name="amount"]')).element(by.id('amount'));
+	var fdataKomunikat = element(by.id('realizationDate'));
 
 	this.tworzPrzelewWlasny = function (rachunekNadawcy,naRachunek,tytulPrzelewu,kwota,dataRealizacji,hasloSms) {
 		browser.driver.sleep(12000);
@@ -43,116 +43,118 @@ var payments = function () {
 		var naRachunek = helpers.zamienRachunekNaNrbZeSpacjami(naRachunek);
 
 		winston.log('info', "Dane testu: rachunekNadawcy="+rachunekNadawcy+" naRachunek="+naRachunek+" tytulPrzelewu="+tytulPrzelewu+" kwota="+kwota+" hasloSms="+hasloSms);
-		helpers.waitUntilReady(this.platnosci);	
-		this.platnosci.click();
-		  helpers.waitUntilReady(this.typPlatnosci);	
-		this.typPlatnosci.click();
+		helpers.waitUntilReady(fplatnosci);	
+		fplatnosci.click();
+		  helpers.waitUntilReady(ftypPlatnosci);	
+		ftypPlatnosci.click();
 		helpers.wybierzElementZListyPoNumerze(1);
-		  helpers.waitUntilReady(this.zRachunku);	
-		this.zRachunku.click();
+		  helpers.waitUntilReady(fzRachunku);	
+		fzRachunku.click();
 		helpers.wybierzElementZListyPoTekscie('accountItem in $select.items track by accountItem.accountNo',rachunekNadawcy);
-		  helpers.waitUntilReady(this.dostepneSrodki);	
-		saldoOczekiwanePo=helpers.wyliczSaldoOczekiwanePo(this.dostepneSrodki,kwota);
-		helpers.waitUntilReady(this.naRachunek);
-		
-		this.naRachunek.click();  	
-		if (naRachunek=="") {
-			//wybiera pierwszy na liscie
-			helpers.wybierzElementZListyPoNumerze(0);
-		} else {
-			//szuka konkretnego na liscie
-			browser.driver.sleep(2000);
-			helpers.wybierzElementZListyPoTekscie('accountItem in $select.items track by accountItem.accountNo',naRachunek);
-		}
-		helpers.waitUntilReady(this.tytul);
-		this.tytul.sendKeys(tytulPrzelewu);
-		helpers.waitUntilReady(this.kwota);
-		this.kwota.sendKeys(kwota); 
-		if (dataRealizacji!=""){
-			this.dataRealizacji.clear();
-			this.dataRealizacji.sendKeys(dataRealizacjiNew);
-		}
-		helpers.waitUntilReady(this.dalej);
-		this.dalej.click().then(function(){
-			winston.log('info', "Wybranie opcji Zatwierdź - przejście do strony drugiej");
+		  helpers.waitUntilReady(fdostepneSrodki);	
+		helpers.wyliczSaldoOczekiwanePo(fdostepneSrodki,kwota).then(function(value) {
+			helpers.waitUntilReady(fnaRachunek);
+			fnaRachunek.click();  	
+			if (naRachunek=="") {
+				//wybiera pierwszy na liscie
+				helpers.wybierzElementZListyPoNumerze(0);
+			} else {
+				//szuka konkretnego na liscie
+				browser.driver.sleep(2000);
+				helpers.wybierzElementZListyPoTekscie('accountItem in $select.items track by accountItem.accountNo',naRachunek);
+			}
+			helpers.waitUntilReady(ftytul);
+			ftytul.sendKeys(tytulPrzelewu);
+			helpers.waitUntilReady(fkwota);
+			fkwota.sendKeys(kwota); 
+			if (dataRealizacji!=""){
+				fdataRealizacji.clear();
+				fdataRealizacji.sendKeys(dataRealizacjiNew);
+			}
+			helpers.waitUntilReady(fdalej);
+			fdalej.click().then(function(){
+				winston.log('info', "Wybranie opcji Zatwierdź - przejście do strony drugiej");
+			});
+			helpers.waitUntilReady(fkodSms);
+			fkodSms.sendKeys(hasloSms);
+			fzatwierdz.click().then(function(){
+				winston.log('info', "Wybranie opcji Zatwierdź - przejście do strony potwierdzenia informacji");
+			});
+			helpers.waitUntilReady(fpotwierdzenie);
+			expect(fpotwierdzenie.getText()).not.toContain("odrzuc");
+			if (dataRealizacji==""){
+					console.log("value=");
+					console.log(value);
+					rachunki.sprawdzOperacjeNaHistorii(rachunekNadawcy,tytulPrzelewu,kwota,value);
+				}
 		});
-		helpers.waitUntilReady(this.kodSms);
-		this.kodSms.sendKeys(hasloSms);
-		this.zatwierdz.click().then(function(){
-			winston.log('info', "Wybranie opcji Zatwierdź - przejście do strony potwierdzenia informacji");
-		});
-		helpers.waitUntilReady(this.potwierdzenie);
-		expect(this.potwierdzenie.getText()).not.toContain("odrzuc");
 	};
 
 	this.przelewWlasnyWalidacjaTytulem = function () {
-		helpers.waitUntilReady(this.platnosci);	
-		this.platnosci.click();
-		  helpers.waitUntilReady(this.typPlatnosci);	
-		this.typPlatnosci.click();
+		helpers.waitUntilReady(fplatnosci);	
+		fplatnosci.click();
+		  helpers.waitUntilReady(ftypPlatnosci);	
+		ftypPlatnosci.click();
 		helpers.wybierzElementZListyPoNumerze(1);
-		  helpers.waitUntilReady(this.tytul);	
-		this.tytul.click();
-		this.tytul.clear();
-		expect(this.tytulKomunikat.getText()).toEqual('Tytuł przelewu nie może być pusty');
-		this.tytul.sendKeys('1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123');
-		expect(this.tytulKomunikat.getText()).toEqual('Tytuł przelewu nie może przekraczać 132 znaków i powinien zawierać wyłącznie litery, cyfry oraz znaki ! @ # $ % ^ & * ( ) - + [ ] { } : ; < > . ? \\ ~ ` \'  , /');
-		this.tytul.sendKeys('"');
-		expect(this.tytulKomunikat.getText()).toEqual('Tytuł przelewu nie może przekraczać 132 znaków i powinien zawierać wyłącznie litery, cyfry oraz znaki ! @ # $ % ^ & * ( ) - + [ ] { } : ; < > . ? \\ ~ ` \'  , /');
-		this.MojBank.click();
+		  helpers.waitUntilReady(ftytul);	
+		ftytul.click();
+		ftytul.clear();
+		expect(ftytulKomunikat.getText()).toEqual('Tytuł przelewu nie może być pusty');
+		ftytul.sendKeys('1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123');
+		expect(ftytulKomunikat.getText()).toEqual('Tytuł przelewu nie może przekraczać 132 znaków i powinien zawierać wyłącznie litery, cyfry oraz znaki ! @ # $ % ^ & * ( ) - + [ ] { } : ; < > . ? \\ ~ ` \'  , /');
+		ftytul.sendKeys('"');
+		expect(ftytulKomunikat.getText()).toEqual('Tytuł przelewu nie może przekraczać 132 znaków i powinien zawierać wyłącznie litery, cyfry oraz znaki ! @ # $ % ^ & * ( ) - + [ ] { } : ; < > . ? \\ ~ ` \'  , /');
 	};
 
 	this.przelewWlasnyWalidacjaKwoty = function () {
-		helpers.waitUntilReady(this.platnosci);	
-		this.platnosci.click();
-		  helpers.waitUntilReady(this.typPlatnosci);	
-		this.typPlatnosci.click();
+		helpers.waitUntilReady(fplatnosci);	
+		fplatnosci.click();
+		  helpers.waitUntilReady(ftypPlatnosci);	
+		ftypPlatnosci.click();
 		helpers.wybierzElementZListyPoNumerze(1);
-		  helpers.waitUntilReady(this.kwota);	
+		  helpers.waitUntilReady(fkwota);	
 		//funkcja, w której można działać na kwotach
 		element(by.css('[class="bd-amount__value"]')).getText().then(function (value) {
-    		this.saldo =  element(by.model('payment.formData.amount'));
-    		this.kwotaKomunikat = element(by.css('[eb-name="amount"]')).element(by.id('amount'));
+    		fsaldo =  element(by.model('payment.formData.amount'));
+    		fkwotaKomunikat = element(by.css('[eb-name="amount"]')).element(by.id('amount'));
 
     	value=value.replace(/\s+/g, '');
 		value=value.replace(',','.');
 		//kwota powyżej środków na rachunku
-    	this.saldo.sendKeys(Number(value)+0.01);
-		expect(this.kwotaKomunikat.getText()).toEqual('Kwota przelewu przekracza środki dostępne na rachunku');
-		this.saldo.clear();
+    	fsaldo.sendKeys(Number(value)+0.01);
+		expect(fkwotaKomunikat.getText()).toEqual('Kwota przelewu przekracza środki dostępne na rachunku');
+		fsaldo.clear();
 		});
 		//Nieprawidłowa kwota przelewu
-		this.kwota.sendKeys('12,344');
-		expect(this.kwotaKomunikat.getText()).toEqual('Nieprawidłowa kwota przelewu');
-		this.kwota.clear();
-		this.kwota.sendKeys('0,0');
-		expect(this.kwotaKomunikat.getText()).toEqual('Nieprawidłowa kwota przelewu');
-		this.kwota.clear();
+		fkwota.sendKeys('12,344');
+		expect(fkwotaKomunikat.getText()).toEqual('Nieprawidłowa kwota przelewu');
+		fkwota.clear();
+		fkwota.sendKeys('0,0');
+		expect(fkwotaKomunikat.getText()).toEqual('Nieprawidłowa kwota przelewu');
+		fkwota.clear();
 		//
-		expect(this.kwotaKomunikat.getText()).toEqual('Kwota przelewu nie może być pusta');
-		this.MojBank.click();
+		expect(fkwotaKomunikat.getText()).toEqual('Kwota przelewu nie może być pusta');
 	};
 
 	this.przelewWlasnyWalidacjaDaty = function () {
-		helpers.waitUntilReady(this.platnosci);	
-		this.platnosci.click();
-		  helpers.waitUntilReady(this.typPlatnosci);	
-		this.typPlatnosci.click();
+		helpers.waitUntilReady(fplatnosci);	
+		fplatnosci.click();
+		  helpers.waitUntilReady(ftypPlatnosci);	
+		ftypPlatnosci.click();
 		helpers.wybierzElementZListyPoNumerze(1);
-		  helpers.waitUntilReady(this.dataRealizacji);	
-		helpers.scrollWindow(this.dataRealizacji);
-		this.dataRealizacji.click();
-		this.datar.clear();
-		this.datar.sendKeys('123');
-		expect(this.dataKomunikat.getText()).toEqual('Niepoprawna data realizacji przelewu');
-		this.datar.clear();
-		expect(this.dataKomunikat.getText()).toEqual('Data realizacji przelewu nie może być pusta');
-		this.datar.sendKeys('01.01.2001');
-		expect(this.dataKomunikat.getText()).toEqual('Data realizacji przelewu nie może być wcześniejsza niż data bieżąca');
-		this.datar.clear();
-		this.datar.sendKeys('01.01.2222');
-		expect(this.dataKomunikat.getText()).toEqual('Data realizacji przelewu nie może być późniejsza niż 14.03.2016');
-		this.MojBank.click();
+		  helpers.waitUntilReady(fdataRealizacji);	
+		helpers.scrollWindow(fdataRealizacji);
+		fdataRealizacji.click();
+		fdatar.clear();
+		fdatar.sendKeys('123');
+		expect(fdataKomunikat.getText()).toEqual('Niepoprawna data realizacji przelewu');
+		fdatar.clear();
+		expect(fdataKomunikat.getText()).toEqual('Data realizacji przelewu nie może być pusta');
+		fdatar.sendKeys('01.01.2001');
+		expect(fdataKomunikat.getText()).toEqual('Data realizacji przelewu nie może być wcześniejsza niż data bieżąca');
+		fdatar.clear();
+		fdatar.sendKeys('01.01.2222');
+		expect(fdataKomunikat.getText()).toEqual('Data realizacji przelewu nie może być późniejsza niż 14.03.2016');
 	};
 
 };

@@ -201,7 +201,7 @@ var payments = function () {
 		expect(fpotwierdzenie.getText()).not.toContain("Przelew został odrzucony");
 		if (dataRealizacji=="")
 		rachunki.sprawdzOperacjeNaHistorii(rachunekNadawcy,symbolFormularza,kwota,value);
-});
+		});
 	}
 
 this.przelewDoUSwaldacjapolaNazwaPlat = function(rachunekNadawcy, nazwaPlatnika) {
