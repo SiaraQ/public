@@ -7,8 +7,8 @@ exports.config = {
 onPrepare: function(){
     var now = new moment();
         loginDane = require('./daneTestowe/login.json');
-        browser.driver.manage().window().maximize();
-        // browser.driver.manage().window().setSize(680, 800);
+        // browser.driver.manage().window().maximize();
+        browser.driver.manage().window().setSize(680, 800);
         require('jasmine-reporters');
         var plik='test_'+String(now.format("YYYY-DD-MM_HH-mm-ss"))+'.log';
         jasmine.getEnv().addReporter(new HtmlReporter({baseDirectory: './logs_protractor_output/'}));
@@ -48,7 +48,7 @@ params: {
     page: {
       url: 'http://10.17.200.155:8080/frontend-web/app/auth.html#/login',
       // url: 'http://172.25.122.17:8080/frontend-web/app/auth.html#/login',
-      mobile:'false',
+      mobile:'true',
     },
   },
 
