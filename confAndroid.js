@@ -39,7 +39,7 @@ params: {
       // http://10.17.200.155:8080/frontend-web/app/auth.html#/login
       // http://172.25.122.17:8080/frontend-web/app/auth.html#/login
       url: 'http://172.25.122.17:8080/frontend-web/app/auth.html#/login',
-
+       mobile:'true',
     },
   },
 

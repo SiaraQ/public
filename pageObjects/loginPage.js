@@ -45,7 +45,7 @@ var loginPage = function () {
             });
         }, 60000,'User nie zalogowal sie do aplikacji');
         this.kliknijWBaner();
-        helpers.waitUntilReady(this.rachunkiSrodki); 
+        helpers.waitUntilReady(this.rachunkiSrodki);
      };
 
 	this.logOut = function () {

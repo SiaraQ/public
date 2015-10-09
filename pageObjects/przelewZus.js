@@ -3,56 +3,56 @@ var przelewZus = function () {
 	var helpers = require('../pageObjects/helpers.js');
 	var winston = require('winston');
 
-	this.platnosci = element(by.cssContainingText('.widget-tile__widget-header__title', 'Płatności'));
-	this.MojBank = element(by.css('[class="rb-header__menu__content"]')).element(by.css('[ui-sref="dashboard"]'));
+	var fplatnosci = element(by.cssContainingText('.widget-tile__widget-header__title', 'Płatności'));
+	var fMojBank = element(by.css('[class="rb-header__menu__content"]')).element(by.css('[ui-sref="dashboard"]'));
 	//powtarzalne
-	this.kodSms = element(by.model('payment.items.credentials'));
-	this.potwierdzenie = element(by.css('[class="bd-msg-panel__message"]'));
+	var fkodSms = element(by.model('payment.items.credentials'));
+	var fpotwierdzenie = element(by.css('[class="bd-msg-panel__message"]'));
 	//krok1 przelew krajowy
-	this.typPlatnosci = element(by.model('payment.type'));
-	this.zRachunku = element(by.model('selection.account'));
-	this.dostepneSrodki = element(by.css('[class="bd-amount__value"]'));
-	this.rachunekOdbiorcy = element(by.model('payment.formData.recipientAccountNo'));
-	this.nazwaOdbiorcy = element(by.model('payment.formData.recipientName')); //tez Nazwa płatnika ZUS
-	this.nazwaPlatnikaZUS = element(by.model('payment.formData.recipientName'));
-	this.tytul = element(by.model('payment.formData.description'));
-	this.kwota = element(by.model('payment.formData.amount'));
-	this.dalej = element(by.css('[ng-click="moveNext()"]'));
-	this.zatwierdz = element(by.buttonText('Zatwierdź'));
+	var ftypPlatnosci = element(by.model('payment.type'));
+	var fzRachunku = element(by.model('selection.account'));
+	var fdostepneSrodki = element(by.css('[class="bd-amount__value"]'));
+	var frachunekOdbiorcy = element(by.model('payment.formData.recipientAccountNo'));
+	var fnazwaOdbiorcy = element(by.model('payment.formData.recipientName')); //tez Nazwa płatnika ZUS
+	var fnazwaPlatnikaZUS = element(by.model('payment.formData.recipientName'));
+	var ftytul = element(by.model('payment.formData.description'));
+	var fkwota = element(by.model('payment.formData.amount'));
+	var fdalej = element(by.css('[ng-click="moveNext()"]'));
+	var fzatwierdz = element(by.buttonText('Zatwierdź'));
 	//Przelew do ZUS
-	this.nipPlatnika = element(by.model('payment.formData.nip'));
-	this.typDrugiegoIdentyfikatora = element(by.model('payment.formData.secondaryIdType'));
-	this.drugiIdentyfikator = element(by.model('payment.formData.secondaryIdNo')); 
-	this.typWpłaty = element(by.model('payment.formData.paymentType'));
-	this.deklaracja = element(by.model('payment.formData.declarationDate'));
-	this.numerDeklaracji = element(by.model('payment.formData.declarationNo'));
-	this.informacjeDodatkowe = element(by.model('payment.formData.additionalInfo'));
-	this.dataRealizacji= element(by.name('realizationDate'));
+	var fnipPlatnika = element(by.model('payment.formData.nip'));
+	var ftypDrugiegoIdentyfikatora = element(by.model('payment.formData.secondaryIdType'));
+	var fdrugiIdentyfikator = element(by.model('payment.formData.secondaryIdNo')); 
+	var ftypWpłaty = element(by.model('payment.formData.paymentType'));
+	var fdeklaracja = element(by.model('payment.formData.declarationDate'));
+	var fnumerDeklaracji = element(by.model('payment.formData.declarationNo'));
+	var finformacjeDodatkowe = element(by.model('payment.formData.additionalInfo'));
+	var fdataRealizacji= element(by.name('realizationDate'));
 	//name="realizationDate"
-	this.ubezpieczenieSpoleczne = element(by.repeater('insuranceType in payment.meta.zusInsuranceTypes').row(0)).element(by.model('$option.active'));
-	this.kwotaUbezpieczenieSpoleczne = element(by.repeater('insuranceType in payment.meta.zusInsuranceTypes').row(0)).element(by.model('payment.formData.insurancePremiums[insuranceType].amount'));
-	this.ubezpieczenieZdrowotne = element(by.repeater('insuranceType in payment.meta.zusInsuranceTypes').row(1)).element(by.model('$option.active'));
-	this.kwotaubezpieczenieZdrowotne = element(by.repeater('insuranceType in payment.meta.zusInsuranceTypes').row(1)).element(by.model('payment.formData.insurancePremiums[insuranceType].amount'));
-	this.ubezpieczenieFPiFGSP = element(by.repeater('insuranceType in payment.meta.zusInsuranceTypes').row(2)).element(by.model('$option.active'));
-	this.kwotaubezpieczenieFPiFGSP = element(by.repeater('insuranceType in payment.meta.zusInsuranceTypes').row(2)).element(by.model('payment.formData.insurancePremiums[insuranceType].amount'));
-	this.funduszEmeryturPomostowych = element(by.repeater('insuranceType in payment.meta.zusInsuranceTypes').row(3)).element(by.model('$option.active'));
-	this.kwotafunduszEmeryturPomostowych = element(by.repeater('insuranceType in payment.meta.zusInsuranceTypes').row(3)).element(by.model('payment.formData.insurancePremiums[insuranceType].amount'));
-	this.dataRealizacji = element(by.model('ngModel'));
-	this.informacjeDodatkoweNovalidate = element(by.name('additionalInfo'));
+	var fubezpieczenieSpoleczne = element(by.repeater('insuranceType in payment.meta.zusInsuranceTypes').row(0)).element(by.model('$option.active'));
+	var fkwotaUbezpieczenieSpoleczne = element(by.repeater('insuranceType in payment.meta.zusInsuranceTypes').row(0)).element(by.model('payment.formData.insurancePremiums[insuranceType].amount'));
+	var fubezpieczenieZdrowotne = element(by.repeater('insuranceType in payment.meta.zusInsuranceTypes').row(1)).element(by.model('$option.active'));
+	var fkwotaubezpieczenieZdrowotne = element(by.repeater('insuranceType in payment.meta.zusInsuranceTypes').row(1)).element(by.model('payment.formData.insurancePremiums[insuranceType].amount'));
+	var fubezpieczenieFPiFGSP = element(by.repeater('insuranceType in payment.meta.zusInsuranceTypes').row(2)).element(by.model('$option.active'));
+	var fkwotaubezpieczenieFPiFGSP = element(by.repeater('insuranceType in payment.meta.zusInsuranceTypes').row(2)).element(by.model('payment.formData.insurancePremiums[insuranceType].amount'));
+	var ffunduszEmeryturPomostowych = element(by.repeater('insuranceType in payment.meta.zusInsuranceTypes').row(3)).element(by.model('$option.active'));
+	var fkwotafunduszEmeryturPomostowych = element(by.repeater('insuranceType in payment.meta.zusInsuranceTypes').row(3)).element(by.model('payment.formData.insurancePremiums[insuranceType].amount'));
+	var fdataRealizacji = element(by.model('ngModel'));
+	var finformacjeDodatkoweNovalidate = element(by.name('additionalInfo'));
 	//komunikaty
-	this.NazwaPlatnikaKomunikat = element(by.css('[class="messages ng-inactive"]'));  
-	this.NipPlatnikaKomunikat = element(by.id('taxpayerNip'));
-	this.DrugiIdentyfikatorKomunikat = element(by.id('taxpayerSupplementaryId'));
-	this.DeklaracjaKomunikat = element(by.id('declarationDate'));
-	this.NumerDeklaracjiKomunikat = element(by.id('declarationNo'));
-	this.DataKomunikat = element(by.id('realizationDate'))
-	this.informacjeDodatkoweKomunikat = element(by.id('additionalInfo'));
-	this.UbezpieczenieKomunikat = element(by.id('insuranceErrors'));
-	this.ubezpieczenieSpoleczneKomunikat = 	element(by.id('SOCIALAmount'));
-	this.ubezpieczenieZdrowotneKomunikat = element(by.id('HEALTHAmount'));
-	this.ubezpieczenieFPiFGSPKomunikat = element(by.id('FPIFGSPAmount'));
-	this.funduszEmeryturPomostowychKomunikat = element(by.id('PENSIONAmount'));
-	this.PoleSaldo = element(by.css('[class="bd-amount__value"]'));
+	var fNazwaPlatnikaKomunikat = element(by.css('[class="messages ng-inactive"]'));  
+	var fNipPlatnikaKomunikat = element(by.id('taxpayerNip'));
+	var fDrugiIdentyfikatorKomunikat = element(by.id('taxpayerSupplementaryId'));
+	var fDeklaracjaKomunikat = element(by.id('declarationDate'));
+	var fNumerDeklaracjiKomunikat = element(by.id('declarationNo'));
+	var fDataKomunikat = element(by.id('realizationDate'))
+	var finformacjeDodatkoweKomunikat = element(by.id('additionalInfo'));
+	var fUbezpieczenieKomunikat = element(by.id('insuranceErrors'));
+	var fubezpieczenieSpoleczneKomunikat = 	element(by.id('SOCIALAmount'));
+	var fubezpieczenieZdrowotneKomunikat = element(by.id('HEALTHAmount'));
+	var fubezpieczenieFPiFGSPKomunikat = element(by.id('FPIFGSPAmount'));
+	var ffunduszEmeryturPomostowychKomunikat = element(by.id('PENSIONAmount'));
+	var fPoleSaldo = element(by.css('[class="bd-amount__value"]'));
 
 	this.przelewDoZUS = function(rachunekNadawcy,nazwaOdbiorcy,nipPlatnika,typDrugiegoIdentyfikatora,drugiIdentyfikator,typWpłaty,deklaracja,numerDeklaracji,informacjeDodatkowe,dataRealizacji,kwotaUbezpieczenieSpoleczne,kwotaubezpieczenieZdrowotne,kwotaubezpieczenieFPiFGSP,kwotafunduszEmeryturPomostowych,dataRealizacji,hasloSms) {
 		var saldoPrzed=0;
@@ -135,524 +135,524 @@ var przelewZus = function () {
 		if (kwotaubezpieczenieZdrowotne==""&&kwotaUbezpieczenieSpoleczne==""&&kwotaubezpieczenieFPiFGSP==""&&kwotafunduszEmeryturPomostowych=="") kwotaUbezpieczenieSpoleczne=helpers.losujKwote();
 		var kwotaN = Number(kwotaubezpieczenieZdrowotne) + Number(kwotaUbezpieczenieSpoleczne) + Number(kwotaubezpieczenieFPiFGSP) + Number(kwotafunduszEmeryturPomostowych);
 		var kwota = String(kwotaN);
-
+		var kwotaHistoria = helpers.zwrocOstatniaKwoteZUS(kwotaUbezpieczenieSpoleczne,kwotaubezpieczenieZdrowotne,kwotaubezpieczenieFPiFGSP,kwotafunduszEmeryturPomostowych)
 		winston.log('info', "Dane testu: rachunekNadawcy="+rachunekNadawcy+" nazwaOdbiorcy="+nazwaOdbiorcy+" nipPlatnika="+nipPlatnika+" typDrugiegoIdentyfikatora="+typDrugiegoIdentyfikatora+" drugiIdentyfikator="+drugiIdentyfikator);
 		winston.log('info', "Dane testu: typWpłaty="+typWpłaty+" deklaracja="+deklaracja+" numerDeklaracji="+numerDeklaracji+" informacjeDodatkowe="+nazwaOdbiorcy+" dataRealizacji="+dataRealizacji+" kwotaUbezpieczenieSpoleczne="+kwotaUbezpieczenieSpoleczne);
 		winston.log('info', "Dane testu: kwotaubezpieczenieFPiFGSP="+kwotaubezpieczenieFPiFGSP+" kwotafunduszEmeryturPomostowych="+kwotafunduszEmeryturPomostowych+" hasloSms="+hasloSms);
 
-			helpers.waitUntilReady(this.platnosci);
-		this.platnosci.click();
+			helpers.waitUntilReady(fplatnosci);
+		fplatnosci.click();
 		// browser.driver.sleep(3000);
-			helpers.waitUntilReady(this.typPlatnosci);
-		this.typPlatnosci.click();
-		helpers.wybierzElementZListyPoNumerze(2);
+			helpers.waitUntilReady(ftypPlatnosci);
+		ftypPlatnosci.click();
+		//paymentType in $select.items Przelew do ZUS
+		helpers.wybierzElementZListyPoTekscie('paymentType in $select.items','Przelew do ZUS');
 		// browser.driver.sleep(2000);
-			helpers.waitUntilReady(this.zRachunku);
-		this.zRachunku.click();
+			helpers.waitUntilReady(fzRachunku);
+		fzRachunku.click();
 		// browser.driver.sleep(5000);
 		helpers.wybierzElementZListyPoTekscie('accountItem in $select.items track by accountItem.accountNo',rachunekNadawcy);
-			helpers.waitUntilReady(this.nazwaOdbiorcy);
-		this.nazwaOdbiorcy.sendKeys(nazwaOdbiorcy);
-			helpers.waitUntilReady(this.dostepneSrodki);
-		saldoOczekiwanePo=helpers.wyliczSaldoOczekiwanePo(this.dostepneSrodki,kwota);
-			helpers.waitUntilReady(this.nipPlatnika);
-		this.nipPlatnika.sendKeys(nipPlatnika);
+			helpers.waitUntilReady(fnazwaOdbiorcy);
+		fnazwaOdbiorcy.sendKeys(nazwaOdbiorcy);
+			helpers.waitUntilReady(fdostepneSrodki);
+		helpers.wyliczSaldoOczekiwanePo(fdostepneSrodki,kwota).then(function(value) {			
+		helpers.waitUntilReady(fnipPlatnika);
+		fnipPlatnika.sendKeys(nipPlatnika);
 		// browser.driver.sleep(2000);
-		this.typDrugiegoIdentyfikatora.click();
+		ftypDrugiegoIdentyfikatora.click();
 		 browser.driver.sleep(2000);
 		helpers.wybierzElementZListyPoNumerze(numerTypDrugiegoIdentyfikatora);
 		// browser.driver.sleep(1000);
-		helpers.waitUntilReady(this.drugiIdentyfikator);
-		this.drugiIdentyfikator.sendKeys(drugiIdentyfikator);
+		helpers.waitUntilReady(fdrugiIdentyfikator);
+		fdrugiIdentyfikator.sendKeys(drugiIdentyfikator);
 		// browser.driver.sleep(1000);
-		helpers.waitUntilReady(this.typWpłaty);
-		this.typWpłaty.click();
+		helpers.waitUntilReady(ftypWpłaty);
+		ftypWpłaty.click();
 		 browser.driver.sleep(2000);
 		helpers.wybierzElementZListyPoNumerze(numerTypWplaty);
 		// browser.driver.sleep(1000);
-		helpers.waitUntilReady(this.deklaracja);
-		this.deklaracja.sendKeys(deklaracja);
+		helpers.waitUntilReady(fdeklaracja);
+		fdeklaracja.sendKeys(deklaracja);
 		// browser.driver.sleep(1000);
-		this.numerDeklaracji.sendKeys(numerDeklaracji);
+		fnumerDeklaracji.sendKeys(numerDeklaracji);
 		// browser.driver.sleep(2000);
 		if ((typWpłaty!='S - Składka za jeden miesiąc')&&(typWpłaty!='M - Składka dłuższa niż jeden miesiąc'))
 		{	
-			helpers.waitUntilReady(this.informacjeDodatkowe);
-            this.informacjeDodatkowe.click();
-            helpers.waitUntilReady(this.informacjeDodatkowe);
-            this.informacjeDodatkowe.sendKeys(informacjeDodatkowe);
+			helpers.waitUntilReady(finformacjeDodatkowe);
+            finformacjeDodatkowe.click();
+            helpers.waitUntilReady(finformacjeDodatkowe);
+            finformacjeDodatkowe.sendKeys(informacjeDodatkowe);
         }
         if (dataRealizacji!=""){
-			this.dataRealizacji.clear();
-			this.dataRealizacji.sendKeys(dataRealizacjiNew);
+			fdataRealizacji.clear();
+			fdataRealizacji.sendKeys(dataRealizacjiNew);
 		}
 				//kwoty
-		this.ubezpieczenieSpoleczne.click();
+		fubezpieczenieSpoleczne.click();
 		if (kwotaUbezpieczenieSpoleczne!=""){
-			this.kwotaUbezpieczenieSpoleczne.sendKeys(kwotaUbezpieczenieSpoleczne);
+			fkwotaUbezpieczenieSpoleczne.sendKeys(kwotaUbezpieczenieSpoleczne);
 		} else if (kwotaubezpieczenieZdrowotne==""&&kwotaUbezpieczenieSpoleczne==""&&kwotaubezpieczenieFPiFGSP==""&&kwotafunduszEmeryturPomostowych=="") {
-			this.kwotaUbezpieczenieSpoleczne.sendKeys(kwotaUbezpieczenieSpoleczne);
+			fkwotaUbezpieczenieSpoleczne.sendKeys(kwotaUbezpieczenieSpoleczne);
 		}
 		if (kwotaubezpieczenieZdrowotne!=""){
-			this.ubezpieczenieZdrowotne.click();
-			this.kwotaubezpieczenieZdrowotne.sendKeys(kwotaubezpieczenieZdrowotne);
+			fubezpieczenieZdrowotne.click();
+			fkwotaubezpieczenieZdrowotne.sendKeys(kwotaubezpieczenieZdrowotne);
 		}
 		if (kwotaubezpieczenieFPiFGSP!=""){
-			this.ubezpieczenieFPiFGSP.click();
-			this.kwotaubezpieczenieFPiFGSP.sendKeys(kwotaubezpieczenieFPiFGSP);	
+			fubezpieczenieFPiFGSP.click();
+			fkwotaubezpieczenieFPiFGSP.sendKeys(kwotaubezpieczenieFPiFGSP);	
 		}
 		if (kwotafunduszEmeryturPomostowych!=""){
-			this.funduszEmeryturPomostowych.click();
-			this.kwotafunduszEmeryturPomostowych.sendKeys(kwotafunduszEmeryturPomostowych);
+			ffunduszEmeryturPomostowych.click();
+			fkwotafunduszEmeryturPomostowych.sendKeys(kwotafunduszEmeryturPomostowych);
 		}
 
 		// browser.driver.sleep(3000);
-			helpers.waitUntilReady(this.dalej);
-		this.dalej.click().then(function(){
+			helpers.waitUntilReady(fdalej);
+		fdalej.click().then(function(){
 			winston.log('info', "Wybranie opcji Zatwierdź - przejście do strony drugiej");
 		});
 		// browser.driver.sleep(16000);
-			helpers.waitUntilReady(this.kodSms);
-		this.kodSms.sendKeys(hasloSms);
-			helpers.waitUntilReady(this.zatwierdz);
-		this.zatwierdz.click().then(function(){
+			helpers.waitUntilReady(fkodSms);
+		fkodSms.sendKeys(hasloSms);
+			helpers.waitUntilReady(fzatwierdz);
+		fzatwierdz.click().then(function(){
 			winston.log('info', "Wybranie opcji Zatwierdź - przejście do strony potwierdzenia informacji");
 		});
 		// browser.driver.sleep(5000);
-			helpers.waitUntilReady(this.potwierdzenie);
-		expect(this.potwierdzenie.getText()).not.toContain("Przelew/transakcja odrzucona");
-		expect(this.potwierdzenie.getText()).not.toContain("odrzuc");
+			helpers.waitUntilReady(fpotwierdzenie);
+		expect(fpotwierdzenie.getText()).not.toContain("Przelew/transakcja odrzucona");
+		expect(fpotwierdzenie.getText()).not.toContain("odrzuc");
 		if (dataRealizacji=="")
-		rachunki.sprawdzOperacjeNaHistorii(rachunekNadawcy,'Ubezpiecz',kwota,saldoOczekiwanePo);
+		rachunki.sprawdzOperacjeNaHistorii(rachunekNadawcy,'Ubezpiecz',kwotaHistoria,value);
+		});
 	};
 	
 	this.przelewDoZusWalidacjaNazwyPlatnika = function () {
-		this.platnosci.click();
-		browser.driver.sleep(1000);
-		this.typPlatnosci.click();
-		helpers.wybierzElementZListyPoNumerze(2);
+		helpers.waitUntilReady(fplatnosci);
+		fplatnosci.click();
+		helpers.waitUntilReady(ftypPlatnosci);
+		ftypPlatnosci.click();
+		helpers.wybierzElementZListyPoTekscie('paymentType in $select.items','Przelew do ZUS');
 		browser.driver.sleep(500);
-		this.nazwaPlatnikaZUS.sendKeys('a');
+		fnazwaPlatnikaZUS.sendKeys('a');
 		// browser.driver.sleep(1000);
-		this.nazwaPlatnikaZUS.clear().sendKeys('');
-		expect(this.NazwaPlatnikaKomunikat.getText()).toEqual('Nazwa płatnika nie może być pusta');
-		this.nazwaPlatnikaZUS.sendKeys('1234567890123456789012345678901234567890123456789012345');
-		expect(this.NazwaPlatnikaKomunikat.getText()).toEqual('Nazwa płatnika nie może przekraczać 54 znaków i powinna zawierać wyłącznie litery, cyfry oraz znaki ! @ # $ % ^ & * ( ) - + [ ] { } : ; < > . ? \\ ~ ` \'  , /');
-		this.MojBank.click();
+		fnazwaPlatnikaZUS.clear().sendKeys('');
+		expect(fNazwaPlatnikaKomunikat.getText()).toEqual('Nazwa płatnika nie może być pusta');
+		fnazwaPlatnikaZUS.sendKeys('1234567890123456789012345678901234567890123456789012345');
+		expect(fNazwaPlatnikaKomunikat.getText()).toEqual('Nazwa płatnika nie może przekraczać 54 znaków i powinna zawierać wyłącznie litery, cyfry oraz znaki ! @ # $ % ^ & * ( ) - + [ ] { } : ; < > . ? \\ ~ ` \'  , /');
 	};
 
 	this.przelewDoZusWalidacjaPolaNIP = function () {
-		this.platnosci.click();
-		browser.driver.sleep(2000);
-		this.typPlatnosci.click();
-		helpers.wybierzElementZListyPoNumerze(2);
+		helpers.waitUntilReady(fplatnosci);
+		fplatnosci.click();
+		helpers.waitUntilReady(ftypPlatnosci);
+		ftypPlatnosci.click();
+		helpers.wybierzElementZListyPoTekscie('paymentType in $select.items','Przelew do ZUS');
 		browser.driver.sleep(500);
-		this.nipPlatnika.sendKeys('1');
-		expect(this.NipPlatnikaKomunikat.getText()).toEqual('Niepoprawny numer NIP płatnika');
-		this.nipPlatnika.clear().sendKeys('');
-		expect(this.NipPlatnikaKomunikat.getText()).toEqual('NIP płatnika nie może być pusty i powinien składać się z 10 cyfr');
-		this.MojBank.click();
+		fnipPlatnika.sendKeys('1');
+		expect(fNipPlatnikaKomunikat.getText()).toEqual('Niepoprawny numer NIP płatnika');
+		fnipPlatnika.clear().sendKeys('');
+		expect(fNipPlatnikaKomunikat.getText()).toEqual('NIP płatnika nie może być pusty i powinien składać się z 10 cyfr');
 	};
 
 	this.przelewDoZusWalidacjaDrugiegoIdentyfikatora = function () {
-		this.platnosci.click();
-		browser.driver.sleep(1000);
-		this.typPlatnosci.click();
-		helpers.wybierzElementZListyPoNumerze(2);
+		helpers.waitUntilReady(fplatnosci);
+		fplatnosci.click();
+		helpers.waitUntilReady(ftypPlatnosci);
+		ftypPlatnosci.click();
+		helpers.wybierzElementZListyPoTekscie('paymentType in $select.items','Przelew do ZUS');
 		browser.driver.sleep(500);
-		this.typDrugiegoIdentyfikatora.click();
+		ftypDrugiegoIdentyfikatora.click();
 		// browser.driver.sleep(500);
 		helpers.wybierzElementZListyPoNumerze(0);
 		browser.driver.sleep(500);
-		expect(this.typDrugiegoIdentyfikatora.getText()).toEqual('P - PESEL');
-		this.drugiIdentyfikator.sendKeys('1');
-		expect(this.DrugiIdentyfikatorKomunikat.getText()).toEqual('Niepoprawny numer PESEL / REGON / dowodu osobistego / paszportu');
-		this.drugiIdentyfikator.clear().sendKeys('');
-		expect(this.DrugiIdentyfikatorKomunikat.getText()).toEqual('Numer identyfikatora uzupełniającego nie może być pusty');
+		expect(ftypDrugiegoIdentyfikatora.getText()).toEqual('P - PESEL');
+		fdrugiIdentyfikator.sendKeys('1');
+		expect(fDrugiIdentyfikatorKomunikat.getText()).toEqual('Niepoprawny numer PESEL / REGON / dowodu osobistego / paszportu');
+		fdrugiIdentyfikator.clear().sendKeys('');
+		expect(fDrugiIdentyfikatorKomunikat.getText()).toEqual('Numer identyfikatora uzupełniającego nie może być pusty');
 
-		this.typDrugiegoIdentyfikatora.click();
+		ftypDrugiegoIdentyfikatora.click();
 		// browser.driver.sleep(1000);
 		helpers.wybierzElementZListyPoNumerze(1);
 		browser.driver.sleep(500);
-		expect(this.typDrugiegoIdentyfikatora.getText()).toEqual('R - REGON');
-		this.drugiIdentyfikator.sendKeys('1');
-		expect(this.DrugiIdentyfikatorKomunikat.getText()).toEqual('Niepoprawny numer PESEL / REGON / dowodu osobistego / paszportu');
-		this.drugiIdentyfikator.clear().sendKeys('');
-		expect(this.DrugiIdentyfikatorKomunikat.getText()).toEqual('Numer identyfikatora uzupełniającego nie może być pusty');
+		expect(ftypDrugiegoIdentyfikatora.getText()).toEqual('R - REGON');
+		fdrugiIdentyfikator.sendKeys('1');
+		expect(fDrugiIdentyfikatorKomunikat.getText()).toEqual('Niepoprawny numer PESEL / REGON / dowodu osobistego / paszportu');
+		fdrugiIdentyfikator.clear().sendKeys('');
+		expect(fDrugiIdentyfikatorKomunikat.getText()).toEqual('Numer identyfikatora uzupełniającego nie może być pusty');
 
-		this.typDrugiegoIdentyfikatora.click();
+		ftypDrugiegoIdentyfikatora.click();
 		// browser.driver.sleep(1000);
-		helpers.wybierzElementZListyPoNumerze(2);
+		helpers.wybierzElementZListyPoTekscie('paymentType in $select.items','Przelew do ZUS');
 		browser.driver.sleep(500);
-		expect(this.typDrugiegoIdentyfikatora.getText()).toEqual('1 - Dowód osobisty');
-		this.drugiIdentyfikator.sendKeys('1');
-		expect(this.DrugiIdentyfikatorKomunikat.getText()).toEqual('Niepoprawny numer PESEL / REGON / dowodu osobistego / paszportu');
-		this.drugiIdentyfikator.clear().sendKeys('');
-		expect(this.DrugiIdentyfikatorKomunikat.getText()).toEqual('Numer identyfikatora uzupełniającego nie może być pusty');
+		expect(ftypDrugiegoIdentyfikatora.getText()).toEqual('1 - Dowód osobisty');
+		fdrugiIdentyfikator.sendKeys('1');
+		expect(fDrugiIdentyfikatorKomunikat.getText()).toEqual('Niepoprawny numer PESEL / REGON / dowodu osobistego / paszportu');
+		fdrugiIdentyfikator.clear().sendKeys('');
+		expect(fDrugiIdentyfikatorKomunikat.getText()).toEqual('Numer identyfikatora uzupełniającego nie może być pusty');
 
-		this.typDrugiegoIdentyfikatora.click();
+		ftypDrugiegoIdentyfikatora.click();
 		// browser.driver.sleep(1000);
 		helpers.wybierzElementZListyPoNumerze(3);
 		browser.driver.sleep(500);
-		expect(this.typDrugiegoIdentyfikatora.getText()).toEqual('2 - Paszport');
-		this.drugiIdentyfikator.sendKeys('1');
-		this.drugiIdentyfikator.clear().sendKeys('');
-		expect(this.DrugiIdentyfikatorKomunikat.getText()).toEqual('Numer identyfikatora uzupełniającego nie może być pusty');
-		this.MojBank.click();
+		expect(ftypDrugiegoIdentyfikatora.getText()).toEqual('2 - Paszport');
+		fdrugiIdentyfikator.sendKeys('1');
+		fdrugiIdentyfikator.clear().sendKeys('');
+		expect(fDrugiIdentyfikatorKomunikat.getText()).toEqual('Numer identyfikatora uzupełniającego nie może być pusty');
+		fMojBank.click();
 	};
 
 	this.przelewDoZusWalidacjaPolaDeklaracja = function () {
-		this.platnosci.click();
-		browser.driver.sleep(1000);
-		this.typPlatnosci.click();
-		helpers.wybierzElementZListyPoNumerze(2);
+		helpers.waitUntilReady(fplatnosci);
+		fplatnosci.click();
+		helpers.waitUntilReady(ftypPlatnosci);
+		ftypPlatnosci.click();
+		helpers.wybierzElementZListyPoTekscie('paymentType in $select.items','Przelew do ZUS');
 		browser.driver.sleep(500);
-		this.deklaracja.sendKeys('1');
-		expect(this.DeklaracjaKomunikat.getText()).toEqual('Niepoprawna data deklaracji - poprawny format to RRRRMM (gdzie RRRR>1998 i MM>=01 i MM<=12)');
-		this.deklaracja.clear().sendKeys('');
-		expect(this.DeklaracjaKomunikat.getText()).toEqual('Data deklaracji nie może być pusta');
+		fdeklaracja.sendKeys('1');
+		expect(fDeklaracjaKomunikat.getText()).toEqual('Niepoprawna data deklaracji - poprawny format to RRRRMM (gdzie RRRR>1998 i MM>=01 i MM<=12)');
+		fdeklaracja.clear().sendKeys('');
+		expect(fDeklaracjaKomunikat.getText()).toEqual('Data deklaracji nie może być pusta');
 		browser.driver.sleep(1000);
-		this.MojBank.click();
 	};
 
 
 	this.przelewDoZusWalidacjaPolaNumerDeklaracji = function () {
-		this.platnosci.click();
-		browser.driver.sleep(1000);
-		this.typPlatnosci.click();
-		helpers.wybierzElementZListyPoNumerze(2);
+		helpers.waitUntilReady(fplatnosci);
+		fplatnosci.click();
+		helpers.waitUntilReady(ftypPlatnosci);
+		ftypPlatnosci.click();
+		helpers.wybierzElementZListyPoTekscie('paymentType in $select.items','Przelew do ZUS');
 		browser.driver.sleep(500);
 		//Sprawdzenie dla typu S		
-		this.typWpłaty.click();
+		ftypWpłaty.click();
 		browser.driver.sleep(500);
 		helpers.wybierzElementZListyPoNumerze(0);
-		this.numerDeklaracji.clear();
-		this.numerDeklaracji.sendKeys('1');
-		expect(this.NumerDeklaracjiKomunikat.getText()).toEqual('Niepoprawny numer deklaracji. Dla typu wpłaty S lub M numer deklaracji musi być z zakresu 01-89');
-		this.numerDeklaracji.clear();
-		this.numerDeklaracji.sendKeys('00');
-		expect(this.NumerDeklaracjiKomunikat.getText()).toEqual('Niepoprawny numer deklaracji. Dla typu wpłaty S lub M numer deklaracji musi być z zakresu 01-89');
-		this.numerDeklaracji.clear();
-		this.numerDeklaracji.sendKeys('90');
-		expect(this.NumerDeklaracjiKomunikat.getText()).toEqual('Niepoprawny numer deklaracji. Dla typu wpłaty S lub M numer deklaracji musi być z zakresu 01-89');
-		this.numerDeklaracji.clear();
-		expect(this.NumerDeklaracjiKomunikat.getText()).toEqual('Numer deklaracji nie może być pusty');
+		fnumerDeklaracji.clear();
+		fnumerDeklaracji.sendKeys('1');
+		expect(fNumerDeklaracjiKomunikat.getText()).toEqual('Niepoprawny numer deklaracji. Dla typu wpłaty S lub M numer deklaracji musi być z zakresu 01-89');
+		fnumerDeklaracji.clear();
+		fnumerDeklaracji.sendKeys('00');
+		expect(fNumerDeklaracjiKomunikat.getText()).toEqual('Niepoprawny numer deklaracji. Dla typu wpłaty S lub M numer deklaracji musi być z zakresu 01-89');
+		fnumerDeklaracji.clear();
+		fnumerDeklaracji.sendKeys('90');
+		expect(fNumerDeklaracjiKomunikat.getText()).toEqual('Niepoprawny numer deklaracji. Dla typu wpłaty S lub M numer deklaracji musi być z zakresu 01-89');
+		fnumerDeklaracji.clear();
+		expect(fNumerDeklaracjiKomunikat.getText()).toEqual('Numer deklaracji nie może być pusty');
 		//Sprawdzenie dla typu M
-		this.typWpłaty.click();
+		ftypWpłaty.click();
 		browser.driver.sleep(500);
 		helpers.wybierzElementZListyPoNumerze(1);
-		this.numerDeklaracji.clear();
-		this.numerDeklaracji.sendKeys('1');
-		expect(this.NumerDeklaracjiKomunikat.getText()).toEqual('Niepoprawny numer deklaracji. Dla typu wpłaty S lub M numer deklaracji musi być z zakresu 01-89');
-		this.numerDeklaracji.clear();
-		this.numerDeklaracji.sendKeys('00');
-		expect(this.NumerDeklaracjiKomunikat.getText()).toEqual('Niepoprawny numer deklaracji. Dla typu wpłaty S lub M numer deklaracji musi być z zakresu 01-89');
-		this.numerDeklaracji.clear();
-		this.numerDeklaracji.sendKeys('90');
-		expect(this.NumerDeklaracjiKomunikat.getText()).toEqual('Niepoprawny numer deklaracji. Dla typu wpłaty S lub M numer deklaracji musi być z zakresu 01-89');
-		this.numerDeklaracji.clear();
-		expect(this.NumerDeklaracjiKomunikat.getText()).toEqual('Numer deklaracji nie może być pusty');
+		fnumerDeklaracji.clear();
+		fnumerDeklaracji.sendKeys('1');
+		expect(fNumerDeklaracjiKomunikat.getText()).toEqual('Niepoprawny numer deklaracji. Dla typu wpłaty S lub M numer deklaracji musi być z zakresu 01-89');
+		fnumerDeklaracji.clear();
+		fnumerDeklaracji.sendKeys('00');
+		expect(fNumerDeklaracjiKomunikat.getText()).toEqual('Niepoprawny numer deklaracji. Dla typu wpłaty S lub M numer deklaracji musi być z zakresu 01-89');
+		fnumerDeklaracji.clear();
+		fnumerDeklaracji.sendKeys('90');
+		expect(fNumerDeklaracjiKomunikat.getText()).toEqual('Niepoprawny numer deklaracji. Dla typu wpłaty S lub M numer deklaracji musi być z zakresu 01-89');
+		fnumerDeklaracji.clear();
+		expect(fNumerDeklaracjiKomunikat.getText()).toEqual('Numer deklaracji nie może być pusty');
 		//Sprawdzenie dla typu U
-		this.typWpłaty.click();
+		ftypWpłaty.click();
 		browser.driver.sleep(500);
-		helpers.wybierzElementZListyPoNumerze(2);
-		this.numerDeklaracji.clear();
-		this.numerDeklaracji.sendKeys('00');
-		expect(this.NumerDeklaracjiKomunikat.getText()).toEqual('Niepoprawny numer deklaracji. Dla typu wpłaty A, B, D, E, T lub U numer deklaracji musi mieć wartość 01, 40, 51, 70 lub 80');
-		this.numerDeklaracji.clear();
-		expect(this.NumerDeklaracjiKomunikat.getText()).toEqual('Numer deklaracji nie może być pusty');
+		helpers.wybierzElementZListyPoTekscie('paymentType in $select.items','Przelew do ZUS');
+		fnumerDeklaracji.clear();
+		fnumerDeklaracji.sendKeys('00');
+		expect(fNumerDeklaracjiKomunikat.getText()).toEqual('Niepoprawny numer deklaracji. Dla typu wpłaty A, B, D, E, T lub U numer deklaracji musi mieć wartość 01, 40, 51, 70 lub 80');
+		fnumerDeklaracji.clear();
+		expect(fNumerDeklaracjiKomunikat.getText()).toEqual('Numer deklaracji nie może być pusty');
 		//Sprawdzenie dla typu T
-		this.typWpłaty.click();
+		ftypWpłaty.click();
 		browser.driver.sleep(500);
 		helpers.wybierzElementZListyPoNumerze(3);
-		this.numerDeklaracji.clear();
-		this.numerDeklaracji.sendKeys('00');
-		expect(this.NumerDeklaracjiKomunikat.getText()).toEqual('Niepoprawny numer deklaracji. Dla typu wpłaty A, B, D, E, T lub U numer deklaracji musi mieć wartość 01, 40, 51, 70 lub 80');
-		this.numerDeklaracji.clear();
-		expect(this.NumerDeklaracjiKomunikat.getText()).toEqual('Numer deklaracji nie może być pusty');
+		fnumerDeklaracji.clear();
+		fnumerDeklaracji.sendKeys('00');
+		expect(fNumerDeklaracjiKomunikat.getText()).toEqual('Niepoprawny numer deklaracji. Dla typu wpłaty A, B, D, E, T lub U numer deklaracji musi mieć wartość 01, 40, 51, 70 lub 80');
+		fnumerDeklaracji.clear();
+		expect(fNumerDeklaracjiKomunikat.getText()).toEqual('Numer deklaracji nie może być pusty');
 		//Sprawdzenie dla typu E
-		this.typWpłaty.click();
+		ftypWpłaty.click();
 		browser.driver.sleep(500);
 		helpers.wybierzElementZListyPoNumerze(4);
-		this.numerDeklaracji.clear();
-		this.numerDeklaracji.sendKeys('00');
-		expect(this.NumerDeklaracjiKomunikat.getText()).toEqual('Niepoprawny numer deklaracji. Dla typu wpłaty A, B, D, E, T lub U numer deklaracji musi mieć wartość 01, 40, 51, 70 lub 80');
-		this.numerDeklaracji.clear();
-		expect(this.NumerDeklaracjiKomunikat.getText()).toEqual('Numer deklaracji nie może być pusty');
+		fnumerDeklaracji.clear();
+		fnumerDeklaracji.sendKeys('00');
+		expect(fNumerDeklaracjiKomunikat.getText()).toEqual('Niepoprawny numer deklaracji. Dla typu wpłaty A, B, D, E, T lub U numer deklaracji musi mieć wartość 01, 40, 51, 70 lub 80');
+		fnumerDeklaracji.clear();
+		expect(fNumerDeklaracjiKomunikat.getText()).toEqual('Numer deklaracji nie może być pusty');
 		//Sprawdzenie dla typu A
-		this.typWpłaty.click();
+		ftypWpłaty.click();
 		browser.driver.sleep(500);
 		helpers.wybierzElementZListyPoNumerze(5);
-		this.numerDeklaracji.clear();
-		this.numerDeklaracji.sendKeys('00');
-		expect(this.NumerDeklaracjiKomunikat.getText()).toEqual('Niepoprawny numer deklaracji. Dla typu wpłaty A, B, D, E, T lub U numer deklaracji musi mieć wartość 01, 40, 51, 70 lub 80');
-		this.numerDeklaracji.clear();
-		expect(this.NumerDeklaracjiKomunikat.getText()).toEqual('Numer deklaracji nie może być pusty');
+		fnumerDeklaracji.clear();
+		fnumerDeklaracji.sendKeys('00');
+		expect(fNumerDeklaracjiKomunikat.getText()).toEqual('Niepoprawny numer deklaracji. Dla typu wpłaty A, B, D, E, T lub U numer deklaracji musi mieć wartość 01, 40, 51, 70 lub 80');
+		fnumerDeklaracji.clear();
+		expect(fNumerDeklaracjiKomunikat.getText()).toEqual('Numer deklaracji nie może być pusty');
 		//Sprawdzenie dla typu B
-		this.typWpłaty.click();
+		ftypWpłaty.click();
 		browser.driver.sleep(500);
 		helpers.wybierzElementZListyPoNumerze(6);
-		this.numerDeklaracji.clear();
-		this.numerDeklaracji.sendKeys('00');
-		expect(this.NumerDeklaracjiKomunikat.getText()).toEqual('Niepoprawny numer deklaracji. Dla typu wpłaty A, B, D, E, T lub U numer deklaracji musi mieć wartość 01, 40, 51, 70 lub 80');
-		this.numerDeklaracji.clear();
-		expect(this.NumerDeklaracjiKomunikat.getText()).toEqual('Numer deklaracji nie może być pusty');
+		fnumerDeklaracji.clear();
+		fnumerDeklaracji.sendKeys('00');
+		expect(fNumerDeklaracjiKomunikat.getText()).toEqual('Niepoprawny numer deklaracji. Dla typu wpłaty A, B, D, E, T lub U numer deklaracji musi mieć wartość 01, 40, 51, 70 lub 80');
+		fnumerDeklaracji.clear();
+		expect(fNumerDeklaracjiKomunikat.getText()).toEqual('Numer deklaracji nie może być pusty');
 		//Sprawdzenie dla typu D
-		this.typWpłaty.click();
+		ftypWpłaty.click();
 		browser.driver.sleep(500);
 		helpers.wybierzElementZListyPoNumerze(7);
-		this.numerDeklaracji.clear();
-		this.numerDeklaracji.sendKeys('00');
-		expect(this.NumerDeklaracjiKomunikat.getText()).toEqual('Niepoprawny numer deklaracji. Dla typu wpłaty A, B, D, E, T lub U numer deklaracji musi mieć wartość 01, 40, 51, 70 lub 80');
-		this.numerDeklaracji.clear();
-		expect(this.NumerDeklaracjiKomunikat.getText()).toEqual('Numer deklaracji nie może być pusty');
-		this.MojBank.click();
+		fnumerDeklaracji.clear();
+		fnumerDeklaracji.sendKeys('00');
+		expect(fNumerDeklaracjiKomunikat.getText()).toEqual('Niepoprawny numer deklaracji. Dla typu wpłaty A, B, D, E, T lub U numer deklaracji musi mieć wartość 01, 40, 51, 70 lub 80');
+		fnumerDeklaracji.clear();
+		expect(fNumerDeklaracjiKomunikat.getText()).toEqual('Numer deklaracji nie może być pusty');
 	};
 
 
 		this.przelewDoZusWalidacjaPolaInformacjeDodatkowe = function () {
-		this.platnosci.click();
-		browser.driver.sleep(1000);
-		this.typPlatnosci.click();
-		helpers.wybierzElementZListyPoNumerze(2);
+		helpers.waitUntilReady(fplatnosci);
+		fplatnosci.click();
+		helpers.waitUntilReady(ftypPlatnosci);
+		ftypPlatnosci.click();
+		helpers.wybierzElementZListyPoTekscie('paymentType in $select.items','Przelew do ZUS');
 		browser.driver.sleep(1000);
 		//Sprawdzenie dla typu S		
-		this.typWpłaty.click();
+		ftypWpłaty.click();
 		browser.driver.sleep(500);
 		helpers.wybierzElementZListyPoNumerze(0);
-		expect(this.informacjeDodatkoweNovalidate.isEnabled()).toBe(false);
+		expect(finformacjeDodatkoweNovalidate.isEnabled()).toBe(false);
 		//Sprawdzenie dla typu M
-		this.typWpłaty.click();
+		ftypWpłaty.click();
 		browser.driver.sleep(500);
 		helpers.wybierzElementZListyPoNumerze(1);
-		expect(this.informacjeDodatkoweNovalidate.isEnabled()).toBe(false);
+		expect(finformacjeDodatkoweNovalidate.isEnabled()).toBe(false);
 		//Sprawdzenie dla typu U
-		this.typWpłaty.click();
+		ftypWpłaty.click();
 		browser.driver.sleep(500);
-		helpers.wybierzElementZListyPoNumerze(2);
-		this.informacjeDodatkowe.clear();
+		helpers.wybierzElementZListyPoTekscie('paymentType in $select.items','Przelew do ZUS');
+		finformacjeDodatkowe.clear();
 		browser.driver.sleep(1000);
-		this.informacjeDodatkowe.sendKeys('1234567890123456');
+		finformacjeDodatkowe.sendKeys('1234567890123456');
 		browser.driver.sleep(1000);
-		expect(this.informacjeDodatkoweKomunikat.getText()).toEqual('Informacje dodatkowe muszą zawierać nie więcej niż 15 znaków bez spacji');
-		this.informacjeDodatkowe.clear();
-		expect(this.informacjeDodatkoweKomunikat.getText()).toEqual('Informacje dodatkowe nie mogą być puste i muszą zawierać nie więcej niż 15 znaków bez spacji');
+		expect(finformacjeDodatkoweKomunikat.getText()).toEqual('Informacje dodatkowe muszą zawierać nie więcej niż 15 znaków bez spacji');
+		finformacjeDodatkowe.clear();
+		expect(finformacjeDodatkoweKomunikat.getText()).toEqual('Informacje dodatkowe nie mogą być puste i muszą zawierać nie więcej niż 15 znaków bez spacji');
 		//Sprawdzenie dla typu T
-		this.typWpłaty.click();
+		ftypWpłaty.click();
 		browser.driver.sleep(500);
 		helpers.wybierzElementZListyPoNumerze(3);
-		this.informacjeDodatkowe.clear();
+		finformacjeDodatkowe.clear();
 		browser.driver.sleep(1000);
-		this.informacjeDodatkowe.sendKeys('1234567890123456');
+		finformacjeDodatkowe.sendKeys('1234567890123456');
 		browser.driver.sleep(1000);
-		expect(this.informacjeDodatkoweKomunikat.getText()).toEqual('Informacje dodatkowe muszą zawierać nie więcej niż 15 znaków bez spacji');
-		this.informacjeDodatkowe.clear();
-		expect(this.informacjeDodatkoweKomunikat.getText()).toEqual('Informacje dodatkowe nie mogą być puste i muszą zawierać nie więcej niż 15 znaków bez spacji');
+		expect(finformacjeDodatkoweKomunikat.getText()).toEqual('Informacje dodatkowe muszą zawierać nie więcej niż 15 znaków bez spacji');
+		finformacjeDodatkowe.clear();
+		expect(finformacjeDodatkoweKomunikat.getText()).toEqual('Informacje dodatkowe nie mogą być puste i muszą zawierać nie więcej niż 15 znaków bez spacji');
 		//Sprawdzenie dla typu E
-		this.typWpłaty.click();
+		ftypWpłaty.click();
 		browser.driver.sleep(500);
 		helpers.wybierzElementZListyPoNumerze(4);
-		this.informacjeDodatkowe.clear();
+		finformacjeDodatkowe.clear();
 		browser.driver.sleep(1000);
-		this.informacjeDodatkowe.sendKeys('1234567890123456');
+		finformacjeDodatkowe.sendKeys('1234567890123456');
 		browser.driver.sleep(1000);
-		expect(this.informacjeDodatkoweKomunikat.getText()).toEqual('Informacje dodatkowe muszą zawierać nie więcej niż 15 znaków bez spacji');
-		this.informacjeDodatkowe.clear();
-		expect(this.informacjeDodatkoweKomunikat.getText()).toEqual('Informacje dodatkowe nie mogą być puste i muszą zawierać nie więcej niż 15 znaków bez spacji');
+		expect(finformacjeDodatkoweKomunikat.getText()).toEqual('Informacje dodatkowe muszą zawierać nie więcej niż 15 znaków bez spacji');
+		finformacjeDodatkowe.clear();
+		expect(finformacjeDodatkoweKomunikat.getText()).toEqual('Informacje dodatkowe nie mogą być puste i muszą zawierać nie więcej niż 15 znaków bez spacji');
 		//Sprawdzenie dla typu A
-		this.typWpłaty.click();
+		ftypWpłaty.click();
 		browser.driver.sleep(500);
 		helpers.wybierzElementZListyPoNumerze(5);
-		this.informacjeDodatkowe.clear();
+		finformacjeDodatkowe.clear();
 		browser.driver.sleep(1000);
-		this.informacjeDodatkowe.sendKeys('1234567890123456');
+		finformacjeDodatkowe.sendKeys('1234567890123456');
 		browser.driver.sleep(1000);
-		expect(this.informacjeDodatkoweKomunikat.getText()).toEqual('Informacje dodatkowe muszą zawierać nie więcej niż 15 znaków bez spacji');
-		this.informacjeDodatkowe.clear();
-		expect(this.informacjeDodatkoweKomunikat.getText()).toEqual('Informacje dodatkowe nie mogą być puste i muszą zawierać nie więcej niż 15 znaków bez spacji');
+		expect(finformacjeDodatkoweKomunikat.getText()).toEqual('Informacje dodatkowe muszą zawierać nie więcej niż 15 znaków bez spacji');
+		finformacjeDodatkowe.clear();
+		expect(finformacjeDodatkoweKomunikat.getText()).toEqual('Informacje dodatkowe nie mogą być puste i muszą zawierać nie więcej niż 15 znaków bez spacji');
 		//Sprawdzenie dla typu B
-		this.typWpłaty.click();
+		ftypWpłaty.click();
 		browser.driver.sleep(500);
 		helpers.wybierzElementZListyPoNumerze(6);
-		this.informacjeDodatkowe.clear();
+		finformacjeDodatkowe.clear();
 		browser.driver.sleep(1000);
-		this.informacjeDodatkowe.sendKeys('1234567890123456');
+		finformacjeDodatkowe.sendKeys('1234567890123456');
 		browser.driver.sleep(1000);
-		expect(this.informacjeDodatkoweKomunikat.getText()).toEqual('Informacje dodatkowe muszą zawierać nie więcej niż 15 znaków bez spacji');
-		this.informacjeDodatkowe.clear();
-		expect(this.informacjeDodatkoweKomunikat.getText()).toEqual('Informacje dodatkowe nie mogą być puste i muszą zawierać nie więcej niż 15 znaków bez spacji');
+		expect(finformacjeDodatkoweKomunikat.getText()).toEqual('Informacje dodatkowe muszą zawierać nie więcej niż 15 znaków bez spacji');
+		finformacjeDodatkowe.clear();
+		expect(finformacjeDodatkoweKomunikat.getText()).toEqual('Informacje dodatkowe nie mogą być puste i muszą zawierać nie więcej niż 15 znaków bez spacji');
 		//Sprawdzenie dla typu D
-		this.typWpłaty.click();
+		ftypWpłaty.click();
 		browser.driver.sleep(500);
 		helpers.wybierzElementZListyPoNumerze(7);
-		this.informacjeDodatkowe.clear();
-		this.informacjeDodatkowe.sendKeys('1234567890123456');
+		finformacjeDodatkowe.clear();
+		finformacjeDodatkowe.sendKeys('1234567890123456');
 		browser.driver.sleep(1000);
-		expect(this.informacjeDodatkoweKomunikat.getText()).toEqual('Informacje dodatkowe muszą zawierać nie więcej niż 15 znaków bez spacji');
-		this.informacjeDodatkowe.clear();
-		expect(this.informacjeDodatkoweKomunikat.getText()).toEqual('Informacje dodatkowe nie mogą być puste i muszą zawierać nie więcej niż 15 znaków bez spacji');
-		this.MojBank.click();
+		expect(finformacjeDodatkoweKomunikat.getText()).toEqual('Informacje dodatkowe muszą zawierać nie więcej niż 15 znaków bez spacji');
+		finformacjeDodatkowe.clear();
+		expect(finformacjeDodatkoweKomunikat.getText()).toEqual('Informacje dodatkowe nie mogą być puste i muszą zawierać nie więcej niż 15 znaków bez spacji');
 	};
 
 
 	this.przelewDoZusWalidacjaPolaData = function () {
 		var dataBiezacaPlus180 = helpers.dataBiezacaPlusDzien(180);
-		this.platnosci.click();
+		fplatnosci.click();
+		helpers.waitUntilReady(ftypPlatnosci);
+		ftypPlatnosci.click();
+		helpers.wybierzElementZListyPoTekscie('paymentType in $select.items','Przelew do ZUS');
 		browser.driver.sleep(1000);
-		this.typPlatnosci.click();
-		helpers.wybierzElementZListyPoNumerze(2);
+		fdatar = fdataRealizacji.element(by.model('ngModel'));
+		fdatar.sendKeys('123');
 		browser.driver.sleep(1000);
-		helpers.scrollWindow(this.dataRealizacji);
-		this.dataRealizacji.click();
-		this.datar = this.dataRealizacji.element(by.model('ngModel'));
-		this.datar.sendKeys('123');
-		browser.driver.sleep(1000);
-		expect(this.DataKomunikat.getText()).toEqual('Niepoprawna data realizacji przelewu');
-		this.datar.clear();
-		expect(this.DataKomunikat.getText()).toEqual('Data realizacji przelewu nie może być pusta');
-		this.datar.sendKeys('01.01.2001');
-		expect(this.DataKomunikat.getText()).toEqual('Data realizacji przelewu nie może być wcześniejsza niż data bieżąca');
-		this.datar.clear();
-		this.datar.sendKeys('01.01.2222');
-		expect(this.DataKomunikat.getText()).toEqual('Data realizacji przelewu nie może być późniejsza niż '+dataBiezacaPlus180);
-		this.MojBank.click();
+		expect(fDataKomunikat.getText()).toEqual('Niepoprawna data realizacji przelewu');
+		fdatar.clear();
+		expect(fDataKomunikat.getText()).toEqual('Data realizacji przelewu nie może być pusta');
+		fdatar.sendKeys('01.01.2001');
+		expect(fDataKomunikat.getText()).toEqual('Data realizacji przelewu nie może być wcześniejsza niż data bieżąca');
+		fdatar.clear();
+		fdatar.sendKeys('01.01.2222');
+		expect(fDataKomunikat.getText()).toEqual('Data realizacji przelewu nie może być późniejsza niż '+dataBiezacaPlus180);
 	};
 
 	this.przelewDoZusWalidacjaTypuUbezpieczenia = function () {
-		this.platnosci.click();
-		browser.driver.sleep(3000);
-		this.typPlatnosci.click();
-		helpers.wybierzElementZListyPoNumerze(2);
+		helpers.waitUntilReady(fplatnosci);
+		fplatnosci.click();
+		helpers.waitUntilReady(ftypPlatnosci);
+		ftypPlatnosci.click();
+		helpers.wybierzElementZListyPoTekscie('paymentType in $select.items','Przelew do ZUS');
 		browser.driver.sleep(1000);
-		this.nazwaOdbiorcy.sendKeys('Nazwa');
-		this.nipPlatnika.sendKeys(helpers.tworzNip());
-		this.typDrugiegoIdentyfikatora.click();
+		fnazwaOdbiorcy.sendKeys('Nazwa');
+		fnipPlatnika.sendKeys(helpers.tworzNip());
+		ftypDrugiegoIdentyfikatora.click();
 		browser.driver.sleep(500);
 		helpers.wybierzElementZListyPoNumerze(3);
-		this.drugiIdentyfikator.sendKeys('ABC123');
-		this.typWpłaty.click();
+		fdrugiIdentyfikator.sendKeys('ABC123');
+		ftypWpłaty.click();
 		browser.driver.sleep(500);
-		helpers.wybierzElementZListyPoNumerze(2);
-		this.deklaracja.sendKeys('201501');
-		this.numerDeklaracji.sendKeys('01');
-		this.informacjeDodatkowe.sendKeys('Info');
+		helpers.wybierzElementZListyPoTekscie('paymentType in $select.items','Przelew do ZUS');
+		fdeklaracja.sendKeys('201501');
+		fnumerDeklaracji.sendKeys('01');
+		finformacjeDodatkowe.sendKeys('Info');
 
-		this.dalej.click();
-		expect(this.UbezpieczenieKomunikat.getText()).toEqual('Musisz zaznaczyć przynajmniej jedno ubezpieczenie i wprowadzić poprawną kwotę przelewu');
+		fdalej.click();
+		expect(fUbezpieczenieKomunikat.getText()).toEqual('Musisz zaznaczyć przynajmniej jedno ubezpieczenie i wprowadzić poprawną kwotę przelewu');
 		browser.driver.sleep(1000);
 
 //UBEZPIECZENIE SPOŁECZNE
-		this.ubezpieczenieSpoleczne.click();
-		this.kwotaUbezpieczenieSpoleczne.sendKeys('12,344');
-		expect(this.ubezpieczenieSpoleczneKomunikat.getText()).toEqual('Nieprawidłowa kwota przelewu');
-		this.kwotaUbezpieczenieSpoleczne.clear();
+		fubezpieczenieSpoleczne.click();
+		fkwotaUbezpieczenieSpoleczne.sendKeys('12,344');
+		expect(fubezpieczenieSpoleczneKomunikat.getText()).toEqual('Nieprawidłowa kwota przelewu');
+		fkwotaUbezpieczenieSpoleczne.clear();
 	
 		element(by.css('[class="bd-amount__value"]')).getText().then(function (value) {
-    	this.kwotaUbezpieczenieSpoleczne = element(by.repeater('insuranceType in payment.meta.zusInsuranceTypes').row(0)).element(by.model('payment.formData.insurancePremiums[insuranceType].amount'));
-    	this.ubezpieczenieSpoleczneKomunikat = 	element(by.id('SOCIALAmount'));
+    	fkwotaUbezpieczenieSpoleczne = element(by.repeater('insuranceType in payment.meta.zusInsuranceTypes').row(0)).element(by.model('payment.formData.insurancePremiums[insuranceType].amount'));
+    	fubezpieczenieSpoleczneKomunikat = 	element(by.id('SOCIALAmount'));
     		value=value.replace(/\s+/g, '');
 			value=value.replace(',','.');
 			//kwota powyżej środków na rachunku
-    		this.kwotaUbezpieczenieSpoleczne.sendKeys(Number(value)+0.01);
-			expect(this.ubezpieczenieSpoleczneKomunikat.getText()).toEqual('Kwota przelewu przekracza środki dostępne na rachunku');
-			this.kwotaUbezpieczenieSpoleczne.clear();
+    		fkwotaUbezpieczenieSpoleczne.sendKeys(Number(value)+0.01);
+			expect(fubezpieczenieSpoleczneKomunikat.getText()).toEqual('Kwota przelewu przekracza środki dostępne na rachunku');
+			fkwotaUbezpieczenieSpoleczne.clear();
 			//sprawdzenie komunikatu Elixir jeżeli środki na rachunku na to pozwalają
 			if (Number(value) > 75000.00) {
-				this.kwotaUbezpieczenieSpoleczne.sendKeys('75000,01');
-				expect(this.ubezpieczenieSpoleczneKomunikat.getText()).toEqual('Przelew nie może być wykonany jako płatność Elixir');
-				this.kwotaUbezpieczenieSpoleczne.clear();
+				fkwotaUbezpieczenieSpoleczne.sendKeys('75000,01');
+				expect(fubezpieczenieSpoleczneKomunikat.getText()).toEqual('Przelew nie może być wykonany jako płatność Elixir');
+				fkwotaUbezpieczenieSpoleczne.clear();
 				winston.log('info', "value > 75000");
 			} else {
 				winston.log('info', "Środki na rachunku poniżej 75000,00. Brak sprawdzenia komunikatu o Elixir dla Ubezpieczenia Społecznego");
 			}
 		});
-		this.kwotaUbezpieczenieSpoleczne.clear();
-		this.ubezpieczenieSpoleczne.click();
+		fkwotaUbezpieczenieSpoleczne.clear();
+		fubezpieczenieSpoleczne.click();
 
 //UBEZPIECZENIE ZDROWOTNE
-		this.ubezpieczenieZdrowotne.click();
-		this.kwotaubezpieczenieZdrowotne.sendKeys('12,344');
-		expect(this.ubezpieczenieZdrowotneKomunikat.getText()).toEqual('Nieprawidłowa kwota przelewu');
-		this.kwotaubezpieczenieZdrowotne.clear();
+		fubezpieczenieZdrowotne.click();
+		fkwotaubezpieczenieZdrowotne.sendKeys('12,344');
+		expect(fubezpieczenieZdrowotneKomunikat.getText()).toEqual('Nieprawidłowa kwota przelewu');
+		fkwotaubezpieczenieZdrowotne.clear();
 
 		element(by.css('[class="bd-amount__value"]')).getText().then(function (value) {
-    	this.kwotaubezpieczenieZdrowotne = element(by.repeater('insuranceType in payment.meta.zusInsuranceTypes').row(1)).element(by.model('payment.formData.insurancePremiums[insuranceType].amount'));
-    	this.ubezpieczenieZdrowotneKomunikat = element(by.id('HEALTHAmount'));
+    	fkwotaubezpieczenieZdrowotne = element(by.repeater('insuranceType in payment.meta.zusInsuranceTypes').row(1)).element(by.model('payment.formData.insurancePremiums[insuranceType].amount'));
+    	fubezpieczenieZdrowotneKomunikat = element(by.id('HEALTHAmount'));
     		value=value.replace(/\s+/g, '');
 			value=value.replace(',','.');
 			//kwota powyżej środków na rachunku
-    		this.kwotaubezpieczenieZdrowotne.sendKeys(Number(value)+0.01);
-			expect(this.ubezpieczenieZdrowotneKomunikat.getText()).toEqual('Kwota przelewu przekracza środki dostępne na rachunku');
-			this.kwotaubezpieczenieZdrowotne.clear();
+    		fkwotaubezpieczenieZdrowotne.sendKeys(Number(value)+0.01);
+			expect(fubezpieczenieZdrowotneKomunikat.getText()).toEqual('Kwota przelewu przekracza środki dostępne na rachunku');
+			fkwotaubezpieczenieZdrowotne.clear();
 			//sprawdzenie komunikatu Elixir jeżeli środki na rachunku na to pozwalają
 			if (Number(value) > 75000.00) {
-				this.kwotaubezpieczenieZdrowotne.sendKeys('75000,01');
-				expect(this.ubezpieczenieZdrowotneKomunikat.getText()).toEqual('Przelew nie może być wykonany jako płatność Elixir');
-				this.kwotaubezpieczenieZdrowotne.clear();
+				fkwotaubezpieczenieZdrowotne.sendKeys('75000,01');
+				expect(fubezpieczenieZdrowotneKomunikat.getText()).toEqual('Przelew nie może być wykonany jako płatność Elixir');
+				fkwotaubezpieczenieZdrowotne.clear();
 				winston.log('info', "value > 75000");
 			} else {
 				winston.log('info', "Środki na rachunku poniżej 75000,00. Brak sprawdzenia komunikatu o Elixir dla Ubezpieczenia Zdrowotnego");
 			}
 		});
-		this.kwotaubezpieczenieZdrowotne.clear();
-		this.ubezpieczenieZdrowotne.click();
+		fkwotaubezpieczenieZdrowotne.clear();
+		fubezpieczenieZdrowotne.click();
 
 //UBEZPIECZENIE FP I FGSP
-		this.ubezpieczenieFPiFGSP.click();
-		this.kwotaubezpieczenieFPiFGSP.sendKeys('12,344');
-		expect(this.ubezpieczenieFPiFGSPKomunikat.getText()).toEqual('Nieprawidłowa kwota przelewu');
-		this.kwotaubezpieczenieFPiFGSP.clear();
+		fubezpieczenieFPiFGSP.click();
+		fkwotaubezpieczenieFPiFGSP.sendKeys('12,344');
+		expect(fubezpieczenieFPiFGSPKomunikat.getText()).toEqual('Nieprawidłowa kwota przelewu');
+		fkwotaubezpieczenieFPiFGSP.clear();
 
 		element(by.css('[class="bd-amount__value"]')).getText().then(function (value) {
-    	this.kwotaubezpieczenieFPiFGSP = element(by.repeater('insuranceType in payment.meta.zusInsuranceTypes').row(2)).element(by.model('payment.formData.insurancePremiums[insuranceType].amount'));
-    	this.ubezpieczenieFPiFGSPKomunikat = element(by.id('FPIFGSPAmount'));
+    	fkwotaubezpieczenieFPiFGSP = element(by.repeater('insuranceType in payment.meta.zusInsuranceTypes').row(2)).element(by.model('payment.formData.insurancePremiums[insuranceType].amount'));
+    	fubezpieczenieFPiFGSPKomunikat = element(by.id('FPIFGSPAmount'));
     		value=value.replace(/\s+/g, '');
 			value=value.replace(',','.');
 			//kwota powyżej środków na rachunku
-    		this.kwotaubezpieczenieFPiFGSP.sendKeys(Number(value)+0.01);
-			expect(this.ubezpieczenieFPiFGSPKomunikat.getText()).toEqual('Kwota przelewu przekracza środki dostępne na rachunku');
-			this.kwotaubezpieczenieFPiFGSP.clear();
+    		fkwotaubezpieczenieFPiFGSP.sendKeys(Number(value)+0.01);
+			expect(fubezpieczenieFPiFGSPKomunikat.getText()).toEqual('Kwota przelewu przekracza środki dostępne na rachunku');
+			fkwotaubezpieczenieFPiFGSP.clear();
 			//sprawdzenie komunikatu Elixir jeżeli środki na rachunku na to pozwalają
 			if (Number(value) > 75000.00) {
-				this.kwotaubezpieczenieFPiFGSP.sendKeys('75000,01');
-				expect(this.ubezpieczenieFPiFGSPKomunikat.getText()).toEqual('Przelew nie może być wykonany jako płatność Elixir');
-				this.kwotaubezpieczenieFPiFGSP.clear();
+				fkwotaubezpieczenieFPiFGSP.sendKeys('75000,01');
+				expect(fubezpieczenieFPiFGSPKomunikat.getText()).toEqual('Przelew nie może być wykonany jako płatność Elixir');
+				fkwotaubezpieczenieFPiFGSP.clear();
 				winston.log('info', "value > 75000");
 			} else {
 				winston.log('info', "Środki na rachunku poniżej 75000,00. Brak sprawdzenia komunikatu o Elixir dla Ubezpieczenia FP i FGSP");
 			}
 		});
-		this.kwotaubezpieczenieFPiFGSP.clear();
-		this.ubezpieczenieFPiFGSP.click();
+		fkwotaubezpieczenieFPiFGSP.clear();
+		fubezpieczenieFPiFGSP.click();
 
 //FUNDUSZ EMERYTUR POMOSTOWYCH
-		this.funduszEmeryturPomostowych.click();
-		this.kwotafunduszEmeryturPomostowych.sendKeys('12,344');
-		expect(this.funduszEmeryturPomostowychKomunikat.getText()).toEqual('Nieprawidłowa kwota przelewu');
-		this.kwotafunduszEmeryturPomostowych.clear();
+		ffunduszEmeryturPomostowych.click();
+		fkwotafunduszEmeryturPomostowych.sendKeys('12,344');
+		expect(ffunduszEmeryturPomostowychKomunikat.getText()).toEqual('Nieprawidłowa kwota przelewu');
+		fkwotafunduszEmeryturPomostowych.clear();
 
 		element(by.css('[class="bd-amount__value"]')).getText().then(function (value) {
-    	this.kwotafunduszEmeryturPomostowych = element(by.repeater('insuranceType in payment.meta.zusInsuranceTypes').row(3)).element(by.model('payment.formData.insurancePremiums[insuranceType].amount'));
-    	this.funduszEmeryturPomostowychKomunikat = element(by.id('PENSIONAmount'));
+    	fkwotafunduszEmeryturPomostowych = element(by.repeater('insuranceType in payment.meta.zusInsuranceTypes').row(3)).element(by.model('payment.formData.insurancePremiums[insuranceType].amount'));
+    	ffunduszEmeryturPomostowychKomunikat = element(by.id('PENSIONAmount'));
     		value=value.replace(/\s+/g, '');
 			value=value.replace(',','.');
 			//kwota powyżej środków na rachunku
-    		this.kwotafunduszEmeryturPomostowych.sendKeys(Number(value)+0.01);
-			expect(this.funduszEmeryturPomostowychKomunikat.getText()).toEqual('Kwota przelewu przekracza środki dostępne na rachunku');
-			this.kwotafunduszEmeryturPomostowych.clear();
+    		fkwotafunduszEmeryturPomostowych.sendKeys(Number(value)+0.01);
+			expect(ffunduszEmeryturPomostowychKomunikat.getText()).toEqual('Kwota przelewu przekracza środki dostępne na rachunku');
+			fkwotafunduszEmeryturPomostowych.clear();
 			//sprawdzenie komunikatu Elixir jeżeli środki na rachunku na to pozwalają
 			if (Number(value) > 75000.00) {
-				this.kwotafunduszEmeryturPomostowych.sendKeys('75000,01');
-				expect(this.funduszEmeryturPomostowychKomunikat.getText()).toEqual('Przelew nie może być wykonany jako płatność Elixir');
-				this.kwotafunduszEmeryturPomostowych.clear();
+				fkwotafunduszEmeryturPomostowych.sendKeys('75000,01');
+				expect(ffunduszEmeryturPomostowychKomunikat.getText()).toEqual('Przelew nie może być wykonany jako płatność Elixir');
+				fkwotafunduszEmeryturPomostowych.clear();
 				winston.log('info', "value > 75000");
 			} else {
 				winston.log('info', "Środki na rachunku poniżej 75000,00. Brak sprawdzenia komunikatu o Elixir dla Funduszu Emerytur Pomostowych");
 			}
 		});
-		this.kwotafunduszEmeryturPomostowych.clear();
-		this.funduszEmeryturPomostowych.click();
-		this.MojBank.click();
+		fkwotafunduszEmeryturPomostowych.clear();
+		ffunduszEmeryturPomostowych.click();
 	};
 
 };

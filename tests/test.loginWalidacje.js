@@ -8,7 +8,7 @@ describe('Walidacje logowania', function() {
 it('błedne hasło', function() {
 	winston.log('info', 'Walidacje logowania błedne hasło');
 	loginPage.navigate();
-	loginPage.bledneHaslo(loginDane.usrLogin,'bledne_haslo');
+	loginPage.bledneHaslo(loginDane.usrLogin,'xxxxx');
 	winston.log('info', 'test pozytywnie zakonczony');
 });
 

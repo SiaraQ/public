@@ -95,39 +95,54 @@
         return (dd[1]?dd:"0"+dd[0]) + '.' + (mm[1]?mm:"0"+mm[0]) + '.' +  yyyy;
    };
 
-   //  this.wyliczSaldoOczekiwanePo= function(element,kwota){
-   //      return element.getText().then(function (text) {
-   //          text=String(text);
-   //          console.log("text="+text);
-   //          text=text.replace(/\s+/g, '');
-   //          text=text.replace(',','.');
-   //          saldoPrzed=Number(text);
-   //          console.log("saldoPrzed="+saldoPrzed);
-   //          kwota=kwota.replace(/\s+/g, '');
-   //          kwota=kwota.replace(',','.');
-   //          text=saldoPrzed-Number(kwota);
-   //          console.log("kwota="+kwota);
-   //          console.log("saldoOczekiwanePo="+text);  
-   //          // text=saldoOczekiwane;  
-   //          return text;
-   //      }) 
-   // };
+    String.prototype.formatujKwoteDoWyswietleniaNaStonie = function (num) {
+        num=String(num);
+        var n = num.indexOf("."); 
+        var numlen = num.length;
+        var dziesietne = num.substr(n+1, numlen);
+        var liczbowe = num.substr(0, n);
+        liczbowe=liczbowe.reverse();
+        if (liczbowe.length==0) {    
+            liczbowe="0";
+        }
+        if ((liczbowe.length>3)&&(liczbowe.length<7)) {    
+            liczbowe=liczbowe.substr(0,3)+" "+liczbowe.substr(3,numlen);
+        }
+        if ((liczbowe.length>6)&&(liczbowe.length<9)) {
+            liczbowe=liczbowe.substr(0,3)+" "+liczbowe.substr(3,3)+" "+liczbowe.substr(6,numlen);
+            // console.log('liczboweR=',liczbowe);
+        }
+        if ((liczbowe.length>8)&&(liczbowe.length<12)) {
+            liczbowe=liczbowe.substr(0,3)+" "+liczbowe.substr(3,3)+" "+liczbowe.substr(6,3)+" "+liczbowe.substr(9,numlen);
+            // console.log('liczboweR=',liczbowe);
+        }
+        if (dziesietne.length>2) dziesietne = dziesietne.substr(0,2);
+        if (dziesietne.length<2) dziesietne = dziesietne+"0";  
+        num=String(liczbowe.reverse()+","+dziesietne);
+        console.log("formatujKwoteDoWyswietleniaNaStonie="+num);
+    return ""+num;
+    };
+
+    this.zwrocOstatniaKwoteZUS = function(kw1,kw2,kw3,kw4){
+        if (kw4!="") return kw4;
+        else if ((kw3!="")&&(kw4=="")) return kw3;
+        else if ((kw2!="")&&(kw3=="")&&(kw4=="")) return kw2;
+        else return kw1;
+    }
+
     this.wyliczSaldoOczekiwanePo= function(element,kwota){
-        // var saldoOczekiwane=0;
         return element.getText().then(function (text) {
             text=String(text);
-            console.log("text="+text);
             text=text.replace(/\s+/g, '');
             text=text.replace(',','.');
             saldoPrzed=Number(text);
-            console.log("saldoPrzed="+saldoPrzed);
             kwota=kwota.replace(/\s+/g, '');
             kwota=kwota.replace(',','.');
-            saldoOczekiwane=saldoPrzed-Number(kwota);
-            console.log("kwota="+kwota);
-            console.log("saldoOczekiwanePo="+saldoOczekiwane);  
-            text=saldoOczekiwane;  
-            return text;
+            saldoOczekiwane=Number(text)-Number(kwota); 
+            // text.formatujKwoteDoWyswietleniaNaStonie(saldoOczekiwane);
+            // console.log(text.formatujKwoteDoWyswietleniaNaStonie(saldoOczekiwane));  
+            return text.formatujKwoteDoWyswietleniaNaStonie(saldoOczekiwane);
+
         }) 
    };
 
@@ -181,35 +196,35 @@
           })
     };
 
- 	this.formatujKwoteDoWyswietleniaNaStonie = function (num) {
-        num=String(num);
- 		var n = num.indexOf("."); 
- 		 // console.log('n=',n);
- 		var numlen = num.length;
- 		 // console.log('numlen=',numlen);
- 		// var dziesietne = num.substr(n+1, num.length-1);
-        var dziesietne = num.substr(n+1, n+2);
- 		 // console.log('dziesietne=',dziesietne);
- 		var lenD = dziesietne.length;
- 		 // console.log('lenD=',lenD);
- 		var liczbowe = num.substr(0, n);
- 		 // console.log('liczbowe=',liczbowe);
- 		var lenL = liczbowe.length;
- 		 // console.log('lenL=',lenL);
- 		if (lenL==6) {
- 			num=num.substr(0,3)+" "+num.substr(3,numlen);
- 		}
- 		if (lenL==9) {
- 			num=num.substr(0,3)+" "+num.substr(3,9)+" "+num.substr(9,numlen);
- 		}
- 		if (numlen==1) return num+",00";
- 			else if (lenD==1)  {
- 				return num+"0";
- 			} else if (n==0) {
- 				return "0"+num;
- 			};	
-    return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1 ");
-	};
+    String.prototype.reverse=function(){return this.split("").reverse().join("");}
+
+    this.formatujKwoteDoWyswietleniaNaStonie = function (num) {
+         // num=String(num);
+        var n = num.indexOf("."); 
+        var numlen = num.length;
+        var dziesietne = num.substr(n+1, numlen);
+        var liczbowe = num.substr(0, n);
+        liczbowe=liczbowe.reverse();
+        if (liczbowe.length==0) {    
+            liczbowe="0";
+        } else
+        if ((liczbowe.length>3)&&(liczbowe.length<7)) {    
+            liczbowe=liczbowe.substr(0,3)+" "+liczbowe.substr(3,numlen);
+        } else
+        if ((liczbowe.length>6)&&(liczbowe.length<9)) {
+            liczbowe=liczbowe.substr(0,3)+" "+liczbowe.substr(3,3)+" "+liczbowe.substr(6,numlen);
+            console.log('liczboweR=',liczbowe);
+        } else
+        if ((liczbowe.length>8)&&(liczbowe.length<12)) {
+            liczbowe=liczbowe.substr(0,3)+" "+liczbowe.substr(3,3)+" "+liczbowe.substr(6,3)+" "+liczbowe.substr(9,numlen);
+            console.log('liczboweR=',liczbowe);
+        }
+        if (dziesietne.length>2) dziesietne = dziesietne.substr(0,2);
+        if (dziesietne.length<2) dziesietne = dziesietne+"0";  
+        num=String(liczbowe.reverse()+","+dziesietne);
+        console.log("formatujKwoteDoWyswietleniaNaStonie="+num);
+    return ""+num;
+    };
 
 
 	 function validatepesel(pesel) {
