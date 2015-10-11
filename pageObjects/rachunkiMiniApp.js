@@ -1,5 +1,6 @@
 var accounts = function () {
 	var helpers = require('./helpers.js');
+	var login = require('./loginPage.js');
 	var winston = require('winston');
 	var mobileMenu = require('./mobileMenu.js');
 	var params = browser.params;
@@ -7,7 +8,7 @@ var accounts = function () {
 	this.rachunki = element(by.css('[class="raiff-icons accounts widget-tile__widget-header__widget-icon"]'));
 	this.rachunekHistoria = element(by.model('table.tableConfig.selectedAccount'));
 	this.rachunkiHistoriaLista = element(by.css('[ui-sref="accounts.transactions"]'));
-	this.mojBank = element(by.css('[class="raiff-icon logo"]'));
+	this.mojBank = element(by.css('[class="raiff-icons logo"]'));
 	this.szczegoly = element(by.buttonText('Szczegóły'));
 	this.nrRachunku = element(by.css('[label="Nr rachunku"]'));
 	this.nazwaRachunku = element(by.css('[label="Nazwa rachunku"]'));
@@ -55,8 +56,10 @@ var accounts = function () {
 		} else {
 			helpers.waitUntilReady(this.mojBank);	
 			this.mojBank.click();
+			login.kliknijWBaner();
 			helpers.waitUntilReady(this.rachunki);	
-			this.rachunki.click();
+			helpers.clickSmallElement(this.rachunki);
+			// this.rachunki.click();
 		}
 			helpers.waitUntilReady(this.rachunkiHistoriaLista);	
 		this.rachunkiHistoriaLista.click();

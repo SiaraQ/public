@@ -26,7 +26,8 @@ var loginPage = function () {
 		var baner =  element(by.css('[ng-click="$close()"]'));
 		    baner.isPresent().then(function(result) {
 		    if ( result ) {
-		        baner.click();
+		    	helpers.clickSmallElement(baner);
+		        // baner.click();
 		    } else {
 		        //do nothing
 		    }

@@ -11,7 +11,8 @@ var payments = function () {
 	var fkodSms = element(by.model('payment.items.credentials'));
 	var fpotwierdzenie = element(by.css('[class="bd-msg-panel__message"]'));
 	//krok1 przelew krajowy
-	var ftypPlatnosci = element(by.model('payment.type'));
+	var fprzelewWlasny = element(by.css('[ui-sref="payments.new_internal.fill"]'));
+	// var fprzelewWlasny = element(by.model('payment.type'));
 	var fzRachunku = element(by.model('selection.account'));
 	var fnaRachunek = element(by.css('[name="recipientAccountId"]'));
 	var fdostepneSrodki = element(by.css('[class="bd-amount__value"]'));
@@ -45,9 +46,8 @@ var payments = function () {
 		winston.log('info', "Dane testu: rachunekNadawcy="+rachunekNadawcy+" naRachunek="+naRachunek+" tytulPrzelewu="+tytulPrzelewu+" kwota="+kwota+" hasloSms="+hasloSms);
 		helpers.waitUntilReady(fplatnosci);	
 		fplatnosci.click();
-		  helpers.waitUntilReady(ftypPlatnosci);	
-		ftypPlatnosci.click();
-		helpers.wybierzElementZListyPoNumerze(1);
+		  helpers.waitUntilReady(fprzelewWlasny);	
+		fprzelewWlasny.click();
 		  helpers.waitUntilReady(fzRachunku);	
 		fzRachunku.click();
 		helpers.wybierzElementZListyPoTekscie('accountItem in $select.items track by accountItem.accountNo',rachunekNadawcy);
@@ -93,9 +93,9 @@ var payments = function () {
 	this.przelewWlasnyWalidacjaTytulem = function () {
 		helpers.waitUntilReady(fplatnosci);	
 		fplatnosci.click();
-		  helpers.waitUntilReady(ftypPlatnosci);	
-		ftypPlatnosci.click();
-		helpers.wybierzElementZListyPoNumerze(1);
+		  helpers.waitUntilReady(fprzelewWlasny);	
+		fprzelewWlasny.click();
+		// helpers.wybierzElementZListyPoNumerze(1);
 		  helpers.waitUntilReady(ftytul);	
 		ftytul.click();
 		ftytul.clear();
@@ -109,15 +109,14 @@ var payments = function () {
 	this.przelewWlasnyWalidacjaKwoty = function () {
 		helpers.waitUntilReady(fplatnosci);	
 		fplatnosci.click();
-		  helpers.waitUntilReady(ftypPlatnosci);	
-		ftypPlatnosci.click();
-		helpers.wybierzElementZListyPoNumerze(1);
+		  helpers.waitUntilReady(fprzelewWlasny);	
+		fprzelewWlasny.click();
+		// helpers.wybierzElementZListyPoNumerze(1);
 		  helpers.waitUntilReady(fkwota);	
 		//funkcja, w której można działać na kwotach
 		element(by.css('[class="bd-amount__value"]')).getText().then(function (value) {
     		fsaldo =  element(by.model('payment.formData.amount'));
     		fkwotaKomunikat = element(by.css('[eb-name="amount"]')).element(by.id('amount'));
-
     	value=value.replace(/\s+/g, '');
 		value=value.replace(',','.');
 		//kwota powyżej środków na rachunku
@@ -139,9 +138,9 @@ var payments = function () {
 	this.przelewWlasnyWalidacjaDaty = function () {
 		helpers.waitUntilReady(fplatnosci);	
 		fplatnosci.click();
-		  helpers.waitUntilReady(ftypPlatnosci);	
-		ftypPlatnosci.click();
-		helpers.wybierzElementZListyPoNumerze(1);
+		  helpers.waitUntilReady(fprzelewWlasny);	
+		fprzelewWlasny.click();
+		// helpers.wybierzElementZListyPoNumerze(1);
 		  helpers.waitUntilReady(fdataRealizacji);	
 		helpers.scrollWindow(fdataRealizacji);
 		fdataRealizacji.click();

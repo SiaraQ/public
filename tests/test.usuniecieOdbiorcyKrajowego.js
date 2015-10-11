@@ -5,7 +5,7 @@ describe('Odbiorcy Testy', function() {
 
 it('Usuniecie odbiorcy krajowego', function() {
 	winston.log('info', 'TEST = Usuniecie odbiorcy krajowego');
-    odbiorcy.usunOdbiorce();
+    odbiorcy.usunOdbiorce(loginDane.rachunekNadawcy);
 });
 
 });

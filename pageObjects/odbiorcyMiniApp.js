@@ -139,7 +139,7 @@ var payments = function () {
 		}
 		var rachunekNadawcyNew="";var nazwaOdbiorcyNew="";var rachunekOdbiorcyNew="";var daneOdbiorcyNew="";var tytulPrzelewuNew="";
 		this.dodajOdbiorceKrajowego(rachunekNadawcyNew,nazwaOdbiorcyNew,rachunekOdbiorcyNew,daneOdbiorcyNew,tytulPrzelewuNew,hasloSms);
-		this.wyszukajOdbiorce(edytuj);
+		this.wyszukajOdbiorce(nazwaOdbiorcyNew);
 		this.edytuj.click();
 		helpers.waitUntilReady(this.twojaNazwaOdbiorcy);
 		this.twojaNazwaOdbiorcy.clear();
@@ -164,23 +164,28 @@ var payments = function () {
 			winston.log('info', "Wybranie opcji Zatwierdź - przejście do strony potwierdzenia informacji");
 		});
 		helpers.waitUntilReady(this.potwierdzenie);
-		expect(this.potwierdzenie.getText()).toBe("Odbiorca zdefiniowany został utworzony");
+		expect(this.potwierdzenie.getText()).not.toContain("Zlecenie odrzucone");
 		expect(this.potwierdzenie.getText()).not.toContain("odrzuc");
 	}
 
-	this.usunOdbiorce = function () {
-		var rachunekNadawcyNew="";var nazwaOdbiorcyNew="";var rachunekOdbiorcyNew="";var daneOdbiorcyNew="";var tytulPrzelewuNew="";var hasloSms="";
-		if (hasloSms=="") hasloSms='1111';
+	this.usunOdbiorce = function (rachunekNadawcyNew) {
+		var random = Math.random();
+		var hasloSms='1111';
+	    var nazwaOdbiorcyNew="nazwaOdbiorcy"+random;
+		var rachunekOdbiorcyNew=helpers.losujRachunekBiezacyPL();
+		var daneOdbiorcyNew="Kowalski Stanisław"
+		var tytulPrzelewuNew="tytul"+random;
+
 		this.dodajOdbiorceKrajowego(rachunekNadawcyNew,nazwaOdbiorcyNew,rachunekOdbiorcyNew,daneOdbiorcyNew,tytulPrzelewuNew,hasloSms);
 		this.wyszukajOdbiorce(nazwaOdbiorcyNew);
-		this.sprawdzDaneOdbiorcy(rachunekNadawcyNew,nazwaOdbiorcyNew,rachunekOdbiorcyNew,daneOdbiorcyNew,tytulPrzelewuNew);
+		// this.sprawdzDaneOdbiorcy(rachunekNadawcyNew,nazwaOdbiorcyNew,rachunekOdbiorcyNew,daneOdbiorcyNew,tytulPrzelewuNew);
 		this.usun.click();
 		this.sprawdzDaneOdbiorcyStronaDruga(rachunekNadawcyNew,nazwaOdbiorcyNew,rachunekOdbiorcyNew,daneOdbiorcyNew,tytulPrzelewuNew);
 		helpers.waitUntilReady(this.kodSms);
 		this.kodSms.sendKeys(hasloSms);
 		this.usun.click();
 		helpers.waitUntilReady(this.potwierdzenie);
-		expect(this.potwierdzenie.getText()).toBe("Odbiorca zdefiniowany został usuniety");
+		expect(this.potwierdzenie.getText()).not.toContain("Zlecenie odrzucone");
 		expect(this.potwierdzenie.getText()).not.toContain("odrzuc");
 	}
 

@@ -4,6 +4,8 @@ var payments = function () {
 	var winston = require('winston');
 
 	var fplatnosci = element(by.cssContainingText('.widget-tile__widget-header__title', 'Płatności'));
+	// #/payments/new/domestic/fill
+	var fplatnosciLink = element(by.css('[icon="raiff-icons raiff_przelew"]'));
 	//powtarzalne
 	var fkodSms = element(by.model('payment.items.credentials'));
 	var fpowrot = element(by.buttonText('Powrót do listy'));
@@ -11,6 +13,7 @@ var payments = function () {
 	//krok1 przelew krajowy
 	var ftypPlatnosci = element(by.model('payment.type'));
 	var fzRachunku = element(by.model('selection.account'));
+	var wybierzOdbiorce = element(by.model('selection.recipient'));
 	var fdostepneSrodki = element(by.css('[class="bd-amount__value"]'));
 	var frachunekOdbiorcy = element(by.model('payment.formData.recipientAccountNo'));
 	var fnazwaOdbiorcy = element(by.model('payment.formData.recipientName')); //tez Nazwa płatnika ZUS
@@ -36,10 +39,11 @@ var payments = function () {
 	//button Anuluj Popraw
 	//Zatwierdź  lub ng-click="moveNext()"
 
- 	this.tworzPrzelewZwykly = function (rachunekNadawcy,nazwaOdbiorcy,rachunekOdbiorcy,tytulPrzelewu,kwota,dataRealizacji,hasloSms) {
+ 	this.tworzPrzelewZwykly = function (rachunekNadawcy,nazwaOdbiorcy,rachunekOdbiorcy,tytulPrzelewu,kwota,dataRealizacji,hasloSms,odbiorca) {
 		var saldoPrzed=0;
 		var saldoOczekiwanePo=0;
 		var random = Math.random();
+		// var odbiorca=false;
 		if (hasloSms=="") {
 			hasloSms='1111';
 		}
@@ -59,8 +63,12 @@ var payments = function () {
 
 		winston.log('info', "Dane testu: rachunekNadawcy="+rachunekNadawcy+" rachunekOdbiorcy="+rachunekOdbiorcy+" tytulPrzelewu="+tytulPrzelewu+" hasloSms="+hasloSms);
 		winston.log('info', "dataRealizacji="+dataRealizacjiNew);
- 		helpers.waitUntilReady(fplatnosci);
-		fplatnosci.click();
+		if (odbiorca) {
+			fplatnosciLink.click();
+		} else {
+			helpers.waitUntilReady(fplatnosci);
+			fplatnosci.click();	
+		}
 		helpers.waitUntilReady(ftypPlatnosci);
 		ftypPlatnosci.click();
 		// browser.driver.sleep(3000);
@@ -70,10 +78,18 @@ var payments = function () {
 		fzRachunku.click();
 		helpers.wybierzElementZListyPoTekscie('accountItem in $select.items track by accountItem.accountNo',rachunekNadawcy);
 		helpers.waitUntilReady(fdostepneSrodki);
-		helpers.wyliczSaldoOczekiwanePo(fdostepneSrodki,kwota).then(function(value) {
- 			frachunekOdbiorcy.sendKeys(rachunekOdbiorcy);
+		if (odbiorca) {
+			helpers.waitUntilReady(wybierzOdbiorce);
+			wybierzOdbiorce.click();
+			helpers.wybierzElementZListyPoTekscie('recipientItem in $select.items track by $index',nazwaOdbiorcy);
+		}
+		else {
+			frachunekOdbiorcy.sendKeys(rachunekOdbiorcy);
 			fnazwaOdbiorcy.sendKeys(nazwaOdbiorcy);
 			ftytul.sendKeys(tytulPrzelewu);
+		}
+		helpers.wyliczSaldoOczekiwanePo(fdostepneSrodki,kwota).then(function(value) {
+
 			fkwota.sendKeys(kwota); 
 			if (dataRealizacji!=""){
 				fdataRealizacji.clear();
