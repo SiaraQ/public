@@ -22,12 +22,12 @@ var cards = function () {
 	this.powodZastrzezeniaPotwierdzenie = element(by.css('[label="Powód zastrzeżenia"]'));
 	this.checkboxNowaKartaPotwierdzenie = element(by.css('[label="Proszę o wydanie nowej karty w miejsce zastrzeżonej"]'));
 
-	this.zastrzezenieKarty = function (powodZastrzezenia,numerKarty,hasloSms) {
+	this.zastrzezenieKarty = function (powodZastrzezenia,numerKartyCaly,hasloSms) {
 
 		if (powodZastrzezenia=="")	powodZastrzezenia="zgubiona karta";
 		if (hasloSms=="")	hasloSms="1111";
-
-		winston.log('info', "Dane testu: numerKarty="+numerKarty+" powodZastrzezenia="+powodZastrzezenia);
+		var numerKarty=helpers.zamienRachunekKarty(numerKartyCaly);
+		winston.log('info', "Dane testu: numerKarty="+numerKartyCaly+" powodZastrzezenia="+powodZastrzezenia);
 
 			helpers.waitUntilReady(this.karty);	
 		this.karty.click();
@@ -62,7 +62,9 @@ var cards = function () {
 			helpers.waitUntilReady(this.kodSms);	
 		this.kodSms.sendKeys(hasloSms);
 			helpers.waitUntilReady(this.zatwierdz);	
-		this.zatwierdz.click();
+		this.zatwierdz.click().then(function(){
+				winston.log('info', "Wybranie opcji Zatwierdź - przejście do strony potwierdzenia informacji");
+			});
 		// browser.driver.sleep(1000);
 			helpers.waitUntilReady(this.potwierdzenie);	
 		expect(this.potwierdzenie.getText()).toContain('Karta');

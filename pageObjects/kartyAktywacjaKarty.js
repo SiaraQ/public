@@ -16,9 +16,9 @@ var cards = function () {
 	this.numerKartyPotwierdzenie = element(by.css('[label="Nazwa karty"]'));
 	this.dataWaznosci = element(by.css('[label="Data ważności"]'));
 
-	this.aktywacjaKarty = function (numerKarty,hasloSms) {
+	this.aktywacjaKarty = function (numerKartyCaly,hasloSms) {
 		if (hasloSms=="")	hasloSms="1111";
-
+		var numerKarty=helpers.zamienRachunekKarty(numerKartyCaly);
 		winston.log('info', "Dane testu: numerKarty="+numerKarty+" hasloSms="+hasloSms);
 
 		helpers.waitUntilReady(this.karty);
@@ -38,7 +38,9 @@ var cards = function () {
 		expect(this.dataWaznosci.getText()).toContain('Data ważności');
 		helpers.waitUntilReady(this.kodSms);
 		this.kodSms.sendKeys(hasloSms);
-		this.zatwierdz.click();
+		this.zatwierdz.click().then(function(){
+				winston.log('info', "Wybranie opcji Zatwierdź - przejście do strony potwierdzenia informacji");
+			});
 		helpers.waitUntilReady(this.potwierdzenie);
 		expect(this.potwierdzenie.getText()).toContain('Karta');
 		expect(this.potwierdzenie.getText()).toContain('została aktywowana');

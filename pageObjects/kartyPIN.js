@@ -21,9 +21,10 @@ var cards = function () {
 	this.nowyPinPotwierdzenie = element(by.css('[label="Nowy PIN"]'));
 	this.nowyPinPotPotwierdzenie = element(by.css('[label="Potwierdź nowy PIN"]'));
 
-	this.zmienPin = function (numerKarty,pin,hasloSms) {
+	this.zmienPin = function (numerKartyCaly,pin,hasloSms) {
 		if (pin=="") pin="2468"
 		if (hasloSms=="") hasloSms="1111"
+		var numerKarty=helpers.zamienRachunekKarty(numerKartyCaly);
 		winston.log('info', "Dane testu: numerKarty="+numerKarty+" pin="+pin+" hasloSms="+hasloSms);
 		helpers.waitUntilReady(this.karty);
 		this.karty.click();
@@ -49,9 +50,12 @@ var cards = function () {
 		expect(this.nowyPinPotPotwierdzenie.getText()).toEqual('Potwierdź nowy PIN\n****');	
 		helpers.waitUntilReady(this.kodSms);
 		this.kodSms.sendKeys(hasloSms);
-		this.zatwierdz.click();
+		this.zatwierdz.click().then(function(){
+				winston.log('info', "Wybranie opcji Zatwierdź - przejście do strony potwierdzenia informacji");
+			});
 		helpers.waitUntilReady(this.potwierdzenie);
-		expect(this.potwierdzenie.getText()).toEqual('Operacja przyjęta do realizacji');
+		// expect(this.potwierdzenie.getText()).toEqual('Operacja przyjęta do realizacji');
+		expect(this.potwierdzenie.getText()).not.toContain("odrzuc");
 	};
 
 

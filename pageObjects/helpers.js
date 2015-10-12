@@ -285,6 +285,12 @@
         return rachunek;
     }
 
+    this.zamienRachunekKarty = function (rachunekKarty) {
+        var rachunek=rachunekKarty;
+            rachunek=rachunekKarty.substr(0,4)+" **** **** "+rachunekKarty.substr(rachunekKarty.length-4,4);
+        return rachunek;
+    }
+
     this.losujKwote = function () {
          return getDigit()+','+getDigit();
     }

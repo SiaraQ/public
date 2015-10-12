@@ -82,10 +82,13 @@ var cards = function () {
 		expect(this.tytulemPotwierdzenie.getText()).toEqual('Tytułem\n'+tytul);
 		expect(this.dataRealizacjiPotwierdzenie.getText()).toContain('Data realizacji');
 		helpers.waitUntilReady(this.zatwierdz);
-		this.zatwierdz.click();
+		this.zatwierdz.click().then(function(){
+				winston.log('info', "Wybranie opcji Zatwierdź - przejście do strony potwierdzenia informacji");
+			});
 		helpers.waitUntilReady(this.potwierdzenie);
 		expect(this.potwierdzenie.getText()).toContain('Spłata karty');
 		expect(this.potwierdzenie.getText()).toContain('została przekazana do realizacji');
+		expect(this.potwierdzenie.getText()).not.toContain("odrzuc");
 	};
 
 	

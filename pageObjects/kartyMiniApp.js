@@ -82,12 +82,15 @@ var cards = function () {
 			expect(this.typSplatyOpis.getText()).toEqual('Typ spłaty\nSpłata minimalna');
 		}
 		helpers.waitUntilReady(this.zatwierdz);
-		this.zatwierdz.click();
+		this.zatwierdz.click().then(function(){
+				winston.log('info', "Wybranie opcji Zatwierdź - przejście do strony potwierdzenia informacji");
+			});
 		helpers.waitUntilReady(this.numerRachunkuKartyOpis);
 		expect(this.numerRachunkuKartyOpis.getText()).toEqual('Automatyczna spłata karty kredytowej została pomyślnie dodana');
 	};
 
 	this.usuniecieAutomatycznejSplaty = function (rodzajSplaty,rachunekKarty,rachunekNadawcy) {
+		winston.log('info', "Dane testu: rachunekKarty="+rachunekKarty+" rachunekNadawcy="+rachunekNadawcy);
 		helpers.waitUntilReady(this.automatycznaSplata);
 		this.automatycznaSplata.click();
 		helpers.waitUntilReady(this.usun);
@@ -104,7 +107,9 @@ var cards = function () {
 		if (rodzajSplaty==2) {
 			expect(this.typSplatyOpis.getText()).toEqual('Typ spłaty\nSpłata minimalna');
 		}
-		this.zatwierdz.click();
+		this.zatwierdz.click().then(function(){
+				winston.log('info', "Wybranie opcji Zatwierdź - przejście do strony potwierdzenia informacji");
+			});
 		helpers.waitUntilReady(this.potwierdzenie);
 		expect(this.potwierdzenie.getText()).toEqual('Automatyczna spłata karty kredytowej została pomyślnie usunięta');
 	};
