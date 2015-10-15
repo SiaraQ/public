@@ -152,9 +152,16 @@
 	};
 
     this.dataBiezacaPlusDzien = function (plus) {
-        var d = new Date();
-        d.setDate(d.getDate() + plus);
-        return d.yyyymmdd();
+        // var d = new Date();
+        // console.log(d);
+        // d.setDate(d.getDate() + plus);
+        // console.log(d);
+        // d.toLocaleDateString();
+        // return d.yyyymmdd();
+        var ms = new Date().getTime() + (86400000 * plus);
+        var added = new Date(ms);
+        console.log(added);
+        return added.yyyymmdd();
     };
 
 	this.returnFirstElementFromRepeater = function (repeaterTag,classN) {
