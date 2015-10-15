@@ -26,12 +26,12 @@ var cards = function () {
 
 	this.zmienLimit = function (numerKartyCaly,liczbaTransakcjiBezgot,kwotaTransakcjiBezgot,liczbaTransakcjiGot,kwotaTransakcjiGot,hasloSms) {
 		if (liczbaTransakcjiBezgot=="") liczbaTransakcjiBezgot="1"
-		if (kwotaTransakcjiBezgot=="") kwotaTransakcjiBezgot="1000"
+		if (kwotaTransakcjiBezgot=="") kwotaTransakcjiBezgot="150"
 		if (liczbaTransakcjiGot=="") liczbaTransakcjiGot="2"
-		if (kwotaTransakcjiGot=="") kwotaTransakcjiGot="2000"
+		if (kwotaTransakcjiGot=="") kwotaTransakcjiGot="250"
 		if (hasloSms=="") hasloSms="1111"
 		var numerKarty=helpers.zamienRachunekKarty(numerKartyCaly);
-		winston.log('info', "Dane testu: numerKarty="+numerKarty+" liczbaTransakcjiBezgot="+liczbaTransakcjiBezgot+" kwotaTransakcjiBezgot="+kwotaTransakcjiBezgot);
+		winston.log('info', "Dane testu: numerKarty="+numerKarty+"= liczbaTransakcjiBezgot="+liczbaTransakcjiBezgot+" kwotaTransakcjiBezgot="+kwotaTransakcjiBezgot);
 		winston.log('info', "Dane testu: liczbaTransakcjiGot="+liczbaTransakcjiGot+" kwotaTransakcjiGot="+kwotaTransakcjiGot);
 		helpers.waitUntilReady(this.karty);
 		this.karty.click();
@@ -39,6 +39,8 @@ var cards = function () {
 		this.zmienLimity.click();
 		helpers.waitUntilReady(this.nazwaKarty);
 		this.nazwaKarty.click();
+
+		// ng-repeat="cardItem in $select.items track by $index"
 		helpers.wybierzElementZListyPoTekscie('cardItem in $select.items track by $index',numerKarty);
 		helpers.waitUntilReady(this.liczbaTransakcjiBezgot);
 		this.liczbaTransakcjiBezgot.clear();
@@ -66,6 +68,7 @@ var cards = function () {
 			});
 		helpers.waitUntilReady(this.potwierdzenie);
 		expect(this.potwierdzenie.getText()).not.toContain("odrzuc");
+		expect(this.potwierdzenie.getText()).not.toContain("nie");
 	};
 
 

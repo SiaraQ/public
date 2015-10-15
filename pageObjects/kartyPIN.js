@@ -56,6 +56,7 @@ var cards = function () {
 		helpers.waitUntilReady(this.potwierdzenie);
 		// expect(this.potwierdzenie.getText()).toEqual('Operacja przyjęta do realizacji');
 		expect(this.potwierdzenie.getText()).not.toContain("odrzuc");
+		expect(this.potwierdzenie.getText()).not.toContain("nie");
 	};
 
 

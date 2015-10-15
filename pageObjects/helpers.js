@@ -81,6 +81,7 @@
             return text.indexOf(szukanyTekst) > -1;
         });
         }).then(function(filteredElements) {
+            console.log("Znalalo na liście="+szukanyTekst); 
             return filteredElements[0].click();
         })
       
