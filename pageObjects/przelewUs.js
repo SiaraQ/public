@@ -50,11 +50,8 @@ var payments = function () {
 		var enabled = true;
 
 		if (dataRealizacji!="") dataRealizacjiNew=helpers.dataBiezacaPlusDzien(dataRealizacji);
-		if ((typOkresu=="")&&(numerOkresu=="")&&(rokOkresu="")) {
-			//puste pola na formatce
-			enabled = false;
-		} else 
-		{
+		if ((symbolFormularza=="")&&(typOkresu=="")&&(numerOkresu=="")&&(rokOkresu="")) {
+			if (typOkresu=="") typOkresu="J - dzień";
 			switch (typOkresu) {
 				case 'D - dekada':
 			        numertypOkresu = 1;
@@ -79,8 +76,7 @@ var payments = function () {
 			    //J - dzień;
 			    	if (numerOkresu=="") numerOkresu="0101";
 			        numertypOkresu = 0;
-			} 
-			if (typOkresu=="") typOkresu="J - dzień";
+			} 	
 			if (rokOkresu=="") rokOkresu="15";
 		}
 
@@ -158,7 +154,8 @@ var payments = function () {
 		helpers.wybierzElementZListyPoTekscie('formSymbol in $select.items track by $index',symbolFormularza);
 		// browser.driver.sleep(2000);
 		if ((typOkresu!="")&&(numerOkresu!="")&&(rokOkresu!="")) {
-					helpers.waitUntilReady(ftypOkresu);	
+				console.log('puste wartosci');
+				helpers.waitUntilReady(ftypOkresu);	
                 ftypOkresu.click();
                 browser.driver.sleep(2000);
 				helpers.wybierzElementZListyPoTekscie('periodTypeCode in $select.items track by $index',typOkresu);

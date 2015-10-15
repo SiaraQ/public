@@ -198,24 +198,26 @@ var payments = function () {
 		this.nowyOdbiorca.click();
 		helpers.waitUntilReady(this.twojaNazwaOdbiorcy);
 		this.twojaNazwaOdbiorcy.sendKeys('123456789012345678901234567890123456');
+		helpers.waitUntilReady(this.twojaNazwaOdbiorcyKomunikat);
 		expect(this.twojaNazwaOdbiorcyKomunikat.getText()).toEqual('Pole Nazwa skrócona odbiorcy nie może być dłuższe niż 35 znaków i powinno zawierać tylko litery, cyfry oraz znaki ! @ # $ % ^ & * ( ) - + [ ] { } : ; < > . ? \\ ~ ` \' , /.');
 		this.twojaNazwaOdbiorcy.clear();
 		this.twojaNazwaOdbiorcy.sendKeys('=');
 		expect(this.twojaNazwaOdbiorcyKomunikat.getText()).toEqual('Pole Nazwa skrócona odbiorcy nie może być dłuższe niż 35 znaków i powinno zawierać tylko litery, cyfry oraz znaki ! @ # $ % ^ & * ( ) - + [ ] { } : ; < > . ? \\ ~ ` \' , /.');
 		this.twojaNazwaOdbiorcy.clear();
-		expect(this.twojaNazwaOdbiorcyKomunikat.getText()).toEqual('Nazwa odbiorcy nie może być pusta');
+		expect(this.twojaNazwaOdbiorcyKomunikat.getText()).toEqual('Nazwa skrócona odbiorcy nie może być pusta');
 		this.twojaNazwaOdbiorcy.clear();
 	};
 
 	this.dodajOdbiorceKrajowegoWalidacjaNumerRachunku = function () {
-		helpers.waitUntilReady(this.twojaNazwaOdbiorcy);
+		helpers.waitUntilReady(this.platnosci);
 		this.platnosci.click();
-		browser.driver.sleep(2000);
+		helpers.waitUntilReady(this.odbiorcyZdefiniowani);
 		this.odbiorcyZdefiniowani.click();
-		browser.driver.sleep(2000);
+		helpers.waitUntilReady(this.nowyOdbiorca);
 		this.nowyOdbiorca.click();
-		browser.driver.sleep(2000);
+		helpers.waitUntilReady(this.numerRachunku);
 		this.numerRachunku.sendKeys('83101010230000261395100000');
+		helpers.waitUntilReady(this.numerRachunkuKomunikat);
 		expect(this.numerRachunkuKomunikat.getText()).toEqual('Rachunek odbiorcy nie może być rachunkiem ZUS.');
 		this.numerRachunku.clear();
 		this.numerRachunku.sendKeys('12');

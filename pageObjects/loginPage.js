@@ -9,7 +9,7 @@ var loginPage = function () {
 	this.logoutMessage = element(by.className('content-panel'));  
 	this.panelMessage = element(by.css('[class="bd-msg-panel__message"]'));
 	this.krotkimessage = element(by.css('[ng-if="(authForm.$submitted) && authForm.j_password.$error.minlength"]'));
-	this.rachunkiSrodki= element(by.css('[class="accounts widget-content"]'));
+	// this.rachunkiSrodki= element(by.css('[class="accounts widget-content"]'));
 	// this.kartySrodki = element(by.css('[ng-controller="CardsWidgetContentController"]'));
 	
 	var settings = {
@@ -46,7 +46,7 @@ var loginPage = function () {
             });
         }, 60000,'User nie zalogowal sie do aplikacji');
         this.kliknijWBaner();
-        helpers.waitUntilReady(this.rachunkiSrodki);
+        // helpers.waitUntilReady(this.rachunkiSrodki);
      };
 
 	this.logOut = function () {
