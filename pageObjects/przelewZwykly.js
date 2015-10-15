@@ -93,7 +93,7 @@ var payments = function () {
 			fkwota.sendKeys(kwota); 
 			if (dataRealizacji!=""){
 				fdataRealizacji.clear();
-				tfdataRealizacji.sendKeys(dataRealizacjiNew);
+				fdataRealizacji.sendKeys(dataRealizacjiNew);
 			}
 			fdalej.click().then(function(){
 				winston.log('info', "Wybranie opcji Zatwierdź - przejście do strony drugiej");

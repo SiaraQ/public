@@ -31,8 +31,9 @@ var cards = function () {
 	this.sms = element(by.model('rbAuth.value"'));	
 	//automatyczna splata
 	this.automatycznaSplata=element(by.css('[ui-sref="cards.autorepayment"]'));
-	this.nowaSplata = element(by.buttonText('Nowa spłata'));
+	this.nowaSplata = element(by.buttonText('NOWA SPŁATA'));
 	//automatyczna splata szczegoly
+	this.potwierdzenie=element(by.css('[class="bd-msg-panel__message"]'));
 	this.numerRachunkuKartyOpis = element(by.css('[label="Numer rachunku karty"]'));
 	this.numerRachunkuOpis = element(by.css('[label="Numer rachunku"]'));
 	this.typSplatyOpis = element(by.css('[label="Typ spłaty"]'));
@@ -83,12 +84,13 @@ var cards = function () {
 		}
 		helpers.waitUntilReady(this.zatwierdz);
 		this.zatwierdz.click();
-		helpers.waitUntilReady(this.numerRachunkuKartyOpis);
-		expect(this.numerRachunkuKartyOpis.getText()).toEqual('Automatyczna spłata karty kredytowej została pomyślnie dodana');
+		helpers.waitUntilReady(this.potwierdzenie);
+		expect(this.potwierdzenie.getText()).not.toContain("odrzuc");
 		this.powrotDoListy.click();
 	};
 
 	this.usuniecieAutomatycznejSplaty = function (rodzajSplaty,rachunekKarty,rachunekNadawcy) {
+		var rachunekKarty = helpers.zamienRachunekNaNrbZeSpacjami(rachunekKarty);
 		helpers.waitUntilReady(this.automatycznaSplata);
 		this.automatycznaSplata.click();
 		helpers.waitUntilReady(this.usun);
@@ -107,7 +109,7 @@ var cards = function () {
 		}
 		this.zatwierdz.click();
 		helpers.waitUntilReady(this.potwierdzenie);
-		expect(this.potwierdzenie.getText()).toEqual('Automatyczna spłata karty kredytowej została pomyślnie usunięta');
+		expect(this.potwierdzenie.getText()).not.toContain("odrzuc");
 		this.powrotDoListy.click();
 	};
 
@@ -131,7 +133,7 @@ var cards = function () {
 		}
 		this.zatwierdz.click();
 		helpers.waitUntilReady(this.potwierdzenie);
-		expect(this.potwierdzenie.getText()).toEqual('Automatyczna spłata karty kredytowej została pomyślnie usunięta');
+		expect(this.potwierdzenie.getText()).not.toContain("odrzuc");
 		this.powrotDoListy.click();
 	};
 

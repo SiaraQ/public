@@ -67,8 +67,7 @@ var cards = function () {
 			});
 		// browser.driver.sleep(1000);
 			helpers.waitUntilReady(this.potwierdzenie);	
-		expect(this.potwierdzenie.getText()).toContain('Karta');
-		expect(this.potwierdzenie.getText()).toContain('została zastrzeżona');
+			expect(this.potwierdzenie.getText()).not.toContain("odrzuc");
 	};
 
 	

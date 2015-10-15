@@ -65,7 +65,7 @@ var cards = function () {
 				winston.log('info', "Wybranie opcji Zatwierdź - przejście do strony potwierdzenia informacji");
 			});
 		helpers.waitUntilReady(this.potwierdzenie);
-		expect(this.potwierdzenie.getText()).toEqual('Operacja przyjęta do realizacji');
+		expect(this.potwierdzenie.getText()).not.toContain("odrzuc");
 	};
 
 
