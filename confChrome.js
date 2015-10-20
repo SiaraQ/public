@@ -41,7 +41,7 @@ capabilities: {
     // }],
 
 // specs: ['./tests/test.test.js'],
-specs: ['./tests/test.login.js','./tests/test.przelewUS.js',],
+specs: ['./tests/test.login.js','./tests/test.przelewZUSWalidacje.js',],
 
 allScriptsTimeout: 960000,
 params: {

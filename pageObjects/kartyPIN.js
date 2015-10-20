@@ -1,8 +1,8 @@
 var cards = function () {
 	var helpers = require('../pageObjects/helpers.js');
 	var winston = require('winston');
-
-	this.karty = element(by.cssContainingText('.widget-tile__widget-header__title', 'Karty'));
+	var karty = require('../pageObjects/kartyMiniApp.js');
+	
 	this.zmianaPin = element(by.css('[ui-sref="cards.changepin.fill"]'));
 	this.szczegoly = element(by.buttonText('Szczegóły'));
 	this.dalej = element(by.buttonText('Dalej'));
@@ -26,8 +26,7 @@ var cards = function () {
 		if (hasloSms=="") hasloSms="1111"
 		var numerKarty=helpers.zamienRachunekKarty(numerKartyCaly);
 		winston.log('info', "Dane testu: numerKarty="+numerKarty+" pin="+pin+" hasloSms="+hasloSms);
-		helpers.waitUntilReady(this.karty);
-		this.karty.click();
+		karty.wybierzKarty();
 		helpers.waitUntilReady(this.zmianaPin);
 		this.zmianaPin.click();
 		helpers.waitUntilReady(this.nazwaKarty);

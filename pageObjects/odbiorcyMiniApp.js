@@ -1,6 +1,7 @@
 var payments = function () {
 	var helpers = require('../pageObjects/helpers.js');
 	var winston = require('winston');
+	var login = require('./loginPage.js');
 	var deferred = protractor.promise.defer();
 	var promise = deferred.promise;
 
@@ -13,9 +14,10 @@ var payments = function () {
 	this.dalej = element(by.css('[ng-click="moveNext()"]'));
 	this.zatwierdz = element(by.buttonText('Zatwierdź'));
 	//******** ODBIORCY
-	this.odbiorcyZdefiniowani = element(by.css('[label="Odbiorcy zdefiniowani"]'));
+	this.odbiorcyZdefiniowani = element(by.css('[ui-sref="payments.recipients.list"]'));
 	//label="Odbiorcy zdefiniowani"
-	this.nowyOdbiorca = element(by.css('[ng-click="onRecipientCreate()"]'));
+	// this.nowyOdbiorca = element(by.css('[ng-click="onRecipientCreate()"]'));
+	this.nowyOdbiorca = element(by.buttonText('Nowy odbiorca'));
 	this.szukajOdbiorcy = element(by.model('table.operationTitle'));
 	this.szukaj = element(by.css('[ng-click="table.tableControl.invalidate()"]'));
 	this.typOdbiorcy = element(by.model('types.currentType'));
@@ -38,7 +40,19 @@ var payments = function () {
 	this.daneOdbiorcyKomunikat = element(by.id('recipientData'));
 	this.twojaNazwaOdbiorcyKomunikat = element(by.id('customName'));
 	this.numerRachunkuKomunikat = element(by.css('[eb-name="recipientAccountNo"]')).element(by.id('recipientAccountNo'));
-
+	
+	this.wybieranieOdbiorcy = function() {
+		helpers.waitUntilReady(this.MojBank);
+		this.MojBank.click();
+		helpers.waitUntilReady(this.MojBank);
+		login.kliknijWBaner();
+		helpers.waitUntilReady(this.platnosci);
+		this.platnosci.click();
+		helpers.waitUntilReady(this.odbiorcyZdefiniowani);
+		this.odbiorcyZdefiniowani.click();
+		helpers.waitUntilReady(this.nowyOdbiorca);
+		this.nowyOdbiorca.click();
+	}
 	this.sprawdzDaneOdbiorcy = function(rachunekNadawcy,nazwaOdbiorcy,rachunekOdbiorcy,daneOdbiorcy,tytulPrzelewu) {
 		var rachunekNadawcy = helpers.zamienRachunekNaNrbZeSpacjami(rachunekNadawcy);
 		var rachunekOdbiorcy = helpers.zamienRachunekNaNrbZeSpacjami(rachunekOdbiorcy);
@@ -77,12 +91,7 @@ var payments = function () {
 		}
 		var rachunekNadawcy = helpers.zamienRachunekNaNrbZeSpacjami(rachunekNadawcy);
 		winston.log('info', "Dane testu: rachunekNadawcy="+rachunekNadawcy+" rachunekOdbiorcy="+rachunekOdbiorcy+" daneOdbiorcy"+daneOdbiorcy+" tytulPrzelewu="+tytulPrzelewu+" hasloSms="+hasloSms);
-		helpers.waitUntilReady(this.platnosci);	
-		this.platnosci.click();
-		helpers.waitUntilReady(this.odbiorcyZdefiniowani);	
-		this.odbiorcyZdefiniowani.click();
-		helpers.waitUntilReady(this.nowyOdbiorca);
-		this.nowyOdbiorca.click();
+		this.wybieranieOdbiorcy();
 		browser.driver.sleep(24000);
 		helpers.waitUntilReady(this.zRachunku);
 		this.zRachunku.click();
@@ -190,12 +199,7 @@ var payments = function () {
 	}
 
 	this.dodajOdbiorceKrajowegoWalidacjaNazwaOdbiorcy = function () {
-		helpers.waitUntilReady(this.platnosci);
-		this.platnosci.click();
-		helpers.waitUntilReady(this.odbiorcyZdefiniowani);
-		this.odbiorcyZdefiniowani.click();
-		helpers.waitUntilReady(this.nowyOdbiorca);
-		this.nowyOdbiorca.click();
+		this.wybieranieOdbiorcy();
 		helpers.waitUntilReady(this.twojaNazwaOdbiorcy);
 		this.twojaNazwaOdbiorcy.sendKeys('123456789012345678901234567890123456');
 		helpers.waitUntilReady(this.twojaNazwaOdbiorcyKomunikat);
@@ -206,15 +210,11 @@ var payments = function () {
 		this.twojaNazwaOdbiorcy.clear();
 		expect(this.twojaNazwaOdbiorcyKomunikat.getText()).toEqual('Nazwa skrócona odbiorcy nie może być pusta');
 		this.twojaNazwaOdbiorcy.clear();
+		
 	};
 
 	this.dodajOdbiorceKrajowegoWalidacjaNumerRachunku = function () {
-		helpers.waitUntilReady(this.platnosci);
-		this.platnosci.click();
-		helpers.waitUntilReady(this.odbiorcyZdefiniowani);
-		this.odbiorcyZdefiniowani.click();
-		helpers.waitUntilReady(this.nowyOdbiorca);
-		this.nowyOdbiorca.click();
+		this.wybieranieOdbiorcy();
 		helpers.waitUntilReady(this.numerRachunku);
 		this.numerRachunku.sendKeys('83101010230000261395100000');
 		helpers.waitUntilReady(this.numerRachunkuKomunikat);
@@ -225,15 +225,11 @@ var payments = function () {
 		this.numerRachunku.clear();
 		expect(this.numerRachunkuKomunikat.getText()).toEqual('Rachunek odbiorcy nie może być pusty');
 		this.numerRachunku.clear();
+	
 	};
 
 	this.dodajOdbiorceKrajowegoWalidacjaPolaDaneOdbiorcy = function () {
-		helpers.waitUntilReady(this.platnosci);
-		this.platnosci.click();
-		helpers.waitUntilReady(this.odbiorcyZdefiniowani);
-		this.odbiorcyZdefiniowani.click();
-		helpers.waitUntilReady(this.nowyOdbiorca);
-		this.nowyOdbiorca.click();
+		this.wybieranieOdbiorcy();
 		helpers.waitUntilReady(this.daneOdbiorcy);
 		this.daneOdbiorcy.sendKeys('123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901');
 		expect(this.daneOdbiorcyKomunikat.getText()).toEqual('Dane odbiorcy nie mogą przekraczać 132 znaków i powinny zawierać wyłącznie litery, cyfry oraz znaki ! @ # $ % ^ & * ( ) - + [ ] { } : ; < > . ? \\ ~ ` \'  , /');
@@ -243,15 +239,11 @@ var payments = function () {
 		this.daneOdbiorcy.clear();
 		expect(this.daneOdbiorcyKomunikat.getText()).toEqual('Dane odbiorcy nie mogę być puste');
 		this.daneOdbiorcy.clear();
+
 	};
 
 	this.dodajOdbiorceKrajowegoWalidacjaPolaTytul = function () {
-		helpers.waitUntilReady(this.platnosci);
-		this.platnosci.click();
-		helpers.waitUntilReady(this.odbiorcyZdefiniowani);
-		this.odbiorcyZdefiniowani.click();
-		helpers.waitUntilReady(this.nowyOdbiorca);
-		this.nowyOdbiorca.click();
+		this.wybieranieOdbiorcy();
 		helpers.waitUntilReady(this.tytul);
 		this.tytul.sendKeys('123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901');
 		expect(this.TytulKomunikat.getText()).toEqual('Dane odbiorcy mogą składać się maskymalnie ze 140 znaków');
@@ -261,6 +253,7 @@ var payments = function () {
 		this.tytul.clear();
 		expect(this.TytulKomunikat.getText()).toEqual('Tytuł przelewu nie może być pusty');
 		this.tytul.clear();
+
 	};
 
 };

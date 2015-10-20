@@ -1,8 +1,8 @@
 var cards = function () {
 	var helpers = require('../pageObjects/helpers.js');
 	var winston = require('winston');
+	var karty = require('../pageObjects/kartyMiniApp.js');
 	
-	this.karty = element(by.cssContainingText('.widget-tile__widget-header__title', 'Karty'));
 	this.szczegoly = element(by.buttonText('Szczegóły'));
 	this.dalej = element(by.buttonText('Dalej'));
 	this.zatwierdz = element(by.buttonText('Zatwierdź'));
@@ -48,8 +48,7 @@ var cards = function () {
 		var rachunekKarty = helpers.zamienRachunekNaNrbZeSpacjami(rachunekKarty);
 		var rachunekNadawcy = helpers.zamienRachunekNaNrbZeSpacjami(rachunekNadawcy);
 
-		helpers.waitUntilReady(this.karty);
-		this.karty.click();
+		karty.wybierzKarty();
 		helpers.waitUntilReady(this.automatycznaSplata);
 		this.automatycznaSplata.click();
 		helpers.waitUntilReady(this.nowaSplata);

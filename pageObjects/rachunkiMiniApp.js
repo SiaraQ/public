@@ -5,6 +5,7 @@ var accounts = function () {
 	var mobileMenu = require('./mobileMenu.js');
 	var params = browser.params;
 
+	var fMojBank = element(by.css('[class="rb-header__menu__content"]')).element(by.css('[ui-sref="dashboard"]'));
 	this.rachunki = element(by.css('[class="raiff-icons accounts widget-tile__widget-header__widget-icon"]'));
 	this.rachunekHistoria = element(by.model('table.tableConfig.selectedAccount'));
 	this.rachunkiHistoriaLista = element(by.css('[ui-sref="accounts.transactions"]'));
@@ -37,8 +38,18 @@ var accounts = function () {
 	this.dataTransakcjiSzczegoly = element(by.css('[label="Data transakcji"]'));
 	this.dataKsiegowaniaSzczegoly = element(by.css('[label="Data księgowania"]'));
 
+	this.testRachunku= function(nrb){
+		this.wyszukajRachunekIWybierzOpcjeSzczegoly(nrb);
+		this.veryfikacjaSzczegolowRachunkuPoWybraniuPrzyciskuSzczegoly(nrb);
+	}
+
 	this.wyszukajRachunekIWybierzOpcjeSzczegoly= function (nrb) {
 		nrb=helpers.zamienRachunekNaNrbZeSpacjami(nrb);
+		helpers.waitUntilReady(fMojBank);
+		fMojBank.click();
+		helpers.waitUntilReady(fMojBank);
+		login.kliknijWBaner();
+		helpers.waitUntilReady(this.rachunki);
 		this.rachunki.click();
 		browser.driver.sleep(12000);
 		helpers.klinijPrzyciskPoWyszukaniuTekstu('account in accountList.content',nrb,'Szczegóły');

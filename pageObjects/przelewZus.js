@@ -1,9 +1,11 @@
 var przelewZus = function () {
 	var rachunki = require('../pageObjects/rachunkiMiniApp.js');
 	var helpers = require('../pageObjects/helpers.js');
+	var platnosci = require('../pageObjects/platnosci.js');
 	var winston = require('winston');
-
+	
 	var fplatnosci = element(by.cssContainingText('.widget-tile__widget-header__title', 'Płatności'));
+	var fplatnosciPrzelewy = element(by.css('[ui-sref="payments.new.fill({ paymentType: \'domestic\' })"]'));
 	var fMojBank = element(by.css('[class="rb-header__menu__content"]')).element(by.css('[ui-sref="dashboard"]'));
 	//powtarzalne
 	var fkodSms = element(by.model('payment.items.credentials'));
@@ -136,16 +138,12 @@ var przelewZus = function () {
 		var kwotaN = Number(kwotaubezpieczenieZdrowotne) + Number(kwotaUbezpieczenieSpoleczne) + Number(kwotaubezpieczenieFPiFGSP) + Number(kwotafunduszEmeryturPomostowych);
 		var kwota = String(kwotaN);
 		var kwotaHistoria = helpers.zwrocOstatniaKwoteZUS(kwotaUbezpieczenieSpoleczne,kwotaubezpieczenieZdrowotne,kwotaubezpieczenieFPiFGSP,kwotafunduszEmeryturPomostowych)
+		var kwotaHistoria=helpers.formatujKwoteDoWyswietleniaNaStonie(kwotaHistoria);
 		winston.log('info', "Dane testu: rachunekNadawcy="+rachunekNadawcy+" nazwaOdbiorcy="+nazwaOdbiorcy+" nipPlatnika="+nipPlatnika+" typDrugiegoIdentyfikatora="+typDrugiegoIdentyfikatora+" drugiIdentyfikator="+drugiIdentyfikator);
 		winston.log('info', "Dane testu: typWpłaty="+typWpłaty+" deklaracja="+deklaracja+" numerDeklaracji="+numerDeklaracji+" informacjeDodatkowe="+nazwaOdbiorcy+" dataRealizacji="+dataRealizacji+" kwotaUbezpieczenieSpoleczne="+kwotaUbezpieczenieSpoleczne);
 		winston.log('info', "Dane testu: kwotaubezpieczenieFPiFGSP="+kwotaubezpieczenieFPiFGSP+" kwotafunduszEmeryturPomostowych="+kwotafunduszEmeryturPomostowych+" hasloSms="+hasloSms);
 
-			helpers.waitUntilReady(fplatnosci);
-		fplatnosci.click();
-		// browser.driver.sleep(3000);
-			helpers.waitUntilReady(ftypPlatnosci);
-		ftypPlatnosci.click();
-		//paymentType in $select.items Przelew do ZUS
+		platnosci.wybierzPlatnosci();
 		helpers.wybierzElementZListyPoTekscie('paymentType in $select.items','Przelew do ZUS');
 		// browser.driver.sleep(2000);
 			helpers.waitUntilReady(fzRachunku);
@@ -229,10 +227,7 @@ var przelewZus = function () {
 	};
 	
 	this.przelewDoZusWalidacjaNazwyPlatnika = function () {
-		helpers.waitUntilReady(fplatnosci);
-		fplatnosci.click();
-		helpers.waitUntilReady(ftypPlatnosci);
-		ftypPlatnosci.click();
+		platnosci.wybierzPlatnosci();
 		helpers.wybierzElementZListyPoTekscie('paymentType in $select.items','Przelew do ZUS');
 		browser.driver.sleep(500);
 		fnazwaPlatnikaZUS.sendKeys('a');
@@ -241,26 +236,22 @@ var przelewZus = function () {
 		expect(fNazwaPlatnikaKomunikat.getText()).toEqual('Nazwa płatnika nie może być pusta');
 		fnazwaPlatnikaZUS.sendKeys('1234567890123456789012345678901234567890123456789012345');
 		expect(fNazwaPlatnikaKomunikat.getText()).toEqual('Nazwa płatnika nie może przekraczać 54 znaków i powinna zawierać wyłącznie litery, cyfry oraz znaki ! @ # $ % ^ & * ( ) - + [ ] { } : ; < > . ? \\ ~ ` \'  , /');
+		fMojBank.click();
 	};
 
 	this.przelewDoZusWalidacjaPolaNIP = function () {
-		helpers.waitUntilReady(fplatnosci);
-		fplatnosci.click();
-		helpers.waitUntilReady(ftypPlatnosci);
-		ftypPlatnosci.click();
+		platnosci.wybierzPlatnosci();
 		helpers.wybierzElementZListyPoTekscie('paymentType in $select.items','Przelew do ZUS');
 		browser.driver.sleep(500);
 		fnipPlatnika.sendKeys('1');
 		expect(fNipPlatnikaKomunikat.getText()).toEqual('Niepoprawny numer NIP płatnika');
 		fnipPlatnika.clear().sendKeys('');
 		expect(fNipPlatnikaKomunikat.getText()).toEqual('NIP płatnika nie może być pusty i powinien składać się z 10 cyfr');
-	};
+		fMojBank.click();
+		};
 
 	this.przelewDoZusWalidacjaDrugiegoIdentyfikatora = function () {
-		helpers.waitUntilReady(fplatnosci);
-		fplatnosci.click();
-		helpers.waitUntilReady(ftypPlatnosci);
-		ftypPlatnosci.click();
+		platnosci.wybierzPlatnosci();
 		helpers.wybierzElementZListyPoTekscie('paymentType in $select.items','Przelew do ZUS');
 		browser.driver.sleep(500);
 		ftypDrugiegoIdentyfikatora.click();
@@ -301,14 +292,11 @@ var przelewZus = function () {
 		fdrugiIdentyfikator.sendKeys('1');
 		fdrugiIdentyfikator.clear().sendKeys('');
 		expect(fDrugiIdentyfikatorKomunikat.getText()).toEqual('Numer identyfikatora uzupełniającego nie może być pusty');
-		fMojBank.click();
+		
 	};
 
-	this.przelewDoZusWalidacjaPolaDeklaracja = function () {
-		helpers.waitUntilReady(fplatnosci);
-		fplatnosci.click();
-		helpers.waitUntilReady(ftypPlatnosci);
-		ftypPlatnosci.click();
+	this.przelewDoZusWalidacjaPolaDeklaracja = function () {	
+		platnosci.wybierzPlatnosci();
 		helpers.wybierzElementZListyPoTekscie('paymentType in $select.items','Przelew do ZUS');
 		browser.driver.sleep(500);
 		fdeklaracja.sendKeys('1');
@@ -320,10 +308,7 @@ var przelewZus = function () {
 
 
 	this.przelewDoZusWalidacjaPolaNumerDeklaracji = function () {
-		helpers.waitUntilReady(fplatnosci);
-		fplatnosci.click();
-		helpers.waitUntilReady(ftypPlatnosci);
-		ftypPlatnosci.click();
+		platnosci.wybierzPlatnosci();
 		helpers.wybierzElementZListyPoTekscie('paymentType in $select.items','Przelew do ZUS');
 		browser.driver.sleep(500);
 		//Sprawdzenie dla typu S		
@@ -413,11 +398,8 @@ var przelewZus = function () {
 	};
 
 
-		this.przelewDoZusWalidacjaPolaInformacjeDodatkowe = function () {
-		helpers.waitUntilReady(fplatnosci);
-		fplatnosci.click();
-		helpers.waitUntilReady(ftypPlatnosci);
-		ftypPlatnosci.click();
+	this.przelewDoZusWalidacjaPolaInformacjeDodatkowe = function () {
+		platnosci.wybierzPlatnosci();
 		helpers.wybierzElementZListyPoTekscie('paymentType in $select.items','Przelew do ZUS');
 		browser.driver.sleep(1000);
 		//Sprawdzenie dla typu S		
@@ -495,14 +477,13 @@ var przelewZus = function () {
 		expect(finformacjeDodatkoweKomunikat.getText()).toEqual('Informacje dodatkowe muszą zawierać nie więcej niż 15 znaków bez spacji');
 		finformacjeDodatkowe.clear();
 		expect(finformacjeDodatkoweKomunikat.getText()).toEqual('Informacje dodatkowe nie mogą być puste i muszą zawierać nie więcej niż 15 znaków bez spacji');
+
 	};
 
 
 	this.przelewDoZusWalidacjaPolaData = function () {
 		var dataBiezacaPlus180 = helpers.dataBiezacaPlusDzien(180);
-		fplatnosci.click();
-		helpers.waitUntilReady(ftypPlatnosci);
-		ftypPlatnosci.click();
+		platnosci.wybierzPlatnosci();
 		helpers.wybierzElementZListyPoTekscie('paymentType in $select.items','Przelew do ZUS');
 		browser.driver.sleep(1000);
 		fdatar = fdataRealizacji.element(by.model('ngModel'));
@@ -519,10 +500,7 @@ var przelewZus = function () {
 	};
 
 	this.przelewDoZusWalidacjaTypuUbezpieczenia = function () {
-		helpers.waitUntilReady(fplatnosci);
-		fplatnosci.click();
-		helpers.waitUntilReady(ftypPlatnosci);
-		ftypPlatnosci.click();
+		platnosci.wybierzPlatnosci();
 		helpers.wybierzElementZListyPoTekscie('paymentType in $select.items','Przelew do ZUS');
 		browser.driver.sleep(1000);
 		fnazwaOdbiorcy.sendKeys('Nazwa');

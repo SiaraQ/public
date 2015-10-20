@@ -104,6 +104,7 @@ var payments = function () {
 		expect(ftytulKomunikat.getText()).toEqual('Tytuł przelewu nie może przekraczać 132 znaków i powinien zawierać wyłącznie litery, cyfry oraz znaki ! @ # $ % ^ & * ( ) - + [ ] { } : ; < > . ? \\ ~ ` \'  , /');
 		ftytul.sendKeys('"');
 		expect(ftytulKomunikat.getText()).toEqual('Tytuł przelewu nie może przekraczać 132 znaków i powinien zawierać wyłącznie litery, cyfry oraz znaki ! @ # $ % ^ & * ( ) - + [ ] { } : ; < > . ? \\ ~ ` \'  , /');
+		fMojBank.click();
 	};
 
 	this.przelewWlasnyWalidacjaKwoty = function () {
@@ -133,6 +134,7 @@ var payments = function () {
 		fkwota.clear();
 		//
 		expect(fkwotaKomunikat.getText()).toEqual('Kwota przelewu nie może być pusta');
+		fMojBank.click();
 	};
 
 	this.przelewWlasnyWalidacjaDaty = function () {
@@ -154,6 +156,7 @@ var payments = function () {
 		fdatar.clear();
 		fdatar.sendKeys('01.01.2222');
 		expect(fdataKomunikat.getText()).toEqual('Data realizacji przelewu nie może być późniejsza niż 14.03.2016');
+		fMojBank.click();
 	};
 
 };

@@ -2,8 +2,10 @@ var payments = function () {
 	var helpers = require('../pageObjects/helpers.js');
 	var rachunki = require('../pageObjects/rachunkiMiniApp.js');
 	var winston = require('winston');
+	var platnosci = require('../pageObjects/platnosci.js');
 
 	var fplatnosci = element(by.cssContainingText('.widget-tile__widget-header__title', 'Płatności'));
+	var fplatnosciPrzelewy = element(by.css('[ui-sref="payments.new.fill({ paymentType: \'domestic\' })"]'));
 	// #/payments/new/domestic/fill
 	var fplatnosciLink = element(by.css('[icon="raiff-icons raiff_przelew"]'));
 	//powtarzalne
@@ -66,11 +68,11 @@ var payments = function () {
 		if (odbiorca) {
 			fplatnosciLink.click();
 		} else {
-			helpers.waitUntilReady(fplatnosci);
-			fplatnosci.click();	
+			platnosci.wybierzPlatnosci();
 		}
-		helpers.waitUntilReady(ftypPlatnosci);
-		ftypPlatnosci.click();
+		// helpers.waitUntilReady(ftypPlatnosci);
+		// ftypPlatnosci.click();
+
 		// browser.driver.sleep(3000);
 		helpers.wybierzElementZListyPoNumerze(0);
 		// browser.driver.sleep(5000);
@@ -118,8 +120,8 @@ var payments = function () {
 
 
 	this.przelewKrajowyWalidacjaTytulem = function () {
-		helpers.waitUntilReady(fplatnosci);
-		fplatnosci.click();
+		platnosci.wybierzPlatnosci();
+		helpers.wybierzElementZListyPoNumerze(0);
 		helpers.waitUntilReady(ftytul);
 		ftytul.click();
 		ftytul.sendKeys("1");
@@ -129,11 +131,12 @@ var payments = function () {
 		expect(ftytulKomunikat.getText()).toEqual('Tytuł przelewu nie może przekraczać 132 znaków i powinien zawierać wyłącznie litery, cyfry oraz znaki ! @ # $ % ^ & * ( ) - + [ ] { } : ; < > . ? \\ ~ ` \'  , /');
 		ftytul.sendKeys('"');
 		expect(ftytulKomunikat.getText()).toEqual('Tytuł przelewu nie może przekraczać 132 znaków i powinien zawierać wyłącznie litery, cyfry oraz znaki ! @ # $ % ^ & * ( ) - + [ ] { } : ; < > . ? \\ ~ ` \'  , /');
+
 	};
 
 	this.przelewKrajowyWalidacjaKwoty = function () {
-		helpers.waitUntilReady(fplatnosci);
-		fplatnosci.click();
+		platnosci.wybierzPlatnosci();
+		helpers.wybierzElementZListyPoNumerze(0);
 		helpers.waitUntilReady(fkwota);
 		fkwota.sendKeys('12,344');
 		expect(fkwotaKomunikat.getText()).toEqual('Nieprawidłowa kwota przelewu');
@@ -150,8 +153,8 @@ var payments = function () {
 
 	this.przelewKrajowyWalidacjaDaty = function () {
 		var dataBiezacaPlus180 = helpers.dataBiezacaPlusDzien(180);
-		helpers.waitUntilReady(fplatnosci);
-		fplatnosci.click();
+		platnosci.wybierzPlatnosci();
+		helpers.wybierzElementZListyPoNumerze(0);
 		helpers.waitUntilReady(fdataRealizacji);
 		fdataRealizacji.sendKeys('123');
 		browser.driver.sleep(1000);

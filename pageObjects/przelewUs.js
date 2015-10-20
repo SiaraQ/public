@@ -2,11 +2,13 @@ var payments = function () {
 	var rachunki = require('../pageObjects/rachunkiMiniApp.js');
 	var helpers = require('../pageObjects/helpers.js');
 	var winston = require('winston');
+	var platnosci = require('../pageObjects/platnosci.js');
 	var deferred = protractor.promise.defer();
 	var promise = deferred.promise;
 	var random = Math.random();
 
 	var fplatnosci = element(by.cssContainingText('.widget-tile__widget-header__title', 'Płatności'));
+	var fplatnosciPrzelewy = element(by.css('[ui-sref="payments.new.fill({ paymentType: \'domestic\' })"]'));
 	var fMojBank = element(by.css('[class="rb-header__menu__content"]')).element(by.css('[ui-sref="dashboard"]'));
 	//powtarzalne
 	var fkodSms = element(by.model('payment.items.credentials'));
@@ -121,13 +123,7 @@ var payments = function () {
 		winston.log('info', "Dane testu: typOkresu="+typOkresu+" numerOkresu="+numerOkresu+" rokOkresu="+rokOkresu+" identyfokacjaZobowiazania="+identyfokacjaZobowiazania);
 		winston.log('info', "Dane testu: dataRealizacji="+dataRealizacji+" kwota="+kwota+" hasloSms="+hasloSms);
 		
-		// browser.driver.sleep(24000);
-			helpers.waitUntilReady(fplatnosci);	
-		fplatnosci.click();
-		// browser.driver.sleep(3000);
-			helpers.waitUntilReady(ftypPlatnosci);	
-		ftypPlatnosci.click();
-		//paymentType in $select.items Przelew do US/IC
+		platnosci.wybierzPlatnosci();
 			helpers.wybierzElementZListyPoTekscie('paymentType in $select.items','Przelew do US/IC');
 		// browser.driver.sleep(10000);
 			helpers.waitUntilReady(fzRachunku);	
@@ -205,58 +201,49 @@ this.przelewDoUSwaldacjapolaNazwaPlat = function(rachunekNadawcy, nazwaPlatnika)
 		rachunekNadawcy = helpers.zamienRachunekNaNrbZeSpacjami(rachunekNadawcy);
 		if (nazwaPlatnika=="") nazwaPlatnika="nazwaPlatnika"+random;
 		winston.log('info', "Dane testu: rachunekNadawcy="+rachunekNadawcy+" nazwaPlatnika="+nazwaPlatnika);
-		helpers.waitUntilReady(fplatnosci);	
-		fplatnosci.click();
-		browser.driver.sleep(1000);
-		ftypPlatnosci.click();
+		platnosci.wybierzPlatnosci();
 		helpers.wybierzElementZListyPoTekscie('paymentType in $select.items','Przelew do US/IC');
 		browser.driver.sleep(5000);
 		fzRachunku.click();
 		browser.driver.sleep(1000);
-		helpers.zwrotNumerElementuNaLiscie('accountItem in $select.items track by accountItem.accountNo',rachunekNadawcy);
+		helpers.wybierzElementZListyPoTekscie('accountItem in $select.items track by accountItem.accountNo',rachunekNadawcy);
 		fnazwaPlatnika.sendKeys('adsads');
 		fnazwaPlatnika.clear().sendKeys('');
 		expect(fKomNazwaPlatnika.getText()).toEqual('Dane płatnika nie mogą być puste');
 		fnazwaPlatnika.sendKeys('1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111');
 		browser.driver.sleep(1000);
 		expect(fKomNazwaPlatnika.getText()).toEqual('Dane płatnika nie mogą przekraczać 132 znaków i powinny zawierać wyłącznie litery, cyfry oraz znaki ! @ # $ % ^ & * ( ) - + [ ] { } : ; < > . ? \\ ~ ` \'  , /');
-		fMojBank.click();
+
 		}
 		
 this.przelewDoUSwaldacjapolaRachUrzSkarb = function(rachunekNadawcy) {
 		rachunekNadawcy = helpers.zamienRachunekNaNrbZeSpacjami(rachunekNadawcy);
 		console.log("="+rachunekNadawcy+"=");
 		winston.log('info', "Dane testu: rachunekNadawcy="+rachunekNadawcy);
-		helpers.waitUntilReady(fplatnosci);	
-		fplatnosci.click();
-		browser.driver.sleep(1000);
-		ftypPlatnosci.click();
+		platnosci.wybierzPlatnosci();
 		helpers.wybierzElementZListyPoTekscie('paymentType in $select.items','Przelew do US/IC');
 		browser.driver.sleep(5000);
 		fzRachunku.click();
 		browser.driver.sleep(1000);
-		helpers.zwrotNumerElementuNaLiscie('accountItem in $select.items track by accountItem.accountNo',rachunekNadawcy);
+		helpers.wybierzElementZListyPoTekscie('accountItem in $select.items track by accountItem.accountNo',rachunekNadawcy);
 		browser.driver.sleep(1000);
 		fRachunekUrzSkarb.click();
 		fnazwaPlatnika.click();
 		browser.driver.sleep(1000);
 		expect(fKomNazwaPlatnika.getText()).toEqual('Rachunek Urzędu Skarbowego nie może być pusty');
-		fMojBank.click();
+
 		}		
 
 this.przelewDoUSwaldacjapolaRachUrzSkarbformat = function(rachunekNadawcy) {
 		rachunekNadawcy = helpers.zamienRachunekNaNrbZeSpacjami(rachunekNadawcy);
 		console.log("="+rachunekNadawcy+"=");
 		winston.log('info', "Dane testu: rachunekNadawcy="+rachunekNadawcy);
-		helpers.waitUntilReady(fplatnosci);	
-		fplatnosci.click();
-		browser.driver.sleep(1000);
-		ftypPlatnosci.click();
+		platnosci.wybierzPlatnosci();
 		helpers.wybierzElementZListyPoTekscie('paymentType in $select.items','Przelew do US/IC');
 		browser.driver.sleep(2000);
 		fzRachunku.click();
 		browser.driver.sleep(1000);
-		helpers.zwrotNumerElementuNaLiscie('accountItem in $select.items track by accountItem.accountNo',rachunekNadawcy);
+		helpers.wybierzElementZListyPoTekscie('accountItem in $select.items track by accountItem.accountNo',rachunekNadawcy);
 		browser.driver.sleep(2000);
 		fRachunekUrzSkarb.click();
 		browser.driver.sleep(2000);
@@ -265,22 +252,19 @@ this.przelewDoUSwaldacjapolaRachUrzSkarbformat = function(rachunekNadawcy) {
 		fnazwaPlatnika.click();
 		browser.driver.sleep(1000);
 		expect(fKomunikat2.getText()).toEqual('Rachunek Urzędu Skarbowego musi być zgodny z formatem NRB [CCBBBBBBBBAAAAAAAAAAAAAAAA lub CC BBBB BBBB AAAA AAAA AAAA AAAA]');
-		fMojBank.click();
+
 		}		
 		
 this.przelewDoUSwaldacjapolaNIP = function(rachunekNadawcy, nazwaPlatnika) {
 		rachunekNadawcy = helpers.zamienRachunekNaNrbZeSpacjami(rachunekNadawcy);
 		if (nazwaPlatnika=="") nazwaPlatnika="nazwaPlatnika"+random;
 		winston.log('info', "Dane testu: rachunekNadawcy="+rachunekNadawcy+" nazwaPlatnika="+nazwaPlatnika);
-		helpers.waitUntilReady(fplatnosci);	
-		fplatnosci.click();
-		browser.driver.sleep(1000);
-		ftypPlatnosci.click();
+		platnosci.wybierzPlatnosci();
 		helpers.wybierzElementZListyPoTekscie('paymentType in $select.items','Przelew do US/IC');
 		browser.driver.sleep(2000);
 		fzRachunku.click();
 		browser.driver.sleep(1000);
-		helpers.zwrotNumerElementuNaLiscie('accountItem in $select.items track by accountItem.accountNo',rachunekNadawcy);
+		helpers.wybierzElementZListyPoTekscie('accountItem in $select.items track by accountItem.accountNo',rachunekNadawcy);
 		browser.driver.sleep(2000);
 		helpers.wybierzElementZListyPoNumerze(4);
 		browser.driver.sleep(3000);
@@ -294,15 +278,13 @@ this.przelewDoUSwaldacjapolaNIP = function(rachunekNadawcy, nazwaPlatnika) {
 		helpers.wybierzElementZListyPoNumerze(5);
 		browser.driver.sleep(3000);
 		expect(fKomNIP.getText()).toEqual('Numer identyfikatora uzupełniającego nie może być pusty');
-		fMojBank.click();
+
 		}	
 
 this.przelewDoUSwaldacjapolaNIPformat = function() {
 		var numertypIdentyfikatoraUzup=0;
 		helpers.waitUntilReady(fplatnosci);	
-		fplatnosci.click();
-		browser.driver.sleep(1000);
-		ftypPlatnosci.click();
+		platnosci.wybierzPlatnosci();
 		helpers.wybierzElementZListyPoTekscie('paymentType in $select.items','Przelew do US/IC');
 		browser.driver.sleep(2000);
 		ftypIdentyfikatoraUzupelniajacego.click();
@@ -321,74 +303,58 @@ this.przelewDoUSwaldacjapolaNIPformat = function() {
 		helpers.wybierzElementZListyPoTekscie('paymentType in $select.items','Przelew do US/IC');
 		browser.driver.sleep(1000);
 		expect(fKomNIP.getText()).toEqual('Niepoprawny numer NIP/ PESEL / REGON / dowodu osobistego / paszportu / innego dowodu tożsamości');
-		fMojBank.click();
+
 		}	
 		
 this.przelewDoUSwaldacjapolaKWOTA = function() {
-	helpers.waitUntilReady(fplatnosci);	
-		fplatnosci.click();
-		browser.driver.sleep(1000);
-		ftypPlatnosci.click();
+		platnosci.wybierzPlatnosci();
 		helpers.wybierzElementZListyPoTekscie('paymentType in $select.items','Przelew do US/IC');
 		browser.driver.sleep(2000);
 		fkwota.click();
 		browser.driver.sleep(3000);
 		fidentyfokacjaZobowiazania.click();
 		expect(fKomKwota.getText()).toEqual('Pole kwota jest wymagane');
-		fMojBank.click();
+
 		}	
 
 this.przelewDoUSwaldacjapolaKWOTA2 = function() {
-		helpers.waitUntilReady(fplatnosci);	
-		fplatnosci.click();
-		browser.driver.sleep(1000);
-		ftypPlatnosci.click();
+		platnosci.wybierzPlatnosci();
 		helpers.wybierzElementZListyPoTekscie('paymentType in $select.items','Przelew do US/IC');
 		browser.driver.sleep(2000);
 		fkwota.sendKeys('as');
 		browser.driver.sleep(3000);
 		fidentyfokacjaZobowiazania.click();
 		expect(fKomKwota.getText()).toEqual('Nieprawidłowa kwota przelewu');
-		fMojBank.click();
+
 		}
 
 this.przelewDoUSwaldacjapolaKWOTA3 = function() {
-		helpers.waitUntilReady(fplatnosci);	
-		fplatnosci.click();
-		browser.driver.sleep(1000);
-		ftypPlatnosci.click();
+		platnosci.wybierzPlatnosci();
 		helpers.wybierzElementZListyPoTekscie('paymentType in $select.items','Przelew do US/IC');
 		browser.driver.sleep(2000);
 		fkwota.sendKeys('99999999999999999999');
 		browser.driver.sleep(3000);
 		fidentyfokacjaZobowiazania.click();
 		expect(fKomKwota.getText()).toEqual('Kwota przelewu przekracza środki dostępne na rachunku');
-		fMojBank.click();
+
 		}
 
 
 		
 this.przelewDoUSwaldacjapolaKWOTA4 = function() {
-		helpers.waitUntilReady(fplatnosci);	
-		fplatnosci.click();
-		browser.driver.sleep(1000);
-		ftypPlatnosci.click();
-		browser.driver.sleep(1000);
+		platnosci.wybierzPlatnosci();
 		helpers.wybierzElementZListyPoTekscie('paymentType in $select.items','Przelew do US/IC');
 		browser.driver.sleep(2000);
 		fkwota.sendKeys('99999');
 		browser.driver.sleep(5000);
 		fidentyfokacjaZobowiazania.click();
 		expect(fKomKwota.getText()).toEqual('Przelew nie może być wykonany jako płatność Elixir');
-		fMojBank.click();
+
 		}
 
 this.przelewDoUSwaldacjapolaDATA = function() {
 	var dataBiezacaPlus180 = helpers.dataBiezacaPlusDzien(180);
-	helpers.waitUntilReady(fplatnosci);	
-		fplatnosci.click();
-		browser.driver.sleep(1000);
-		ftypPlatnosci.click();
+		platnosci.wybierzPlatnosci();
 		helpers.wybierzElementZListyPoTekscie('paymentType in $select.items','Przelew do US/IC');
 		browser.driver.sleep(2000);
 		helpers.scrollWindow(fdataRealizacji);
@@ -405,15 +371,12 @@ this.przelewDoUSwaldacjapolaDATA = function() {
 		fdatar.clear();
 		fdatar.sendKeys('');
 		expect(fKomdataRealizacji.getText()).toEqual('Data realizacji przelewu nie może być pusta');
-		fMojBank.click();
+
 		}			
 	
 		
 this.przelewDoUSwaldacjapolaSymbolFormularza = function() {		
-	helpers.waitUntilReady(fplatnosci);	
-		fplatnosci.click();
-		browser.driver.sleep(1000);
-		ftypPlatnosci.click();
+		platnosci.wybierzPlatnosci();
 		helpers.wybierzElementZListyPoTekscie('paymentType in $select.items','Przelew do US/IC');
 		browser.driver.sleep(2000);
 		fsymbolFormularza.click();
@@ -452,20 +415,17 @@ this.przelewDoUSwaldacjapolaSymbolFormularza = function() {
 		fnazwaPlatnika.click();
 		browser.driver.sleep(1000);
 		expect(fKomNumerOkresu.getText()).toEqual('Numer okresu nie może być pusty');
-		fMojBank.click();
+	
 		}
 		
 this.przelewDoUSwaldacjapolaIdentyfikatorzobowiazania = function() {
-	helpers.waitUntilReady(fplatnosci);	
-		fplatnosci.click();
-		browser.driver.sleep(1000);
-		ftypPlatnosci.click();
+	platnosci.wybierzPlatnosci();
 		helpers.wybierzElementZListyPoTekscie('paymentType in $select.items','Przelew do US/IC');
 		browser.driver.sleep(3000);
 		fidentyfokacjaZobowiazania.click();
 		fidentyfokacjaZobowiazania.sendKeys('12345678912345674981234567981233333333333');
 		expect(fKomidentyfokacjaZobowiazania.getText()).toEqual('Identyfikacja zobowiązania nie może przekraczać 40 znaków i powinna zawierać wyłącznie litery, cyfry oraz znaki : ; , . \\');
-		fMojBank.click();
+	
 		}			
 		
 
