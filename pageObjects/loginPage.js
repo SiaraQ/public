@@ -9,8 +9,6 @@ var loginPage = function () {
 	this.logoutMessage = element(by.className('content-panel'));  
 	this.panelMessage = element(by.css('[class="bd-msg-panel__message"]'));
 	this.krotkimessage = element(by.css('[ng-if="(authForm.$submitted) && authForm.j_password.$error.minlength"]'));
-	// this.rachunkiSrodki= element(by.css('[class="accounts widget-content"]'));
-	// this.kartySrodki = element(by.css('[ng-controller="CardsWidgetContentController"]'));
 	
 	var settings = {
 		pageLoadTimeout: 1000,
@@ -40,14 +38,12 @@ var loginPage = function () {
 		this.login.sendKeys(login);
 		this.password.sendKeys(password);
 		this.zaloguj.click();
-		// this.kliknijWBaner();
 		browser.driver.wait(function() {
             return browser.driver.getCurrentUrl().then(function(url) {
                 return (/dashboard/).test(url);
             });
         }, 60000,'User nie zalogowal sie do aplikacji');
         this.kliknijWBaner();
-        // helpers.waitUntilReady(this.rachunkiSrodki);
      };
 
 	this.logOut = function () {
