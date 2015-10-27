@@ -31,7 +31,7 @@ var payments = function () {
 	this.rachunekOpis = element(by.css('[label="Z rachunku"]'));
 	this.twojaNazwaOdbiorcyOpis = element(by.css('[label="Twoja nazwa odbiorcy"]'));
 	this.numerRachunkuOpis = element(by.css('[label="Numer rachunku"]'));
-	this.daneOdbiorcyOpis = element(by.css('[label="Dane odbiorcy"]'));
+	this.daneOdbiorcyOpis = element(by.css('[label="Nazwa i adres"]'));
 	this.tytulOpis = element(by.css('[label="Tytułem"]'));
 	//po wyszukaniu odbiorcy 
 	this.pierwszyElementwTabeli = element(by.css('[bd-table-cell="first"]'));
@@ -69,7 +69,7 @@ var payments = function () {
 		expect(this.rachunekOpis.getText()).toContain('Z rachunku');
 		expect(this.twojaNazwaOdbiorcyOpis.getText()).toEqual('Twoja nazwa odbiorcy\n'+nazwaOdbiorcy);
 		expect(this.numerRachunkuOpis.getText()).toEqual('Numer rachunku\n'+rachunekOdbiorcy);
-		expect(this.daneOdbiorcyOpis.getText()).toEqual('Dane odbiorcy\n'+daneOdbiorcy);
+		expect(this.daneOdbiorcyOpis.getText()).toEqual('Nazwa i adres\n'+daneOdbiorcy);
 		expect(this.tytulOpis.getText()).toEqual('Tytułem\n'+tytulPrzelewu);
 	}
 

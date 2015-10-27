@@ -67,7 +67,8 @@ var payments = function () {
 		winston.log('info', "Dane testu: rachunekNadawcy="+rachunekNadawcy+" rachunekOdbiorcy="+rachunekOdbiorcy+" tytulPrzelewu="+tytulPrzelewu+" hasloSms="+hasloSms);
 		winston.log('info', "dataRealizacji="+dataRealizacjiNew);
 		if (odbiorca) {
-			fplatnosciLink.click();
+			// fplatnosciLink.click();
+			platnosci.wybierzPlatnosci();
 		} else {
 			platnosci.wybierzPlatnosci();
 		}
