@@ -1,5 +1,6 @@
 var przelewZus = function () {
 	var rachunki = require('../pageObjects/rachunkiMiniApp.js');
+	var buttons = require('../pageObjects/buttons.js');
 	var helpers = require('../pageObjects/helpers.js');
 	var platnosci = require('../pageObjects/platnosci.js');
 	var winston = require('winston');
@@ -20,7 +21,7 @@ var przelewZus = function () {
 	var ftytul = element(by.model('payment.formData.description'));
 	var fkwota = element(by.model('payment.formData.amount'));
 	var fdalej = element(by.css('[ng-click="moveNext()"]'));
-	var fzatwierdz = element(by.buttonText('Zatwierdź'));
+	var fzatwierdz = buttons.zatwierdz;
 	//Przelew do ZUS
 	var fnipPlatnika = element(by.model('payment.formData.nip'));
 	var ftypDrugiegoIdentyfikatora = element(by.model('payment.formData.secondaryIdType'));

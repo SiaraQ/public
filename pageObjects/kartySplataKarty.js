@@ -1,5 +1,6 @@
 var cards = function () {
 	var helpers = require('../pageObjects/helpers.js');
+	var buttons = require('../pageObjects/buttons.js');
 	var winston = require('winston');
 	var karty = require('../pageObjects/kartyMiniApp.js');
 	

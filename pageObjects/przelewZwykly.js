@@ -1,5 +1,6 @@
 var payments = function () {
 	var helpers = require('../pageObjects/helpers.js');
+	var buttons = require('../pageObjects/buttons.js');
 	var rachunki = require('../pageObjects/rachunkiMiniApp.js');
 	var winston = require('winston');
 	var platnosci = require('../pageObjects/platnosci.js');
@@ -10,7 +11,7 @@ var payments = function () {
 	var fplatnosciLink = element(by.css('[icon="raiff-icons raiff_przelew"]'));
 	//powtarzalne
 	var fkodSms = element(by.model('payment.items.credentials'));
-	var fpowrot = element(by.buttonText('Powrót do listy'));
+	var fpowrot = buttons.powrotDoListy;
 	var fpotwierdzenie = element(by.css('[class="bd-msg-panel__message"]'));
 	//krok1 przelew krajowy
 	var ftypPlatnosci = element(by.model('payment.type'));
@@ -22,7 +23,7 @@ var payments = function () {
 	var ftytul = element(by.model('payment.formData.description'));
 	var fkwota = element(by.model('payment.formData.amount'));
 	var fdalej = element(by.css('[ng-click="moveNext()"]'));
-	var fzatwierdz = element(by.buttonText('Zatwierdź'));
+	var fzatwierdz = buttons.zatwierdz;
 	var ftytulKomunikat = element(by.id('description'));
 	var fkwotaKomunikat = element(by.css('[eb-name="amount"]')).element(by.id('amount'));//.element(by.css('[class="messages ng-inactive"]'));
 	var fdataKomunikat = element(by.id('realizationDate'));

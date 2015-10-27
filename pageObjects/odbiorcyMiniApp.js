@@ -1,5 +1,6 @@
 var payments = function () {
 	var helpers = require('../pageObjects/helpers.js');
+	var buttons = require('../pageObjects/buttons.js');
 	var winston = require('winston');
 	var login = require('./loginPage.js');
 	var deferred = protractor.promise.defer();
@@ -12,12 +13,12 @@ var payments = function () {
 	this.kodSms = element(by.model('recipient.items.credentials'));
 	this.potwierdzenie = element(by.css('[class="bd-msg-panel__message"]'));
 	this.dalej = element(by.css('[ng-click="moveNext()"]'));
-	this.zatwierdz = element(by.buttonText('Zatwierdź'));
+	this.zatwierdz = buttons.zatwierdz;
 	//******** ODBIORCY
 	this.odbiorcyZdefiniowani = element(by.css('[ui-sref="payments.recipients.list"]'));
 	//label="Odbiorcy zdefiniowani"
 	// this.nowyOdbiorca = element(by.css('[ng-click="onRecipientCreate()"]'));
-	this.nowyOdbiorca = element(by.buttonText('Nowy odbiorca'));
+	this.nowyOdbiorca = buttons.nowyOdbiorca;
 	this.szukajOdbiorcy = element(by.model('table.operationTitle'));
 	this.szukaj = element(by.css('[ng-click="table.tableControl.invalidate()"]'));
 	this.typOdbiorcy = element(by.model('types.currentType'));
@@ -34,8 +35,8 @@ var payments = function () {
 	this.tytulOpis = element(by.css('[label="Tytułem"]'));
 	//po wyszukaniu odbiorcy 
 	this.pierwszyElementwTabeli = element(by.css('[bd-table-cell="first"]'));
-	this.edytuj = element(by.buttonText('Edytuj'));
-	this.usun = element(by.buttonText('Usuń'));
+	this.edytuj = buttons.edytuj;
+	this.usun = buttons.usun;
 	this.TytulKomunikat = element(by.id('description'));
 	this.daneOdbiorcyKomunikat = element(by.id('recipientData'));
 	this.twojaNazwaOdbiorcyKomunikat = element(by.id('customName'));

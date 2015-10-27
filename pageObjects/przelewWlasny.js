@@ -1,5 +1,6 @@
 var payments = function () {
 	var helpers = require('../pageObjects/helpers.js');
+	var buttons = require('../pageObjects/buttons.js');
 	var rachunki = require('../pageObjects/rachunkiMiniApp.js');
 	var winston = require('winston');
 	var deferred = protractor.promise.defer();
@@ -21,8 +22,8 @@ var payments = function () {
 	var frachunekOdbiorcy = element(by.model('payment.formData.recipientAccountNo'));
 	var fnazwaOdbiorcy = element(by.model('payment.formData.recipientName'));
 	var fkwota = element(by.model('payment.formData.amount'));
-	var fdalej = element(by.css('[ng-click="moveNext()"]'));
-	var fzatwierdz = element(by.buttonText('Zatwierdź'));
+	var fdalej = buttons.dalej;
+	var fzatwierdz = buttons.zatwierdz;
 	var fdataRealizacji = element(by.model('ngModel'));
 
 	var ftytulKomunikat = element(by.id('description'));

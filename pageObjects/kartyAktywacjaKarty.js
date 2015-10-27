@@ -1,12 +1,13 @@
 var cards = function () {
 	var helpers = require('../pageObjects/helpers.js');
+	var buttons = require('../pageObjects/buttons.js');
 	var winston = require('winston');
 	var karty = require('../pageObjects/kartyMiniApp.js');
 	
 	this.aktywuj = element(by.css('[ui-sref="cards.activate.fill"]'));
-	this.szczegoly = element(by.buttonText('Szczegóły'));
-	this.dalej = element(by.buttonText('Dalej'));
-	this.zatwierdz = element(by.buttonText('Aktywuj'));
+	this.szczegoly = buttons.szczegoly;
+	this.dalej = buttons.dalej;
+	this.zatwierdz = buttons.aktywuj;
 	this.potwierdzenie=element(by.css('[class="bd-msg-panel__message"]'));
 	this.kodSms = element(by.model('rbAuth.value'));
 	//splata karty

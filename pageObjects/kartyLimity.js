@@ -1,14 +1,15 @@
 var cards = function () {
 	var helpers = require('../pageObjects/helpers.js');
+	var buttons = require('../pageObjects/buttons.js');
 	var winston = require('winston');
 	var karty = require('../pageObjects/kartyMiniApp.js');
 
 	this.zmienLimity = element(by.css('[ui-sref="cards.limits.fill"]'));
-	this.szczegoly = element(by.buttonText('Szczegóły'));
-	this.dalej = element(by.buttonText('Dalej'));
-	this.zatwierdz = element(by.buttonText('Zatwierdź'));
+	this.szczegoly = buttons.szczegoly;
+	this.dalej = buttons.dalej;
+	this.zatwierdz = buttons.zatwierdz;
 	this.potwierdzenie=element(by.css('[class="bd-msg-panel__message"]'));
-	this.usun=element(by.buttonText('Usuń'));
+	this.usun=buttons.usun;
 	this.kodSms = element(by.model('rbAuth.value'));
 	//Limity karty
 	this.nazwaKarty = element(by.model('cardContext.item.card'));

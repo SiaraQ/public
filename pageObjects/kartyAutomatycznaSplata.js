@@ -1,14 +1,15 @@
 var cards = function () {
 	var helpers = require('../pageObjects/helpers.js');
+	var buttons = require('../pageObjects/buttons.js');
 	var winston = require('winston');
 	var karty = require('../pageObjects/kartyMiniApp.js');
 	
-	this.szczegoly = element(by.buttonText('Szczegóły'));
-	this.dalej = element(by.buttonText('Dalej'));
-	this.zatwierdz = element(by.buttonText('Zatwierdź'));
+	this.szczegoly = buttons.szczegoly;
+	this.dalej = buttons.dalej;
+	this.zatwierdz = buttons.zatwierdz;
 	this.potwierdzenie=element(by.css('[class="bd-msg-panel__message"]'));
-	this.powrotDoListy = element(by.buttonText('Powrót do listy'));
-	this.usun=element(by.buttonText('Usuń'));
+	this.powrotDoListy = buttons.powrotDoListy;
+	this.usun = buttons.usun;
 	//rachunek karty
 	this.rachunekKarty = element(by.model('cardContext.item.card'));
 	this.numerRachunku = element(by.model('cardContext.item.accountFrom'));
@@ -31,7 +32,7 @@ var cards = function () {
 	this.sms = element(by.model('rbAuth.value"'));	
 	//automatyczna splata
 	this.automatycznaSplata=element(by.css('[ui-sref="cards.autorepayment"]'));
-	this.nowaSplata = element(by.buttonText('NOWA SPŁATA'));
+	this.nowaSplata = buttons.nowaSplata;
 	//automatyczna splata szczegoly
 	this.potwierdzenie=element(by.css('[class="bd-msg-panel__message"]'));
 	this.numerRachunkuKartyOpis = element(by.css('[label="Numer rachunku karty"]'));

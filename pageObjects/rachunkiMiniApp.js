@@ -1,5 +1,6 @@
 var accounts = function () {
 	var helpers = require('./helpers.js');
+	var buttons = require('../pageObjects/buttons.js');
 	var login = require('./loginPage.js');
 	var winston = require('winston');
 	var mobileMenu = require('./mobileMenu.js');
@@ -10,7 +11,7 @@ var accounts = function () {
 	this.rachunekHistoria = element(by.model('table.tableConfig.selectedAccount'));
 	this.rachunkiHistoriaLista = element(by.css('[ui-sref="accounts.transactions"]'));
 	this.mojBank = element(by.css('[class="raiff-icons logo"]'));
-	this.szczegoly = element(by.buttonText('Szczegóły'));
+	this.szczegoly = buttons.szczegoly;
 	this.nrRachunku = element(by.css('[label="Nr rachunku"]'));
 	this.nazwaRachunku = element(by.css('[label="Nazwa rachunku"]'));
 	this.twojaNazwaRachunku = element(by.css('[label="Twoja nazwa rachunku"]'));
@@ -23,14 +24,16 @@ var accounts = function () {
 	this.kodBICRachunku = element(by.css('[label="Kod BIC/SWIFT"]'));
 	this.dataOtwarciaRachunku = element(by.css('[label="Data otwarcia"]'));
 	this.szukajWTresci = element(by.model('models.view.operationTitle'));
-	this.szukaj = element(by.buttonText('Szukaj'));
+	this.szukaj = buttons.szukaj;
 	this.szukajMobile = element(by.id('search_button_mobile'));
 	//szczegoly opearcji
 	this.dataKsiegowania = element(by.css('[bd-table-cell="first"]'));
 	this.nadawcaOdbiorcaTytul = element(by.css('[bd-table-cell="second"]'));
-	this.typTransakcji = element(by.css('[bd-table-cell="third"]'));
-	this.kwotaOpis = element(by.css('[bd-table-cell="fourth"]'));
-	this.saldoPoOperacji = element(by.css('[bd-table-cell="fifth"]'));
+	// this.typTransakcji = element(by.css('[bd-table-cell="third"]'));
+	// this.kwotaOpis = element(by.css('[bd-table-cell="fourth"]'));
+	// this.saldoPoOperacji = element(by.css('[bd-table-cell="fifth"]'));
+	this.kwotaOpis = element(by.css('[bd-table-cell="third"]'));
+	this.saldoPoOperacji = element(by.css('[bd-table-cell="fourth"]'));
 	//po wybraniu szczegolow
 	this.saldoPoTransakcjiSzczegoly = element(by.css('[label="Saldo po transakcji"]'));
 	this.typTransakcjiSzczegoly = element(by.css('[label="Saldo po transakcji"]'));
@@ -91,18 +94,18 @@ var accounts = function () {
 		expect(this.dataKsiegowania.length).not.toEqual(0);
 		if (params.page.mobile=='false')
 		expect(this.nadawcaOdbiorcaTytul.getText()).toContain(tekstDoWyszukania);
-		expect(this.typTransakcji.length).not.toEqual(0);
+		// expect(this.typTransakcji.length).not.toEqual(0);
 		expect(this.kwotaOpis.getText()).toContain('-'+kwota+' PLN');
 		expect(this.saldoPoOperacji.getText()).toContain(saldoPoOperacji.toLocaleString('pl-PL'));
 		this.kwotaOpis.click().then(function(){
 			winston.log('info', 'poprawnie ksiegowanie operacji z rachunku'+nrb+' na kwote='+kwota);
 			winston.log('info', 'poprawnie ksiegowanie operacji z rachunku'+nrb+' na kwote='+kwota+' saldoPoOperacji'+saldoPoOperacji);
 		});
-			helpers.waitUntilReady(this.saldoPoTransakcjiSzczegoly);	
-		//po wybraniu szczegolow
-		expect(this.saldoPoTransakcjiSzczegoly.getText()).toContain('SALDO PO TRANSAKCJI');
-		expect(this.saldoPoTransakcjiSzczegoly.getText()).toContain(saldoPoOperacji);
-		expect(this.typTransakcjiSzczegoly.length).not.toEqual(0);
+		// 	helpers.waitUntilReady(this.saldoPoTransakcjiSzczegoly);	
+		// //po wybraniu szczegolow
+		// expect(this.saldoPoTransakcjiSzczegoly.getText()).toContain('SALDO PO TRANSAKCJI');
+		// expect(this.saldoPoTransakcjiSzczegoly.getText()).toContain(saldoPoOperacji);
+		// expect(this.typTransakcjiSzczegoly.length).not.toEqual(0);
 		expect(this.dataTransakcjiSzczegoly.length).not.toEqual(0);
 		expect(this.dataKsiegowaniaSzczegoly.length).not.toEqual(0);
 	}

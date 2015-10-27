@@ -41,7 +41,7 @@
 		element.all(by.repeater(ngRepeatTag)).each(function(elem) {
   		elem.getText().then(function(text) {
   			if (text.search(szukanyTekst) != -1) {
-  				console.log("dane na liście="+text);
+  				console.log("znalazl na liście="+text);
   				elem.element(by.buttonText(tekstPrzycisku)).click();
   			}
   		});

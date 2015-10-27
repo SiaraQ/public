@@ -1,5 +1,6 @@
 var payments = function () {
 	var rachunki = require('../pageObjects/rachunkiMiniApp.js');
+	var buttons = require('../pageObjects/buttons.js');
 	var helpers = require('../pageObjects/helpers.js');
 	var winston = require('winston');
 	var platnosci = require('../pageObjects/platnosci.js');
@@ -42,7 +43,7 @@ var payments = function () {
 	var fPoleSaldo = element(by.css('[class="bd-amount__value"]'));
 	var fRachunekUrzSkarb = element(by.css('[class="rb-tax-account-select__account"]')).element(by.id('recipientAccountNo'));  
 	var fdalej = element(by.css('[ng-click="moveNext()"]'));
-	var fzatwierdz = element(by.buttonText('Zatwierdź'));
+	var fzatwierdz = buttons.zatwierdz;
 
 	this.przelewDoUS = function(rachunekNadawcy,rachunekUrzeduSkarbowego,nazwaPlatnika,typIdentyfikatoraUzupelniajacego,numerIdentyfikatoraUzupelniajacego,symbolFormularza,typOkresu,numerOkresu,rokOkresu,identyfokacjaZobowiazania,dataRealizacji,kwota,hasloSms) {
 		var numertypOkresu=0;
@@ -114,7 +115,7 @@ var payments = function () {
 		if (identyfokacjaZobowiazania=="") identyfokacjaZobowiazania="identfZ";
 		if (nazwaPlatnika=="") nazwaPlatnika="nazwaPlatnika"+random;
 		if (hasloSms=="") hasloSms='1111';
-		if (rachunekUrzeduSkarbowego=="") rachunekUrzeduSkarbowego='51101010780024112221000000';
+		if (rachunekUrzeduSkarbowego=="") rachunekUrzeduSkarbowego='51 1010 1078 0024 1122 2100 0000';
 		if (kwota=="")	kwota=helpers.losujKwote();
 		rachunekNadawcy = helpers.zamienRachunekNaNrbZeSpacjami(rachunekNadawcy);
 		//rachunekNadawcy,nazwaPlatnika,typIdentyfikatoraUzupelniajacego,numerIdentyfikatoraUzupelniajacego,symbolFormularza,
