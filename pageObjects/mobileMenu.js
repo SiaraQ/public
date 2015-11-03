@@ -18,5 +18,17 @@ var mobileMenu = function() {
 		helpers.clickSmallElement(this.rachunki);
 	}
 
+	this.kliknijPlatnosci = function() {
+		helpers.waitUntilReady(this.menu);
+		this.menu.click();
+		helpers.clickSmallElement(this.platnosci);
+	}
+
+	this.kliknijKarty = function() {
+		helpers.waitUntilReady(this.menu);
+		this.menu.click();
+		helpers.clickSmallElement(this.karty);
+	}
+
 };
 module.exports = new mobileMenu();

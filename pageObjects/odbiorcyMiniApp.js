@@ -43,12 +43,16 @@ var payments = function() {
 	this.numerRachunkuKomunikat = element(by.css('[eb-name="recipientAccountNo"]')).element(by.id('recipientAccountNo'));
 
 	this.wybieranieOdbiorcy = function() {
-		helpers.waitUntilReady(this.MojBank);
-		this.MojBank.click();
-		helpers.waitUntilReady(this.MojBank);
-		login.kliknijWBaner();
-		helpers.waitUntilReady(this.platnosci);
-		this.platnosci.click();
+		if (params.page.mobile == 'true') {
+			mobileMenu.kliknijPlatnosci();
+		} else {
+			helpers.waitUntilReady(this.MojBank);
+			this.MojBank.click();
+			helpers.waitUntilReady(this.MojBank);
+			login.kliknijWBaner();
+			helpers.waitUntilReady(this.platnosci);
+			this.platnosci.click();
+		}
 		helpers.waitUntilReady(this.odbiorcyZdefiniowani);
 		this.odbiorcyZdefiniowani.click();
 		helpers.waitUntilReady(this.nowyOdbiorca);

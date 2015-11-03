@@ -10,12 +10,16 @@ var platnosci = function() {
 	var ftypPlatnosci = element(by.model('payment.type'));
 
 	this.wybierzPlatnosci = function() {
-		helpers.waitUntilReady(fMojBank);
-		fMojBank.click();
-		helpers.waitUntilReady(fMojBank);
-		login.kliknijWBaner();
-		helpers.waitUntilReady(fplatnosci);
-		fplatnosci.click();
+		if (params.page.mobile == 'true') {
+			mobileMenu.kliknijKarty();
+		} else {
+			helpers.waitUntilReady(fMojBank);
+			fMojBank.click();
+			helpers.waitUntilReady(fMojBank);
+			login.kliknijWBaner();
+			helpers.waitUntilReady(fplatnosci);
+			fplatnosci.click();
+		}
 		helpers.waitUntilReady(fplatnosciPrzelewy);
 		fplatnosciPrzelewy.click();
 		helpers.waitUntilReady(ftypPlatnosci);

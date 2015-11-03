@@ -7,12 +7,16 @@ var cards = function() {
 	var karty = element(by.cssContainingText('.widget-tile__widget-header__title', 'Karty'));
 
 	this.wybierzKarty = function() {
-		helpers.waitUntilReady(fMojBank);
-		fMojBank.click();
-		helpers.waitUntilReady(fMojBank);
-		login.kliknijWBaner();
-		helpers.waitUntilReady(karty);
-		karty.click();
+		if (params.page.mobile == 'true') {
+			mobileMenu.kliknijKarty();
+		} else {
+			helpers.waitUntilReady(fMojBank);
+			fMojBank.click();
+			helpers.waitUntilReady(fMojBank);
+			login.kliknijWBaner();
+			helpers.waitUntilReady(karty);
+			karty.click();
+		}
 	}
 
 };
