@@ -1,4 +1,4 @@
-var accounts = function () {
+var accounts = function() {
 	var helpers = require('./helpers.js');
 	var buttons = require('../pageObjects/buttons.js');
 	var login = require('./loginPage.js');
@@ -41,13 +41,13 @@ var accounts = function () {
 	this.dataTransakcjiSzczegoly = element(by.css('[label="Data transakcji"]'));
 	this.dataKsiegowaniaSzczegoly = element(by.css('[label="Data księgowania"]'));
 
-	this.testRachunku= function(nrb){
+	this.testRachunku = function(nrb) {
 		this.wyszukajRachunekIWybierzOpcjeSzczegoly(nrb);
 		this.veryfikacjaSzczegolowRachunkuPoWybraniuPrzyciskuSzczegoly(nrb);
 	}
 
-	this.wyszukajRachunekIWybierzOpcjeSzczegoly= function (nrb) {
-		nrb=helpers.zamienRachunekNaNrbZeSpacjami(nrb);
+	this.wyszukajRachunekIWybierzOpcjeSzczegoly = function(nrb) {
+		nrb = helpers.zamienRachunekNaNrbZeSpacjami(nrb);
 		helpers.waitUntilReady(fMojBank);
 		fMojBank.click();
 		helpers.waitUntilReady(fMojBank);
@@ -55,51 +55,50 @@ var accounts = function () {
 		helpers.waitUntilReady(this.rachunki);
 		this.rachunki.click();
 		browser.driver.sleep(12000);
-		helpers.klinijPrzyciskPoWyszukaniuTekstu('account in accountList.content',nrb,'Szczegóły');
+		helpers.klinijPrzyciskPoWyszukaniuTekstu('account in accountList.content', nrb, 'Szczegóły');
 		browser.driver.sleep(4000);
 
 	};
 
-	this.sprawdzOperacjeNaHistorii = function (nrb,tekstDoWyszukania,kwota,saldoPoOperacji) {
+	this.sprawdzOperacjeNaHistorii = function(nrb, tekstDoWyszukania, kwota, saldoPoOperacji) {
 		console.log("saldoPoOperacji IN ");
 		console.log(saldoPoOperacji);
-		nrb=helpers.zamienRachunekNaNrbZeSpacjami(nrb);
-		if (params.page.mobile=='true'){
+		nrb = helpers.zamienRachunekNaNrbZeSpacjami(nrb);
+		if (params.page.mobile == 'true') {
 			mobileMenu.kliknijRachunki();
-			helpers.klinijPrzyciskPoWyszukaniuTekstu('account in accountList.content',nrb,'Szczegóły');
+			helpers.klinijPrzyciskPoWyszukaniuTekstu('account in accountList.content', nrb, 'Szczegóły');
 		} else {
-			helpers.waitUntilReady(this.mojBank);	
+			helpers.waitUntilReady(this.mojBank);
 			this.mojBank.click();
 			login.kliknijWBaner();
-			helpers.waitUntilReady(this.rachunki);	
+			helpers.waitUntilReady(this.rachunki);
 			helpers.clickSmallElement(this.rachunki);
 			// this.rachunki.click();
 		}
-			helpers.waitUntilReady(this.rachunkiHistoriaLista);	
+		helpers.waitUntilReady(this.rachunkiHistoriaLista);
 		this.rachunkiHistoriaLista.click();
-			helpers.waitUntilReady(this.rachunekHistoria);	
+		helpers.waitUntilReady(this.rachunekHistoria);
 		this.rachunekHistoria.click();
-		helpers.wybierzElementZListyPoTekscie('item in $select.items track by $index',nrb);
-			helpers.waitUntilReady(this.szukajWTresci);	
+		helpers.wybierzElementZListyPoTekscie('item in $select.items track by $index', nrb);
+		helpers.waitUntilReady(this.szukajWTresci);
 		this.szukajWTresci.sendKeys(tekstDoWyszukania);
-		if (params.page.mobile=='true'){
-			helpers.waitUntilReady(this.szukajMobile);	
+		if (params.page.mobile == 'true') {
+			helpers.waitUntilReady(this.szukajMobile);
 			this.szukajMobile.click();
-		}
-		else {
-			helpers.waitUntilReady(this.szukaj);	
+		} else {
+			helpers.waitUntilReady(this.szukaj);
 			this.szukaj.click();
 		}
-			helpers.waitUntilReady(this.dataKsiegowania);	
+		helpers.waitUntilReady(this.dataKsiegowania);
 		expect(this.dataKsiegowania.length).not.toEqual(0);
-		if (params.page.mobile=='false')
-		expect(this.nadawcaOdbiorcaTytul.getText()).toContain(tekstDoWyszukania);
+		if (params.page.mobile == 'false')
+			expect(this.nadawcaOdbiorcaTytul.getText()).toContain(tekstDoWyszukania);
 		// expect(this.typTransakcji.length).not.toEqual(0);
-		expect(this.kwotaOpis.getText()).toContain('-'+kwota+' PLN');
+		expect(this.kwotaOpis.getText()).toContain('-' + kwota + ' PLN');
 		expect(this.saldoPoOperacji.getText()).toContain(saldoPoOperacji.toLocaleString('pl-PL'));
-		this.kwotaOpis.click().then(function(){
-			winston.log('info', 'poprawnie ksiegowanie operacji z rachunku'+nrb+' na kwote='+kwota);
-			winston.log('info', 'poprawnie ksiegowanie operacji z rachunku'+nrb+' na kwote='+kwota+' saldoPoOperacji'+saldoPoOperacji);
+		this.kwotaOpis.click().then(function() {
+			winston.log('info', 'poprawnie ksiegowanie operacji z rachunku' + nrb + ' na kwote=' + kwota);
+			winston.log('info', 'poprawnie ksiegowanie operacji z rachunku' + nrb + ' na kwote=' + kwota + ' saldoPoOperacji' + saldoPoOperacji);
 		});
 		// 	helpers.waitUntilReady(this.saldoPoTransakcjiSzczegoly);	
 		// //po wybraniu szczegolow
@@ -110,7 +109,7 @@ var accounts = function () {
 		expect(this.dataKsiegowaniaSzczegoly.length).not.toEqual(0);
 	}
 
-	this.veryfikacjaSzczegolowRachunkuPoWybraniuPrzyciskuSzczegoly  = function (nrb) {
+	this.veryfikacjaSzczegolowRachunkuPoWybraniuPrzyciskuSzczegoly = function(nrb) {
 		expect(this.nrRachunku.getText()).toContain('NR RACHUNKU');
 		expect(this.nazwaRachunku.getText()).toContain('NAZWA RACHUNKU');
 		expect(this.wlascicieleRachunku.getText()).toContain('WŁAŚCICIELE');
@@ -123,67 +122,67 @@ var accounts = function () {
 	};
 
 	//funkcja wyszukuje rachunek na liscie i weryfikuje dane 
-	this.szegolyRachunkuNaLiscie = function (nrb,dostep,dostepneSrodki,saldo,walutaRachunku) {
+	this.szegolyRachunkuNaLiscie = function(nrb, dostep, dostepneSrodki, saldo, walutaRachunku) {
 		this.rachunki.click();
 		element.all(by.repeater('account in accountList.content')).each(function(elem) {
 			elem.getText().then(function(text) {
-  			if (text.search(nrb) != -1) {
-				elem.element(by.cssContainingText('.bd-list-item__properties-group-cell__item','Dostępne środki')).element(by.css('[class="bd-amount__value"]')).then(function(item) {
-			  		item.getText().then(function(text) {
-			  				console.log('Dostępne środki='+text);
-			  				expect(dostepneSrodki).toEqual(text);
-	  				});
-				});
-				elem.element(by.cssContainingText('.bd-list-item__properties-group-cell__item','Dostępne środki')).element(by.css('[class="bd-amount__currency"]')).then(function(item) {
-			  		item.getText().then(function(text) {
-			  				console.log('Waluta='+text);
-			  				expect(walutaRachunku).toEqual(text);
-	  				});
-				});
-				elem.element(by.cssContainingText('.bd-list-item__properties-group-cell__item','Saldo')).element(by.css('[class="bd-amount__value"]')).then(function(item) {
-			  		item.getText().then(function(text) {
-			  				console.log('saldo='+text);
-			  				expect(saldo).toEqual(text);
-	  				});
-				});
-				elem.element(by.cssContainingText('.bd-list-item__properties-group-cell__item','Saldo')).element(by.css('[class="bd-amount__currency"]')).then(function(item) {
-			  		item.getText().then(function(text) {
-			  				console.log('walutaRachunku='+text);
-			  				expect(walutaRachunku).toEqual(text);
-	  				});
-				});
+				if (text.search(nrb) != -1) {
+					elem.element(by.cssContainingText('.bd-list-item__properties-group-cell__item', 'Dostępne środki')).element(by.css('[class="bd-amount__value"]')).then(function(item) {
+						item.getText().then(function(text) {
+							console.log('Dostępne środki=' + text);
+							expect(dostepneSrodki).toEqual(text);
+						});
+					});
+					elem.element(by.cssContainingText('.bd-list-item__properties-group-cell__item', 'Dostępne środki')).element(by.css('[class="bd-amount__currency"]')).then(function(item) {
+						item.getText().then(function(text) {
+							console.log('Waluta=' + text);
+							expect(walutaRachunku).toEqual(text);
+						});
+					});
+					elem.element(by.cssContainingText('.bd-list-item__properties-group-cell__item', 'Saldo')).element(by.css('[class="bd-amount__value"]')).then(function(item) {
+						item.getText().then(function(text) {
+							console.log('saldo=' + text);
+							expect(saldo).toEqual(text);
+						});
+					});
+					elem.element(by.cssContainingText('.bd-list-item__properties-group-cell__item', 'Saldo')).element(by.css('[class="bd-amount__currency"]')).then(function(item) {
+						item.getText().then(function(text) {
+							console.log('walutaRachunku=' + text);
+							expect(walutaRachunku).toEqual(text);
+						});
+					});
 					elem.element(by.css('[class="product-details-secondary"]')).then(function(item) {
-			  		item.getText().then(function(text) {
-			  				console.log('dostep='+text);
-			  				expect(helpers.formatNumber(dostep)).toEqual(text);
-	  				});
-				});
-			}
+						item.getText().then(function(text) {
+							console.log('dostep=' + text);
+							expect(helpers.formatNumber(dostep)).toEqual(text);
+						});
+					});
+				}
 			});
 		});
 	};
 
-	this.verifyAccountsSummary = function () {
+	this.verifyAccountsSummary = function() {
 		this.rachunki.click();
-		var srodki=0;
+		var srodki = 0;
 		if (text.search("PLN") != -1) {
-		element.all(by.repeater('account in accountList.content')).each(function(elem) {
-			elem.getText().then(function(text) {
-				elem.element(by.cssContainingText('.bd-list-item__properties-group-cell__item','Dostępne środki')).element(by.css('[class="bd-amount__value"]')).then(function(item) {
-			  		item.getText().then(function(text) {
-			  				console.log('Dostępne środki='+text);
-			  				srodki=srodki+(parseFloat(parseFloat));
-			  				expect(dostepneSrodki).toEqual(text);
-	  				});
-				});
-				elem.element(by.cssContainingText('.bd-list-item__properties-group-cell__item','Dostępne środki')).element(by.css('[class="bd-amount__currency"]')).then(function(item) {
-			  		item.getText().then(function(text) {
-			  				console.log('Waluta='+text);
-			  				expect(walutaRachunku).toEqual(text);
-	  				});
+			element.all(by.repeater('account in accountList.content')).each(function(elem) {
+				elem.getText().then(function(text) {
+					elem.element(by.cssContainingText('.bd-list-item__properties-group-cell__item', 'Dostępne środki')).element(by.css('[class="bd-amount__value"]')).then(function(item) {
+						item.getText().then(function(text) {
+							console.log('Dostępne środki=' + text);
+							srodki = srodki + (parseFloat(parseFloat));
+							expect(dostepneSrodki).toEqual(text);
+						});
+					});
+					elem.element(by.cssContainingText('.bd-list-item__properties-group-cell__item', 'Dostępne środki')).element(by.css('[class="bd-amount__currency"]')).then(function(item) {
+						item.getText().then(function(text) {
+							console.log('Waluta=' + text);
+							expect(walutaRachunku).toEqual(text);
+						});
+					});
 				});
 			});
-		});
 		}
 	};
 

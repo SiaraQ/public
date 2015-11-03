@@ -1,14 +1,14 @@
-var cards = function () {
+var cards = function() {
 	var helpers = require('../pageObjects/helpers.js');
 	var buttons = require('../pageObjects/buttons.js');
 	var winston = require('winston');
 	var karty = require('../pageObjects/kartyMiniApp.js');
-	
+
 	this.zastrzez = element(by.css('[ui-sref="cards.restrict.fill"]'));
 	this.szczegoly = buttons.szczegoly;
 	this.dalej = element(by.buttonText('Dalej'));
 	this.zatwierdz = buttons.zastrzez;
-	this.potwierdzenie=element(by.css('[class="bd-msg-panel__message"]'));
+	this.potwierdzenie = element(by.css('[class="bd-msg-panel__message"]'));
 	this.kodSms = element(by.model('rbAuth.value'));
 	//splata karty
 	this.numerKarty = element(by.model('cardContext.item.card'));
@@ -23,53 +23,53 @@ var cards = function () {
 	this.powodZastrzezeniaPotwierdzenie = element(by.css('[label="Powód zastrzeżenia"]'));
 	this.checkboxNowaKartaPotwierdzenie = element(by.css('[label="Proszę o wydanie nowej karty w miejsce zastrzeżonej"]'));
 
-	this.zastrzezenieKarty = function (powodZastrzezenia,numerKartyCaly,hasloSms) {
+	this.zastrzezenieKarty = function(powodZastrzezenia, numerKartyCaly, hasloSms) {
 
-		if (powodZastrzezenia=="")	powodZastrzezenia="zgubiona karta";
-		if (hasloSms=="")	hasloSms="1111";
-		var numerKarty=helpers.zamienRachunekKarty(numerKartyCaly);
-		winston.log('info', "Dane testu: numerKarty="+numerKartyCaly+" powodZastrzezenia="+powodZastrzezenia);
+		if (powodZastrzezenia == "") powodZastrzezenia = "zgubiona karta";
+		if (hasloSms == "") hasloSms = "1111";
+		var numerKarty = helpers.zamienRachunekKarty(numerKartyCaly);
+		winston.log('info', "Dane testu: numerKarty=" + numerKartyCaly + " powodZastrzezenia=" + powodZastrzezenia);
 
 		karty.wybierzKarty();
 		// browser.driver.sleep(12000);
-			helpers.waitUntilReady(this.zastrzez);	
+		helpers.waitUntilReady(this.zastrzez);
 		this.zastrzez.click();
 		// browser.driver.sleep(1000);
-			helpers.waitUntilReady(this.numerKarty);	
+		helpers.waitUntilReady(this.numerKarty);
 		this.numerKarty.click();
 		// browser.driver.sleep(1000);
-		helpers.wybierzElementZListyPoTekscie('cardItem in $select.items track by $index',numerKarty);
+		helpers.wybierzElementZListyPoTekscie('cardItem in $select.items track by $index', numerKarty);
 		// browser.driver.sleep(8000);
-		if (powodZastrzezenia=="zgubiona karta") {
-			helpers.waitUntilReady(this.zgubionaKarta);	
+		if (powodZastrzezenia == "zgubiona karta") {
+			helpers.waitUntilReady(this.zgubionaKarta);
 			this.zgubionaKarta.click();
 		}
-		if (powodZastrzezenia=="skradziona karta") {
-			helpers.waitUntilReady(this.skradzionaKarta);	
+		if (powodZastrzezenia == "skradziona karta") {
+			helpers.waitUntilReady(this.skradzionaKarta);
 			this.skradzionaKarta.click();
 		}
-			helpers.waitUntilReady(this.checkboxNowaKarta);	
+		helpers.waitUntilReady(this.checkboxNowaKarta);
 		this.checkboxNowaKarta.click();
 		// browser.driver.sleep(1000);
-			helpers.waitUntilReady(this.dalej);	
+		helpers.waitUntilReady(this.dalej);
 		this.dalej.click();
 		//strona 2
-		expect(this.numerKartyPotwierdzenie.getText()).toEqual('Numer karty\n'+numerKarty);
+		expect(this.numerKartyPotwierdzenie.getText()).toEqual('Numer karty\n' + numerKarty);
 		expect(this.numerRachunkuPotwierdzenie.getText()).toContain('Numer rachunku');
-		expect(this.powodZastrzezeniaPotwierdzenie.getText()).toEqual('Powód zastrzeżenia\n'+powodZastrzezenia);
+		expect(this.powodZastrzezeniaPotwierdzenie.getText()).toEqual('Powód zastrzeżenia\n' + powodZastrzezenia);
 		expect(this.checkboxNowaKartaPotwierdzenie.getText()).toEqual('Proszę o wydanie nowej karty w miejsce zastrzeżonej\ntak');
 		// browser.driver.sleep(1000);
-			helpers.waitUntilReady(this.kodSms);	
+		helpers.waitUntilReady(this.kodSms);
 		this.kodSms.sendKeys(hasloSms);
-			helpers.waitUntilReady(this.zatwierdz);	
-		this.zatwierdz.click().then(function(){
-				winston.log('info', "Wybranie opcji Zatwierdź - przejście do strony potwierdzenia informacji");
-			});
+		helpers.waitUntilReady(this.zatwierdz);
+		this.zatwierdz.click().then(function() {
+			winston.log('info', "Wybranie opcji Zatwierdź - przejście do strony potwierdzenia informacji");
+		});
 		// browser.driver.sleep(1000);
-			helpers.waitUntilReady(this.potwierdzenie);	
-			expect(this.potwierdzenie.getText()).not.toContain("odrzuc");
+		helpers.waitUntilReady(this.potwierdzenie);
+		expect(this.potwierdzenie.getText()).not.toContain("odrzuc");
 	};
 
-	
+
 };
 module.exports = new cards();

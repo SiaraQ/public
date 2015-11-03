@@ -1,4 +1,4 @@
-var payments = function () {
+var payments = function() {
 	var helpers = require('../pageObjects/helpers.js');
 	var buttons = require('../pageObjects/buttons.js');
 	var rachunki = require('../pageObjects/rachunkiMiniApp.js');
@@ -30,74 +30,74 @@ var payments = function () {
 	var fkwotaKomunikat = element(by.css('[eb-name="amount"]')).element(by.id('amount'));
 	var fdataKomunikat = element(by.id('realizationDate'));
 
-	this.tworzPrzelewWlasny = function (rachunekNadawcy,naRachunek,tytulPrzelewu,kwota,dataRealizacji,hasloSms) {
+	this.tworzPrzelewWlasny = function(rachunekNadawcy, naRachunek, tytulPrzelewu, kwota, dataRealizacji, hasloSms) {
 		browser.driver.sleep(12000);
-		var saldoPrzed=0;
-		var saldoOczekiwanePo=0;
+		var saldoPrzed = 0;
+		var saldoOczekiwanePo = 0;
 		var random = Math.random();
 
-		if (hasloSms=="") hasloSms='1111';
-		if (tytulPrzelewu=="")tytulPrzelewu="tytul"+random;
-		if (kwota=="")	kwota=helpers.losujKwote();
-		if (dataRealizacji!="") dataRealizacjiNew=helpers.dataBiezacaPlusDzien(dataRealizacji);
+		if (hasloSms == "") hasloSms = '1111';
+		if (tytulPrzelewu == "") tytulPrzelewu = "tytul" + random;
+		if (kwota == "") kwota = helpers.losujKwote();
+		if (dataRealizacji != "") dataRealizacjiNew = helpers.dataBiezacaPlusDzien(dataRealizacji);
 
 		var rachunekNadawcy = helpers.zamienRachunekNaNrbZeSpacjami(rachunekNadawcy);
 		var naRachunek = helpers.zamienRachunekNaNrbZeSpacjami(naRachunek);
 
-		winston.log('info', "Dane testu: rachunekNadawcy="+rachunekNadawcy+" naRachunek="+naRachunek+" tytulPrzelewu="+tytulPrzelewu+" kwota="+kwota+" hasloSms="+hasloSms);
-		helpers.waitUntilReady(fplatnosci);	
+		winston.log('info', "Dane testu: rachunekNadawcy=" + rachunekNadawcy + " naRachunek=" + naRachunek + " tytulPrzelewu=" + tytulPrzelewu + " kwota=" + kwota + " hasloSms=" + hasloSms);
+		helpers.waitUntilReady(fplatnosci);
 		fplatnosci.click();
-		  helpers.waitUntilReady(fprzelewWlasny);	
+		helpers.waitUntilReady(fprzelewWlasny);
 		fprzelewWlasny.click();
-		  helpers.waitUntilReady(fzRachunku);	
+		helpers.waitUntilReady(fzRachunku);
 		fzRachunku.click();
-		helpers.wybierzElementZListyPoTekscie('accountItem in $select.items track by accountItem.accountNo',rachunekNadawcy);
-		  helpers.waitUntilReady(fdostepneSrodki);	
-		helpers.wyliczSaldoOczekiwanePo(fdostepneSrodki,kwota).then(function(value) {
+		helpers.wybierzElementZListyPoTekscie('accountItem in $select.items track by accountItem.accountNo', rachunekNadawcy);
+		helpers.waitUntilReady(fdostepneSrodki);
+		helpers.wyliczSaldoOczekiwanePo(fdostepneSrodki, kwota).then(function(value) {
 			helpers.waitUntilReady(fnaRachunek);
-			fnaRachunek.click();  	
-			if (naRachunek=="") {
+			fnaRachunek.click();
+			if (naRachunek == "") {
 				//wybiera pierwszy na liscie
 				helpers.wybierzElementZListyPoNumerze(0);
 			} else {
 				//szuka konkretnego na liscie
 				browser.driver.sleep(2000);
-				helpers.wybierzElementZListyPoTekscie('accountItem in $select.items track by accountItem.accountNo',naRachunek);
+				helpers.wybierzElementZListyPoTekscie('accountItem in $select.items track by accountItem.accountNo', naRachunek);
 			}
 			helpers.waitUntilReady(ftytul);
 			ftytul.sendKeys(tytulPrzelewu);
 			helpers.waitUntilReady(fkwota);
-			fkwota.sendKeys(kwota); 
-			if (dataRealizacji!=""){
+			fkwota.sendKeys(kwota);
+			if (dataRealizacji != "") {
 				fdataRealizacji.clear();
 				fdataRealizacji.sendKeys(dataRealizacjiNew);
 			}
 			helpers.waitUntilReady(fdalej);
-			fdalej.click().then(function(){
+			fdalej.click().then(function() {
 				winston.log('info', "Wybranie opcji Zatwierdź - przejście do strony drugiej");
 			});
 			helpers.waitUntilReady(fkodSms);
 			fkodSms.sendKeys(hasloSms);
-			fzatwierdz.click().then(function(){
+			fzatwierdz.click().then(function() {
 				winston.log('info', "Wybranie opcji Zatwierdź - przejście do strony potwierdzenia informacji");
 			});
 			helpers.waitUntilReady(fpotwierdzenie);
 			expect(fpotwierdzenie.getText()).not.toContain("odrzuc");
-			if (dataRealizacji==""){
-					console.log("value=");
-					console.log(value);
-					rachunki.sprawdzOperacjeNaHistorii(rachunekNadawcy,tytulPrzelewu,kwota,value);
-				}
+			if (dataRealizacji == "") {
+				console.log("value=");
+				console.log(value);
+				rachunki.sprawdzOperacjeNaHistorii(rachunekNadawcy, tytulPrzelewu, kwota, value);
+			}
 		});
 	};
 
-	this.przelewWlasnyWalidacjaTytulem = function () {
-		helpers.waitUntilReady(fplatnosci);	
+	this.przelewWlasnyWalidacjaTytulem = function() {
+		helpers.waitUntilReady(fplatnosci);
 		fplatnosci.click();
-		  helpers.waitUntilReady(fprzelewWlasny);	
+		helpers.waitUntilReady(fprzelewWlasny);
 		fprzelewWlasny.click();
 		// helpers.wybierzElementZListyPoNumerze(1);
-		  helpers.waitUntilReady(ftytul);	
+		helpers.waitUntilReady(ftytul);
 		ftytul.click();
 		ftytul.clear();
 		expect(ftytulKomunikat.getText()).toEqual('Tytuł przelewu nie może być pusty');
@@ -108,23 +108,23 @@ var payments = function () {
 		fMojBank.click();
 	};
 
-	this.przelewWlasnyWalidacjaKwoty = function () {
-		helpers.waitUntilReady(fplatnosci);	
+	this.przelewWlasnyWalidacjaKwoty = function() {
+		helpers.waitUntilReady(fplatnosci);
 		fplatnosci.click();
-		  helpers.waitUntilReady(fprzelewWlasny);	
+		helpers.waitUntilReady(fprzelewWlasny);
 		fprzelewWlasny.click();
 		// helpers.wybierzElementZListyPoNumerze(1);
-		  helpers.waitUntilReady(fkwota);	
+		helpers.waitUntilReady(fkwota);
 		//funkcja, w której można działać na kwotach
-		element(by.css('[class="bd-amount__value"]')).getText().then(function (value) {
-    		fsaldo =  element(by.model('payment.formData.amount'));
-    		fkwotaKomunikat = element(by.css('[eb-name="amount"]')).element(by.id('amount'));
-    	value=value.replace(/\s+/g, '');
-		value=value.replace(',','.');
-		//kwota powyżej środków na rachunku
-    	fsaldo.sendKeys(Number(value)+0.01);
-		expect(fkwotaKomunikat.getText()).toEqual('Kwota przelewu przekracza środki dostępne na rachunku');
-		fsaldo.clear();
+		element(by.css('[class="bd-amount__value"]')).getText().then(function(value) {
+			fsaldo = element(by.model('payment.formData.amount'));
+			fkwotaKomunikat = element(by.css('[eb-name="amount"]')).element(by.id('amount'));
+			value = value.replace(/\s+/g, '');
+			value = value.replace(',', '.');
+			//kwota powyżej środków na rachunku
+			fsaldo.sendKeys(Number(value) + 0.01);
+			expect(fkwotaKomunikat.getText()).toEqual('Kwota przelewu przekracza środki dostępne na rachunku');
+			fsaldo.clear();
 		});
 		//Nieprawidłowa kwota przelewu
 		fkwota.sendKeys('12,344');
@@ -138,13 +138,13 @@ var payments = function () {
 		fMojBank.click();
 	};
 
-	this.przelewWlasnyWalidacjaDaty = function () {
-		helpers.waitUntilReady(fplatnosci);	
+	this.przelewWlasnyWalidacjaDaty = function() {
+		helpers.waitUntilReady(fplatnosci);
 		fplatnosci.click();
-		  helpers.waitUntilReady(fprzelewWlasny);	
+		helpers.waitUntilReady(fprzelewWlasny);
 		fprzelewWlasny.click();
 		// helpers.wybierzElementZListyPoNumerze(1);
-		  helpers.waitUntilReady(fdataRealizacji);	
+		helpers.waitUntilReady(fdataRealizacji);
 		helpers.scrollWindow(fdataRealizacji);
 		fdataRealizacji.click();
 		fdatar.clear();

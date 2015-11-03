@@ -1,4 +1,4 @@
-var platnosci = function () {
+var platnosci = function() {
 	var rachunki = require('../pageObjects/rachunkiMiniApp.js');
 	var helpers = require('../pageObjects/helpers.js');
 	var winston = require('winston');
@@ -8,8 +8,8 @@ var platnosci = function () {
 	var fplatnosciPrzelewy = element(by.css('[ui-sref="payments.new.fill({ paymentType: \'domestic\' })"]'));
 	var fMojBank = element(by.css('[class="rb-header__menu__content"]')).element(by.css('[ui-sref="dashboard"]'));
 	var ftypPlatnosci = element(by.model('payment.type'));
-	
-	this.wybierzPlatnosci = function () {
+
+	this.wybierzPlatnosci = function() {
 		helpers.waitUntilReady(fMojBank);
 		fMojBank.click();
 		helpers.waitUntilReady(fMojBank);

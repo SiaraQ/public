@@ -1,4 +1,4 @@
-var payments = function () {
+var payments = function() {
 	var helpers = require('../pageObjects/helpers.js');
 	var buttons = require('../pageObjects/buttons.js');
 	var winston = require('winston');
@@ -41,7 +41,7 @@ var payments = function () {
 	this.daneOdbiorcyKomunikat = element(by.id('recipientData'));
 	this.twojaNazwaOdbiorcyKomunikat = element(by.id('customName'));
 	this.numerRachunkuKomunikat = element(by.css('[eb-name="recipientAccountNo"]')).element(by.id('recipientAccountNo'));
-	
+
 	this.wybieranieOdbiorcy = function() {
 		helpers.waitUntilReady(this.MojBank);
 		this.MojBank.click();
@@ -54,49 +54,49 @@ var payments = function () {
 		helpers.waitUntilReady(this.nowyOdbiorca);
 		this.nowyOdbiorca.click();
 	}
-	this.sprawdzDaneOdbiorcy = function(rachunekNadawcy,nazwaOdbiorcy,rachunekOdbiorcy,daneOdbiorcy,tytulPrzelewu) {
+	this.sprawdzDaneOdbiorcy = function(rachunekNadawcy, nazwaOdbiorcy, rachunekOdbiorcy, daneOdbiorcy, tytulPrzelewu) {
 		var rachunekNadawcy = helpers.zamienRachunekNaNrbZeSpacjami(rachunekNadawcy);
 		var rachunekOdbiorcy = helpers.zamienRachunekNaNrbZeSpacjami(rachunekOdbiorcy);
-		expect(this.rachunekOpis.getText()).toEqual('Z RACHUNKU\n'+rachunekNadawcy);
-		expect(this.twojaNazwaOdbiorcyOpis.getText()).toEqual('TWOJA NAZWA ODBIORCY\n'+nazwaOdbiorcy);
-		expect(this.numerRachunkuOpis.getText()).toEqual('NUMER RACHUNKU\n'+rachunekOdbiorcy);
-		expect(this.daneOdbiorcyOpis.getText()).toEqual('NAZWA I ADRES\n'+daneOdbiorcy);
-		expect(this.tytulOpis.getText()).toEqual('TYTUŁEM\n'+tytulPrzelewu);
+		expect(this.rachunekOpis.getText()).toEqual('Z RACHUNKU\n' + rachunekNadawcy);
+		expect(this.twojaNazwaOdbiorcyOpis.getText()).toEqual('TWOJA NAZWA ODBIORCY\n' + nazwaOdbiorcy);
+		expect(this.numerRachunkuOpis.getText()).toEqual('NUMER RACHUNKU\n' + rachunekOdbiorcy);
+		expect(this.daneOdbiorcyOpis.getText()).toEqual('NAZWA I ADRES\n' + daneOdbiorcy);
+		expect(this.tytulOpis.getText()).toEqual('TYTUŁEM\n' + tytulPrzelewu);
 	}
 
-	this.sprawdzDaneOdbiorcyStronaDruga = function(rachunekNadawcy,nazwaOdbiorcy,rachunekOdbiorcy,daneOdbiorcy,tytulPrzelewu) {
+	this.sprawdzDaneOdbiorcyStronaDruga = function(rachunekNadawcy, nazwaOdbiorcy, rachunekOdbiorcy, daneOdbiorcy, tytulPrzelewu) {
 		var rachunekOdbiorcy = helpers.zamienRachunekNaNrbZeSpacjami(rachunekOdbiorcy);
 		expect(this.rachunekOpis.getText()).toContain('Z rachunku');
-		expect(this.twojaNazwaOdbiorcyOpis.getText()).toEqual('Twoja nazwa odbiorcy\n'+nazwaOdbiorcy);
-		expect(this.numerRachunkuOpis.getText()).toEqual('Numer rachunku\n'+rachunekOdbiorcy);
-		expect(this.daneOdbiorcyOpis.getText()).toEqual('Nazwa i adres\n'+daneOdbiorcy);
-		expect(this.tytulOpis.getText()).toEqual('Tytułem\n'+tytulPrzelewu);
+		expect(this.twojaNazwaOdbiorcyOpis.getText()).toEqual('Twoja nazwa odbiorcy\n' + nazwaOdbiorcy);
+		expect(this.numerRachunkuOpis.getText()).toEqual('Numer rachunku\n' + rachunekOdbiorcy);
+		expect(this.daneOdbiorcyOpis.getText()).toEqual('Nazwa i adres\n' + daneOdbiorcy);
+		expect(this.tytulOpis.getText()).toEqual('Tytułem\n' + tytulPrzelewu);
 	}
 
-	this.dodajOdbiorceKrajowego = function (rachunekNadawcy,nazwaOdbiorcy,rachunekOdbiorcy,daneOdbiorcy,tytulPrzelewu,hasloSms) {
+	this.dodajOdbiorceKrajowego = function(rachunekNadawcy, nazwaOdbiorcy, rachunekOdbiorcy, daneOdbiorcy, tytulPrzelewu, hasloSms) {
 		var random = Math.random();
-		if (hasloSms=="") {
-			hasloSms='1111';
+		if (hasloSms == "") {
+			hasloSms = '1111';
 		}
-		if (nazwaOdbiorcy==""){
-			nazwaOdbiorcy="nazwaOdbiorcy"+random;
+		if (nazwaOdbiorcy == "") {
+			nazwaOdbiorcy = "nazwaOdbiorcy" + random;
 		}
-		if (rachunekOdbiorcy==""){
-			rachunekOdbiorcy=helpers.losujRachunekBiezacyPL();
+		if (rachunekOdbiorcy == "") {
+			rachunekOdbiorcy = helpers.losujRachunekBiezacyPL();
 		}
-		if (daneOdbiorcy==""){
-			daneOdbiorcy="Kowalski Stanisław"
+		if (daneOdbiorcy == "") {
+			daneOdbiorcy = "Kowalski Stanisław"
 		}
-		if (tytulPrzelewu==""){
-			tytulPrzelewu="tytul"+random;
+		if (tytulPrzelewu == "") {
+			tytulPrzelewu = "tytul" + random;
 		}
 		var rachunekNadawcy = helpers.zamienRachunekNaNrbZeSpacjami(rachunekNadawcy);
-		winston.log('info', "Dane testu: rachunekNadawcy="+rachunekNadawcy+" rachunekOdbiorcy="+rachunekOdbiorcy+" daneOdbiorcy"+daneOdbiorcy+" tytulPrzelewu="+tytulPrzelewu+" hasloSms="+hasloSms);
+		winston.log('info', "Dane testu: rachunekNadawcy=" + rachunekNadawcy + " rachunekOdbiorcy=" + rachunekOdbiorcy + " daneOdbiorcy" + daneOdbiorcy + " tytulPrzelewu=" + tytulPrzelewu + " hasloSms=" + hasloSms);
 		this.wybieranieOdbiorcy();
 		browser.driver.sleep(24000);
 		helpers.waitUntilReady(this.zRachunku);
 		this.zRachunku.click();
-		helpers.wybierzElementZListyPoTekscie('accountItem in $select.items track by accountItem.accountNo',rachunekNadawcy);
+		helpers.wybierzElementZListyPoTekscie('accountItem in $select.items track by accountItem.accountNo', rachunekNadawcy);
 		helpers.waitUntilReady(this.twojaNazwaOdbiorcy);
 		this.twojaNazwaOdbiorcy.sendKeys(nazwaOdbiorcy);
 		helpers.waitUntilReady(this.numerRachunku);
@@ -105,13 +105,13 @@ var payments = function () {
 		this.daneOdbiorcy.sendKeys(daneOdbiorcy);
 		this.tytul.sendKeys(tytulPrzelewu);
 		helpers.waitUntilReady(this.dalej);
-		this.dalej.click().then(function(){
+		this.dalej.click().then(function() {
 			winston.log('info', "Wybranie opcji Zatwierdź - przejście do strony drugiej");
 		});
-		this.sprawdzDaneOdbiorcyStronaDruga(rachunekNadawcy,nazwaOdbiorcy,rachunekOdbiorcy,daneOdbiorcy,tytulPrzelewu);
+		this.sprawdzDaneOdbiorcyStronaDruga(rachunekNadawcy, nazwaOdbiorcy, rachunekOdbiorcy, daneOdbiorcy, tytulPrzelewu);
 		helpers.waitUntilReady(this.kodSms);
 		this.kodSms.sendKeys(hasloSms);
-		this.zatwierdz.click().then(function(){
+		this.zatwierdz.click().then(function() {
 			winston.log('info', "Wybranie opcji Zatwierdź - przejście do strony potwierdzenia informacji");
 		});
 		helpers.waitUntilReady(this.potwierdzenie);
@@ -119,7 +119,7 @@ var payments = function () {
 		expect(this.potwierdzenie.getText()).not.toContain("odrzuc");
 	};
 
-	this.wyszukajOdbiorce  = function (daneDoSzukania) {
+	this.wyszukajOdbiorce = function(daneDoSzukania) {
 		helpers.waitUntilReady(this.odbiorcyZdefiniowani);
 		this.odbiorcyZdefiniowani.click();
 		helpers.waitUntilReady(this.szukajOdbiorcy);
@@ -130,25 +130,29 @@ var payments = function () {
 		this.pierwszyElementwTabeli.click();
 	}
 
-	this.edytujOdbiorce = function (rachunekNadawcy,nazwaOdbiorcy,rachunekOdbiorcy,daneOdbiorcy,tytulPrzelewu,hasloSms) {
+	this.edytujOdbiorce = function(rachunekNadawcy, nazwaOdbiorcy, rachunekOdbiorcy, daneOdbiorcy, tytulPrzelewu, hasloSms) {
 		var random = Math.random();
-		if (hasloSms=="") {
-			hasloSms='1111';
+		if (hasloSms == "") {
+			hasloSms = '1111';
 		}
-		if (nazwaOdbiorcy==""){
-			nazwaOdbiorcy="2nazwaOdbiorcy"+random;
+		if (nazwaOdbiorcy == "") {
+			nazwaOdbiorcy = "2nazwaOdbiorcy" + random;
 		}
-		if (rachunekOdbiorcy==""){
-			rachunekOdbiorcy=helpers.losujRachunekBiezacyPL();
+		if (rachunekOdbiorcy == "") {
+			rachunekOdbiorcy = helpers.losujRachunekBiezacyPL();
 		}
-		if (daneOdbiorcy==""){
-			daneOdbiorcy="2Kowalski Stanisław"
+		if (daneOdbiorcy == "") {
+			daneOdbiorcy = "2Kowalski Stanisław"
 		}
-		if (tytulPrzelewu==""){
-			tytulPrzelewu="2tytul"+random;
+		if (tytulPrzelewu == "") {
+			tytulPrzelewu = "2tytul" + random;
 		}
-		var rachunekNadawcyNew="";var nazwaOdbiorcyNew="";var rachunekOdbiorcyNew="";var daneOdbiorcyNew="";var tytulPrzelewuNew="";
-		this.dodajOdbiorceKrajowego(rachunekNadawcyNew,nazwaOdbiorcyNew,rachunekOdbiorcyNew,daneOdbiorcyNew,tytulPrzelewuNew,hasloSms);
+		var rachunekNadawcyNew = "";
+		var nazwaOdbiorcyNew = "";
+		var rachunekOdbiorcyNew = "";
+		var daneOdbiorcyNew = "";
+		var tytulPrzelewuNew = "";
+		this.dodajOdbiorceKrajowego(rachunekNadawcyNew, nazwaOdbiorcyNew, rachunekOdbiorcyNew, daneOdbiorcyNew, tytulPrzelewuNew, hasloSms);
 		this.wyszukajOdbiorce(nazwaOdbiorcyNew);
 		this.edytuj.click();
 		helpers.waitUntilReady(this.twojaNazwaOdbiorcy);
@@ -164,13 +168,13 @@ var payments = function () {
 		this.tytul.clear();
 		this.tytul.sendKeys(tytulPrzelewu);
 		helpers.waitUntilReady(this.dalej);
-		this.dalej.click().then(function(){
+		this.dalej.click().then(function() {
 			winston.log('info', "Wybranie opcji Zatwierdź - przejście do strony drugiej");
 		});
-		this.sprawdzDaneOdbiorcyStronaDruga(rachunekNadawcy,nazwaOdbiorcy,rachunekOdbiorcy,daneOdbiorcy,tytulPrzelewu);
+		this.sprawdzDaneOdbiorcyStronaDruga(rachunekNadawcy, nazwaOdbiorcy, rachunekOdbiorcy, daneOdbiorcy, tytulPrzelewu);
 		helpers.waitUntilReady(this.kodSms);
 		this.kodSms.sendKeys(hasloSms);
-		this.zatwierdz.click().then(function(){
+		this.zatwierdz.click().then(function() {
 			winston.log('info', "Wybranie opcji Zatwierdź - przejście do strony potwierdzenia informacji");
 		});
 		helpers.waitUntilReady(this.potwierdzenie);
@@ -178,19 +182,19 @@ var payments = function () {
 		expect(this.potwierdzenie.getText()).not.toContain("odrzuc");
 	}
 
-	this.usunOdbiorce = function (rachunekNadawcyNew) {
+	this.usunOdbiorce = function(rachunekNadawcyNew) {
 		var random = Math.random();
-		var hasloSms='1111';
-	    var nazwaOdbiorcyNew="nazwaOdbiorcy"+random;
-		var rachunekOdbiorcyNew=helpers.losujRachunekBiezacyPL();
-		var daneOdbiorcyNew="Kowalski Stanisław"
-		var tytulPrzelewuNew="tytul"+random;
+		var hasloSms = '1111';
+		var nazwaOdbiorcyNew = "nazwaOdbiorcy" + random;
+		var rachunekOdbiorcyNew = helpers.losujRachunekBiezacyPL();
+		var daneOdbiorcyNew = "Kowalski Stanisław"
+		var tytulPrzelewuNew = "tytul" + random;
 
-		this.dodajOdbiorceKrajowego(rachunekNadawcyNew,nazwaOdbiorcyNew,rachunekOdbiorcyNew,daneOdbiorcyNew,tytulPrzelewuNew,hasloSms);
+		this.dodajOdbiorceKrajowego(rachunekNadawcyNew, nazwaOdbiorcyNew, rachunekOdbiorcyNew, daneOdbiorcyNew, tytulPrzelewuNew, hasloSms);
 		this.wyszukajOdbiorce(nazwaOdbiorcyNew);
 		// this.sprawdzDaneOdbiorcy(rachunekNadawcyNew,nazwaOdbiorcyNew,rachunekOdbiorcyNew,daneOdbiorcyNew,tytulPrzelewuNew);
 		this.usun.click();
-		this.sprawdzDaneOdbiorcyStronaDruga(rachunekNadawcyNew,nazwaOdbiorcyNew,rachunekOdbiorcyNew,daneOdbiorcyNew,tytulPrzelewuNew);
+		this.sprawdzDaneOdbiorcyStronaDruga(rachunekNadawcyNew, nazwaOdbiorcyNew, rachunekOdbiorcyNew, daneOdbiorcyNew, tytulPrzelewuNew);
 		helpers.waitUntilReady(this.kodSms);
 		this.kodSms.sendKeys(hasloSms);
 		this.usun.click();
@@ -199,7 +203,7 @@ var payments = function () {
 		expect(this.potwierdzenie.getText()).not.toContain("odrzuc");
 	}
 
-	this.dodajOdbiorceKrajowegoWalidacjaNazwaOdbiorcy = function () {
+	this.dodajOdbiorceKrajowegoWalidacjaNazwaOdbiorcy = function() {
 		this.wybieranieOdbiorcy();
 		helpers.waitUntilReady(this.twojaNazwaOdbiorcy);
 		this.twojaNazwaOdbiorcy.sendKeys('123456789012345678901234567890123456');
@@ -211,10 +215,10 @@ var payments = function () {
 		this.twojaNazwaOdbiorcy.clear();
 		expect(this.twojaNazwaOdbiorcyKomunikat.getText()).toEqual('Nazwa skrócona odbiorcy nie może być pusta');
 		this.twojaNazwaOdbiorcy.clear();
-		
+
 	};
 
-	this.dodajOdbiorceKrajowegoWalidacjaNumerRachunku = function () {
+	this.dodajOdbiorceKrajowegoWalidacjaNumerRachunku = function() {
 		this.wybieranieOdbiorcy();
 		helpers.waitUntilReady(this.numerRachunku);
 		this.numerRachunku.sendKeys('83101010230000261395100000');
@@ -226,10 +230,10 @@ var payments = function () {
 		this.numerRachunku.clear();
 		expect(this.numerRachunkuKomunikat.getText()).toEqual('Rachunek odbiorcy nie może być pusty');
 		this.numerRachunku.clear();
-	
+
 	};
 
-	this.dodajOdbiorceKrajowegoWalidacjaPolaDaneOdbiorcy = function () {
+	this.dodajOdbiorceKrajowegoWalidacjaPolaDaneOdbiorcy = function() {
 		this.wybieranieOdbiorcy();
 		helpers.waitUntilReady(this.daneOdbiorcy);
 		this.daneOdbiorcy.sendKeys('123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901');
@@ -243,7 +247,7 @@ var payments = function () {
 
 	};
 
-	this.dodajOdbiorceKrajowegoWalidacjaPolaTytul = function () {
+	this.dodajOdbiorceKrajowegoWalidacjaPolaTytul = function() {
 		this.wybieranieOdbiorcy();
 		helpers.waitUntilReady(this.tytul);
 		this.tytul.sendKeys('123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901');

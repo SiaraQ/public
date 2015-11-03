@@ -1,4 +1,4 @@
-var payments = function () {
+var payments = function() {
 	var helpers = require('../pageObjects/helpers.js');
 	var buttons = require('../pageObjects/buttons.js');
 	var rachunki = require('../pageObjects/rachunkiMiniApp.js');
@@ -25,7 +25,7 @@ var payments = function () {
 	var fdalej = element(by.css('[ng-click="moveNext()"]'));
 	var fzatwierdz = buttons.zatwierdz;
 	var ftytulKomunikat = element(by.id('description'));
-	var fkwotaKomunikat = element(by.css('[eb-name="amount"]')).element(by.id('amount'));//.element(by.css('[class="messages ng-inactive"]'));
+	var fkwotaKomunikat = element(by.css('[eb-name="amount"]')).element(by.id('amount')); //.element(by.css('[class="messages ng-inactive"]'));
 	var fdataKomunikat = element(by.id('realizationDate'));
 	var fMojBank = element(by.css('[class="rb-header__menu__content"]')).element(by.css('[ui-sref="dashboard"]'));
 	var fdataRealizacji = element(by.model('ngModel'));
@@ -42,30 +42,30 @@ var payments = function () {
 	//button Anuluj Popraw
 	//Zatwierdź  lub ng-click="moveNext()"
 
- 	this.tworzPrzelewZwykly = function (rachunekNadawcy,nazwaOdbiorcy,rachunekOdbiorcy,tytulPrzelewu,kwota,dataRealizacji,hasloSms,odbiorca) {
-		var saldoPrzed=0;
-		var saldoOczekiwanePo=0;
+	this.tworzPrzelewZwykly = function(rachunekNadawcy, nazwaOdbiorcy, rachunekOdbiorcy, tytulPrzelewu, kwota, dataRealizacji, hasloSms, odbiorca) {
+		var saldoPrzed = 0;
+		var saldoOczekiwanePo = 0;
 		var random = Math.random();
 		// var odbiorca=false;
-		if (hasloSms=="") {
-			hasloSms='1111';
+		if (hasloSms == "") {
+			hasloSms = '1111';
 		}
-		if (nazwaOdbiorcy==""){
-			nazwaOdbiorcy="nazwaOdbiorcy"+random;
+		if (nazwaOdbiorcy == "") {
+			nazwaOdbiorcy = "nazwaOdbiorcy" + random;
 		}
-		if (rachunekOdbiorcy==""){
-			rachunekOdbiorcy=helpers.losujRachunekBiezacyPL();
+		if (rachunekOdbiorcy == "") {
+			rachunekOdbiorcy = helpers.losujRachunekBiezacyPL();
 		}
-		if (tytulPrzelewu==""){
-			tytulPrzelewu="tytul"+random;
+		if (tytulPrzelewu == "") {
+			tytulPrzelewu = "tytul" + random;
 		}
-		if (kwota=="") kwota=helpers.losujKwote();
-		if (dataRealizacji!="") var dataRealizacjiNew=helpers.dataBiezacaPlusDzien(dataRealizacji);
+		if (kwota == "") kwota = helpers.losujKwote();
+		if (dataRealizacji != "") var dataRealizacjiNew = helpers.dataBiezacaPlusDzien(dataRealizacji);
 
 		var rachunekNadawcy = helpers.zamienRachunekNaNrbZeSpacjami(rachunekNadawcy);
 
-		winston.log('info', "Dane testu: rachunekNadawcy="+rachunekNadawcy+" rachunekOdbiorcy="+rachunekOdbiorcy+" tytulPrzelewu="+tytulPrzelewu+" hasloSms="+hasloSms);
-		winston.log('info', "dataRealizacji="+dataRealizacjiNew);
+		winston.log('info', "Dane testu: rachunekNadawcy=" + rachunekNadawcy + " rachunekOdbiorcy=" + rachunekOdbiorcy + " tytulPrzelewu=" + tytulPrzelewu + " hasloSms=" + hasloSms);
+		winston.log('info', "dataRealizacji=" + dataRealizacjiNew);
 		if (odbiorca) {
 			// fplatnosciLink.click();
 			platnosci.wybierzPlatnosci();
@@ -80,48 +80,47 @@ var payments = function () {
 		// browser.driver.sleep(5000);
 		helpers.waitUntilReady(fzRachunku);
 		fzRachunku.click();
-		helpers.wybierzElementZListyPoTekscie('accountItem in $select.items track by accountItem.accountNo',rachunekNadawcy);
+		helpers.wybierzElementZListyPoTekscie('accountItem in $select.items track by accountItem.accountNo', rachunekNadawcy);
 		helpers.waitUntilReady(fdostepneSrodki);
 		if (odbiorca) {
 			helpers.waitUntilReady(wybierzOdbiorce);
 			wybierzOdbiorce.click();
-			helpers.wybierzElementZListyPoTekscie('recipientItem in $select.items track by $index',nazwaOdbiorcy);
-		}
-		else {
+			helpers.wybierzElementZListyPoTekscie('recipientItem in $select.items track by $index', nazwaOdbiorcy);
+		} else {
 			frachunekOdbiorcy.sendKeys(rachunekOdbiorcy);
 			fnazwaOdbiorcy.sendKeys(nazwaOdbiorcy);
 			ftytul.sendKeys(tytulPrzelewu);
 		}
-		helpers.wyliczSaldoOczekiwanePo(fdostepneSrodki,kwota).then(function(value) {
+		helpers.wyliczSaldoOczekiwanePo(fdostepneSrodki, kwota).then(function(value) {
 
-			fkwota.sendKeys(kwota); 
-			if (dataRealizacji!=""){
+			fkwota.sendKeys(kwota);
+			if (dataRealizacji != "") {
 				fdataRealizacji.clear();
 				fdataRealizacji.sendKeys(dataRealizacjiNew);
 			}
-			fdalej.click().then(function(){
+			fdalej.click().then(function() {
 				winston.log('info', "Wybranie opcji Zatwierdź - przejście do strony drugiej");
 			});
 			helpers.waitUntilReady(fkodSms);
 			fkodSms.sendKeys("1111");
 			helpers.waitUntilReady(fzatwierdz);
-			fzatwierdz.click().then(function(){
+			fzatwierdz.click().then(function() {
 				winston.log('info', "Wybranie opcji Zatwierdź - przejście do strony potwierdzenia informacji");
 			});
 			helpers.waitUntilReady(fpotwierdzenie);
 			expect(fpotwierdzenie.getText()).not.toContain("Przelew/transakcja odrzucona");
 			expect(fpotwierdzenie.getText()).not.toContain("odrzuc");
 			fpowrot.click();
-			if (dataRealizacji==""){
+			if (dataRealizacji == "") {
 				console.log("value=");
 				console.log(value);
-				rachunki.sprawdzOperacjeNaHistorii(rachunekNadawcy,tytulPrzelewu,kwota,value);
+				rachunki.sprawdzOperacjeNaHistorii(rachunekNadawcy, tytulPrzelewu, kwota, value);
 			}
-		});	
+		});
 	};
 
 
-	this.przelewKrajowyWalidacjaTytulem = function () {
+	this.przelewKrajowyWalidacjaTytulem = function() {
 		platnosci.wybierzPlatnosci();
 		helpers.wybierzElementZListyPoNumerze(0);
 		helpers.waitUntilReady(ftytul);
@@ -136,7 +135,7 @@ var payments = function () {
 
 	};
 
-	this.przelewKrajowyWalidacjaKwoty = function () {
+	this.przelewKrajowyWalidacjaKwoty = function() {
 		platnosci.wybierzPlatnosci();
 		helpers.wybierzElementZListyPoNumerze(0);
 		helpers.waitUntilReady(fkwota);
@@ -153,7 +152,7 @@ var payments = function () {
 	};
 
 
-	this.przelewKrajowyWalidacjaDaty = function () {
+	this.przelewKrajowyWalidacjaDaty = function() {
 		var dataBiezacaPlus180 = helpers.dataBiezacaPlusDzien(180);
 		platnosci.wybierzPlatnosci();
 		helpers.wybierzElementZListyPoNumerze(0);
@@ -166,13 +165,13 @@ var payments = function () {
 		expect(fKomdataRealizacji.getText()).toEqual('Data realizacji przelewu nie może być wcześniejsza niż data bieżąca');
 		fdataRealizacji.clear();
 		fdataRealizacji.sendKeys('01.01.2222');
-		expect(fKomdataRealizacji.getText()).toEqual('Data realizacji przelewu nie może być późniejsza niż '+dataBiezacaPlus180);
+		expect(fKomdataRealizacji.getText()).toEqual('Data realizacji przelewu nie może być późniejsza niż ' + dataBiezacaPlus180);
 		fdataRealizacji.clear();
 		fdataRealizacji.sendKeys('');
 		expect(fKomdataRealizacji.getText()).toEqual('Data realizacji przelewu nie może być pusta');
 
 	};
 
-	
+
 };
 module.exports = new payments();
