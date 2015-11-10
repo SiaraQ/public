@@ -29,9 +29,9 @@ var cards = function() {
 	this.dataRealizacjiPotwierdzenie = element(by.css('[label="Data realizacji"]'));
 
 	this.dodanieSplaty = function(rachunekNadawcy, rachunekKarty, typSplaty, innaKwota, tytul) {
-		if (innaKwota == "") innaKwota = helpers.losujKwote();
+		if (innaKwota === "" || innaKwota === undefined || innaKwota === null) innaKwota = helpers.losujKwote();
 		innaKwota = innaKwota.replace(',', '.');
-		if (tytul == "") tytul = "splata karty";
+		if (tytul == "" || tytul === undefined || tytul === null) tytul = "splata karty";
 		if (typSplaty == "") typSplaty = "Minimalna";
 
 		var rachunekKarty = helpers.zamienRachunekNaNrbZeSpacjami(rachunekKarty);

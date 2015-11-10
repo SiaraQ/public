@@ -29,12 +29,14 @@ var cards = function() {
 		this.numerKarty.click();
 		helpers.wybierzElementZListyPoTekscie('cardItem in $select.items track by $index', numerKarty);
 		helpers.waitUntilReady(this.numerKartyPotwierdzenie);
-		expect(this.numerKartyPotwierdzenie.getText()).toEqual('Nazwa karty\n' + numerKarty);
+		expect(this.numerKartyPotwierdzenie.getText()).toContain('Nazwa karty');
+		expect(this.numerKartyPotwierdzenie.getText()).toContain(numerKarty);
 		expect(this.dataWaznosci.getText()).toContain('Data ważności');
 		this.dalej.click();
 		//strona 2
 		helpers.waitUntilReady(this.numerKartyPotwierdzenie);
-		expect(this.numerKartyPotwierdzenie.getText()).toEqual('Nazwa karty\n' + numerKarty);
+		expect(this.numerKartyPotwierdzenie.getText()).toContain('Nazwa karty');
+		expect(this.numerKartyPotwierdzenie.getText()).toContain(numerKarty);
 		expect(this.dataWaznosci.getText()).toContain('Data ważności');
 		helpers.waitUntilReady(this.kodSms);
 		this.kodSms.sendKeys(hasloSms);
@@ -43,6 +45,7 @@ var cards = function() {
 		});
 		helpers.waitUntilReady(this.potwierdzenie);
 		expect(this.potwierdzenie.getText()).not.toContain("odrzuc");
+		expect(this.potwierdzenie.getText()).not.toContain("Operacja odrzucona");
 	};
 
 

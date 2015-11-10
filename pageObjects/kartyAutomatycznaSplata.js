@@ -32,7 +32,7 @@ var cards = function() {
 	this.sms = element(by.model('rbAuth.value"'));
 	//automatyczna splata
 	this.automatycznaSplata = element(by.css('[ui-sref="cards.autorepayment"]'));
-	this.nowaSplata = buttons.nowaSplata;
+	this.nowaSplata = buttons.nowaSplataAutomatyczna;
 	//automatyczna splata szczegoly
 	this.potwierdzenie = element(by.css('[class="bd-msg-panel__message"]'));
 	this.numerRachunkuKartyOpis = element(by.css('[label="Numer rachunku karty"]'));
@@ -86,11 +86,12 @@ var cards = function() {
 		this.zatwierdz.click();
 		helpers.waitUntilReady(this.potwierdzenie);
 		expect(this.potwierdzenie.getText()).not.toContain("odrzuc");
-		this.powrotDoListy.click();
+		// this.powrotDoListy.click();
 	};
 
 	this.usuniecieAutomatycznejSplaty = function(rodzajSplaty, rachunekKarty, rachunekNadawcy) {
 		var rachunekKarty = helpers.zamienRachunekNaNrbZeSpacjami(rachunekKarty);
+		var rachunekNadawcy = helpers.zamienRachunekNaNrbZeSpacjami(rachunekNadawcy);
 		helpers.waitUntilReady(this.automatycznaSplata);
 		this.automatycznaSplata.click();
 		helpers.waitUntilReady(this.usun);
@@ -142,7 +143,7 @@ var cards = function() {
 	};
 
 	this.usuniecieAutomatycznejSplatyCalkowitej = function(rachunekKarty, rachunekNadawcy) {
-		this.dodanieAutomatycznejSplatyCalkowitej(rachunekKarty, rachunekNadawcy);
+		// this.dodanieAutomatycznejSplatyCalkowitej(rachunekKarty, rachunekNadawcy);
 		this.usuniecieAutomatycznejSplaty(1, rachunekKarty, rachunekNadawcy);
 	};
 
@@ -151,7 +152,7 @@ var cards = function() {
 	};
 
 	this.usuniecieAutomatycznejSplatyMinimalnej = function(rachunekKarty, rachunekNadawcy) {
-		this.dodanieAutomatycznejSplatyMinimalnej(rachunekKarty, rachunekNadawcy);
+		// this.dodanieAutomatycznejSplatyMinimalnej(rachunekKarty, rachunekNadawcy);
 		this.usuniecieAutomatycznejSplaty(2, rachunekKarty, rachunekNadawcy);
 	};
 

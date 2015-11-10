@@ -1,4 +1,5 @@
     var helpers = function() {
+        var params = browser.params;
 
         this.hexToRgb = function(hex) {
             var bigint, r, g, b, a;
@@ -30,12 +31,14 @@
         };
 
         this.waitUntilReady = function(elm) {
-            browser.wait(function() {
-                return elm.isPresent();
-            }, 20000, 'Element nie jest obecny na stronie');
-            browser.wait(function() {
-                return elm.isDisplayed();
-            }, 20000, 'Element nie jest wyswietlony na stronie');
+            if (params.page.mobile != 'true') {
+                browser.wait(function() {
+                    return elm.isPresent();
+                }, 20000, 'Element nie jest obecny na stronie');
+                browser.wait(function() {
+                    return elm.isDisplayed();
+                }, 20000, 'Element nie jest wyswietlony na stronie');
+            }
         };
         // helpers.klinijPrzyciskPoWyszukaniuTekstu('account in accountList.content',"52 1750 0012 0000 0000 2816 4572",'SZCZEGÓŁY');
         this.klinijPrzyciskPoWyszukaniuTekstu = function(ngRepeatTag, szukanyTekst, tekstPrzycisku) {
@@ -99,28 +102,40 @@
 
         String.prototype.formatujKwoteDoWyswietleniaNaStonie = function(num) {
             num = String(num);
+
+            num = num.replace(',', '.');
             var n = num.indexOf(".");
+            if (n === -1)
+                num = (num + ",00");
+            console.log("formatujKwoteDoWyswietleniaNaStonie PRZED=" + num);
+            num = num.replace(',', '.');
+            n = num.indexOf(".");
+            console.log("n=" + n);
             var numlen = num.length;
+            console.log("numlen=" + numlen);
             var dziesietne = num.substr(n + 1, numlen);
+            console.log("dziesietne=" + dziesietne);
             var liczbowe = num.substr(0, n);
+            console.log("liczbowe=" + liczbowe);
+            console.log("liczbowe.length=" + liczbowe.length);
             liczbowe = liczbowe.reverse();
             if (liczbowe.length == 0) {
                 liczbowe = "0";
-            }
-            if ((liczbowe.length > 3) && (liczbowe.length < 7)) {
+            } else if ((liczbowe.length > 3) && (liczbowe.length < 7)) {
                 liczbowe = liczbowe.substr(0, 3) + " " + liczbowe.substr(3, numlen);
-            }
-            if ((liczbowe.length > 6) && (liczbowe.length < 9)) {
+                console.log('liczboweR=', liczbowe);
+            } else if ((liczbowe.length > 6) && (liczbowe.length < 9)) {
                 liczbowe = liczbowe.substr(0, 3) + " " + liczbowe.substr(3, 3) + " " + liczbowe.substr(6, numlen);
-                // console.log('liczboweR=',liczbowe);
-            }
-            if ((liczbowe.length > 8) && (liczbowe.length < 12)) {
+                console.log('liczboweR=', liczbowe);
+            } else if ((liczbowe.length > 8) && (liczbowe.length < 12)) {
                 liczbowe = liczbowe.substr(0, 3) + " " + liczbowe.substr(3, 3) + " " + liczbowe.substr(6, 3) + " " + liczbowe.substr(9, numlen);
-                // console.log('liczboweR=',liczbowe);
+                console.log('liczboweR=', liczbowe);
             }
             if (dziesietne.length > 2) dziesietne = dziesietne.substr(0, 2);
-            if (dziesietne.length < 2) dziesietne = dziesietne + "0";
+            else if (dziesietne.length === 1) dziesietne = dziesietne + "0";
+            else if (dziesietne.length === 0) dziesietne = dziesietne + "00";
             num = String(liczbowe.reverse() + "," + dziesietne);
+
             console.log("formatujKwoteDoWyswietleniaNaStonie=" + num);
             return "" + num;
         };
@@ -210,31 +225,7 @@
         }
 
         this.formatujKwoteDoWyswietleniaNaStonie = function(num) {
-            // num=String(num);
-            var n = num.indexOf(".");
-            var numlen = num.length;
-            var dziesietne = num.substr(n + 1, numlen);
-            var liczbowe = num.substr(0, n);
-            liczbowe = liczbowe.reverse();
-            if (liczbowe.length == 0) {
-                liczbowe = "0";
-            } else
-            if ((liczbowe.length > 3) && (liczbowe.length < 7)) {
-                liczbowe = liczbowe.substr(0, 3) + " " + liczbowe.substr(3, numlen);
-            } else
-            if ((liczbowe.length > 6) && (liczbowe.length < 9)) {
-                liczbowe = liczbowe.substr(0, 3) + " " + liczbowe.substr(3, 3) + " " + liczbowe.substr(6, numlen);
-                console.log('liczboweR=', liczbowe);
-            } else
-            if ((liczbowe.length > 8) && (liczbowe.length < 12)) {
-                liczbowe = liczbowe.substr(0, 3) + " " + liczbowe.substr(3, 3) + " " + liczbowe.substr(6, 3) + " " + liczbowe.substr(9, numlen);
-                console.log('liczboweR=', liczbowe);
-            }
-            if (dziesietne.length > 2) dziesietne = dziesietne.substr(0, 2);
-            if (dziesietne.length < 2) dziesietne = dziesietne + "0";
-            num = String(liczbowe.reverse() + "," + dziesietne);
-            console.log("formatujKwoteDoWyswietleniaNaStonie=" + num);
-            return "" + num;
+            return num.formatujKwoteDoWyswietleniaNaStonie(num);
         };
 
 

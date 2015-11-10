@@ -10,7 +10,8 @@ var payments = function() {
 	// #/payments/new/domestic/fill
 	var fplatnosciLink = element(by.css('[icon="raiff-icons raiff_przelew"]'));
 	//powtarzalne
-	var fkodSms = element(by.model('payment.items.credentials'));
+	// ng-model="rbModel.input.model"
+	var fkodSms = element(by.model('rbModel.input.model'));
 	var fpowrot = buttons.powrotDoListy;
 	var fpotwierdzenie = element(by.css('[class="bd-msg-panel__message"]'));
 	//krok1 przelew krajowy
@@ -22,7 +23,7 @@ var payments = function() {
 	var fnazwaOdbiorcy = element(by.model('payment.formData.recipientName')); //tez Nazwa płatnika ZUS
 	var ftytul = element(by.model('payment.formData.description'));
 	var fkwota = element(by.model('payment.formData.amount'));
-	var fdalej = element(by.css('[ng-click="moveNext()"]'));
+	var fdalej = buttons.dalej;
 	var fzatwierdz = buttons.zatwierdz;
 	var ftytulKomunikat = element(by.id('description'));
 	var fkwotaKomunikat = element(by.css('[eb-name="amount"]')).element(by.id('amount')); //.element(by.css('[class="messages ng-inactive"]'));

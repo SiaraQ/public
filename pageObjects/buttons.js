@@ -8,6 +8,7 @@ var buttons = function() {
 	this.usun = element(by.buttonText('Usuń'));
 	this.powrotDoListy = element(by.buttonText('Powrót do listy'));
 	this.nowaSplata = element(by.buttonText('NOWA SPŁATA'))
+	this.nowaSplataAutomatyczna = element(by.buttonText('UTWÓRZ'));
 	this.nowyOdbiorca = element(by.buttonText('Nowy odbiorca'));
 	this.edytuj = element(by.buttonText('Edytuj'));
 	this.szukaj = element(by.buttonText('Szukaj'));

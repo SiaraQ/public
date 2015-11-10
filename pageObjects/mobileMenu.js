@@ -6,11 +6,11 @@ var mobileMenu = function() {
 	// this.clickSmallElement
 	this.mojBank = element(by.repeater('item in menuItems | orderBy:\'priority\'').row(0));
 	this.rachunki = element(by.repeater('item in menuItems | orderBy:\'priority\'').row(1));
-	this.karty = helpers.wybierzElementZListyPoTekscie('item in menuItems | orderBy:\'priority\'', 'Karty');
-	this.platnosci = helpers.wybierzElementZListyPoTekscie('item in menuItems | orderBy:\'priority\'', 'Płatności');
-	this.lokaty = helpers.wybierzElementZListyPoTekscie('item in menuItems | orderBy:\'priority\'', 'Lokaty');
-	this.wnioski = helpers.wybierzElementZListyPoTekscie('item in menuItems | orderBy:\'priority\'', 'Wnioski i umowy');
-	this.inne = helpers.wybierzElementZListyPoTekscie('item in menuItems | orderBy:\'priority\'', 'Inne usługi');
+	this.karty = element(by.repeater('item in menuItems | orderBy:\'priority\'').row(2));
+	this.platnosci = element(by.repeater('item in menuItems | orderBy:\'priority\'').row(3));
+	this.lokaty = element(by.repeater('item in menuItems | orderBy:\'priority\'').row(4));
+	this.wnioski = element(by.repeater('item in menuItems | orderBy:\'priority\'').row(5));
+	this.inne = element(by.repeater('item in menuItems | orderBy:\'priority\'').row(6));
 
 	this.kliknijRachunki = function() {
 		helpers.waitUntilReady(this.menu);

@@ -12,7 +12,7 @@ var payments = function() {
 	var fplatnosciPrzelewy = element(by.css('[ui-sref="payments.new.fill({ paymentType: \'domestic\' })"]'));
 	var fMojBank = element(by.css('[class="rb-header__menu__content"]')).element(by.css('[ui-sref="dashboard"]'));
 	//powtarzalne
-	var fkodSms = element(by.model('payment.items.credentials'));
+	var fkodSms = element(by.model('rbModel.input.model'));
 	var fpotwierdzenie = element(by.css('[class="bd-msg-panel__message"]'));
 	//krok1 przelew krajowy
 	var ftypPlatnosci = element(by.model('payment.type'));
@@ -266,6 +266,7 @@ var payments = function() {
 		fzRachunku.click();
 		browser.driver.sleep(1000);
 		helpers.wybierzElementZListyPoTekscie('accountItem in $select.items track by accountItem.accountNo', rachunekNadawcy);
+		ftypIdentyfikatoraUzupelniajacego.click();
 		browser.driver.sleep(2000);
 		helpers.wybierzElementZListyPoNumerze(4);
 		browser.driver.sleep(3000);
@@ -276,6 +277,7 @@ var payments = function() {
 		fsymbolFormularza.click();
 		browser.driver.sleep(3000);
 		expect(fKomNIP.getText()).toEqual('Numer identyfikatora uzupełniającego nie może być pusty');
+		ftypIdentyfikatoraUzupelniajacego.click();
 		helpers.wybierzElementZListyPoNumerze(5);
 		browser.driver.sleep(3000);
 		expect(fKomNIP.getText()).toEqual('Numer identyfikatora uzupełniającego nie może być pusty');
@@ -283,27 +285,23 @@ var payments = function() {
 	}
 
 	this.przelewDoUSwaldacjapolaNIPformat = function() {
-		var numertypIdentyfikatoraUzup = 0;
-		helpers.waitUntilReady(fplatnosci);
 		platnosci.wybierzPlatnosci();
 		helpers.wybierzElementZListyPoTekscie('paymentType in $select.items', 'Przelew do US/IC');
 		browser.driver.sleep(2000);
 		ftypIdentyfikatoraUzupelniajacego.click();
-		helpers.wybierzElementZListyPoNumerze(1);
-		browser.driver.sleep(1000);
+		helpers.wybierzElementZListyPoNumerze(0);
+		helpers.waitUntilReady(fnumerIdentyfikatoraUzupelniajacego);
 		fnumerIdentyfikatoraUzupelniajacego.sendKeys('11');
-		browser.driver.sleep(1000);
-		fsymbolFormularza.click();
-		browser.driver.sleep(1000);
+		helpers.waitUntilReady(fKomNIP);
 		expect(fKomNIP.getText()).toEqual('Niepoprawny numer NIP/ PESEL / REGON / dowodu osobistego / paszportu / innego dowodu tożsamości');
-		ftypIdentyfikatoraUzupelniajacego.click();
-		helpers.wybierzElementZListyPoNumerze(2);
-		browser.driver.sleep(1000);
-		expect(fKomNIP.getText()).toEqual('Niepoprawny numer NIP/ PESEL / REGON / dowodu osobistego / paszportu / innego dowodu tożsamości');
-		ftypIdentyfikatoraUzupelniajacego.click();
-		helpers.wybierzElementZListyPoTekscie('paymentType in $select.items', 'Przelew do US/IC');
-		browser.driver.sleep(1000);
-		expect(fKomNIP.getText()).toEqual('Niepoprawny numer NIP/ PESEL / REGON / dowodu osobistego / paszportu / innego dowodu tożsamości');
+		// ftypIdentyfikatoraUzupelniajacego.click();
+		// helpers.wybierzElementZListyPoNumerze(2);
+		// browser.driver.sleep(2000);
+		// expect(fKomNIP.getText()).toEqual('Niepoprawny numer NIP/ PESEL / REGON / dowodu osobistego / paszportu / innego dowodu tożsamości');
+		// ftypIdentyfikatoraUzupelniajacego.click();
+		// helpers.wybierzElementZListyPoTekscie('paymentType in $select.items', 'Przelew do US/IC');
+		// browser.driver.sleep(1000);
+		// expect(fKomNIP.getText()).toEqual('Niepoprawny numer NIP/ PESEL / REGON / dowodu osobistego / paszportu / innego dowodu tożsamości');
 
 	}
 
@@ -359,7 +357,7 @@ var payments = function() {
 		helpers.wybierzElementZListyPoTekscie('paymentType in $select.items', 'Przelew do US/IC');
 		browser.driver.sleep(2000);
 		helpers.scrollWindow(fdataRealizacji);
-		fdatar = fdataRealizacji.element(by.model('ngModel'));
+		fdatar = fdataRealizacji;
 		fdatar.sendKeys('123');
 		browser.driver.sleep(1000);
 		expect(fKomdataRealizacji.getText()).toEqual('Niepoprawna data realizacji przelewu');

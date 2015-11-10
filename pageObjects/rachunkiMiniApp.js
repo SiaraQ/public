@@ -64,6 +64,7 @@ var accounts = function() {
 		console.log("saldoPoOperacji IN ");
 		console.log(saldoPoOperacji);
 		nrb = helpers.zamienRachunekNaNrbZeSpacjami(nrb);
+		kwota = helpers.formatujKwoteDoWyswietleniaNaStonie(kwota);
 		if (params.page.mobile == 'true') {
 			mobileMenu.kliknijRachunki();
 			helpers.klinijPrzyciskPoWyszukaniuTekstu('account in accountList.content', nrb, 'Szczegóły');
