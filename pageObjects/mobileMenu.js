@@ -11,24 +11,31 @@ var mobileMenu = function() {
 	this.lokaty = element(by.repeater('item in menuItems | orderBy:\'priority\'').row(4));
 	this.wnioski = element(by.repeater('item in menuItems | orderBy:\'priority\'').row(5));
 	this.inne = element(by.repeater('item in menuItems | orderBy:\'priority\'').row(6));
+	this.ustawienia = element(by.css('[class="raiff-icons rack_edge"]'));
 
 	this.kliknijRachunki = function() {
 		helpers.waitUntilReady(this.menu);
 		this.menu.click();
 		helpers.clickSmallElement(this.rachunki);
-	}
+	};
 
 	this.kliknijPlatnosci = function() {
 		helpers.waitUntilReady(this.menu);
 		this.menu.click();
 		helpers.clickSmallElement(this.platnosci);
-	}
+	};
 
 	this.kliknijKarty = function() {
 		helpers.waitUntilReady(this.menu);
 		this.menu.click();
 		helpers.clickSmallElement(this.karty);
-	}
+	};
+
+	this.kliknijUstawienia = function() {
+		helpers.waitUntilReady(this.menu);
+		this.menu.click();
+		helpers.clickSmallElement(this.ustawienia);
+	};
 
 };
 module.exports = new mobileMenu();

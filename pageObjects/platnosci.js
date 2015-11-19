@@ -14,10 +14,10 @@ var platnosci = function() {
 	this.wybierzPlatnosci = function() {
 		if (params.page.mobile == 'true') {
 			browser.waitForAngular();
-			browser.refresh();
-			browser.refresh();
-			browser.refresh();
-			browser.refresh();
+			// browser.refresh();
+			// browser.refresh();
+			// browser.refresh();
+			// browser.refresh();
 			mobileMenu.kliknijPlatnosci();
 		} else {
 			helpers.waitUntilReady(pMojBank);

@@ -41,10 +41,13 @@ var loginPage = function() {
 		this.login.sendKeys(login);
 		this.password.sendKeys(password);
 		helpers.waitUntilReady(this.zaloguj);
-		if (params.page.mobile == 'true') 
-		browser.driver.sleep(2000);
-		// helpers.clickSmallElement(this.zaloguj);
-		this.zaloguj.click();
+		if (params.page.mobile == 'true') {
+			this.zaloguj.click();
+			// helpers.clickSmallElement(this.zaloguj);
+		}
+		else {
+			this.zaloguj.click();
+			}
 		if (params.page.mobile != 'true') {
 				browser.driver.wait(function() {
 				return browser.driver.getCurrentUrl().then(function(url) {

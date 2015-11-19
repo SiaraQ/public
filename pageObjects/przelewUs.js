@@ -42,7 +42,7 @@ var payments = function() {
 	var fKomidentyfokacjaZobowiazania = element(by.id('commitmentId'));
 	var fPoleSaldo = element(by.css('[class="bd-amount__value"]'));
 	var fRachunekUrzSkarb = element(by.css('[class="rb-tax-account-select__account"]')).element(by.id('recipientAccountNo'));
-	var fdalej = element(by.css('[ng-click="moveNext()"]'));
+	var fdalej = buttons.dalej;
 	var fzatwierdz = buttons.zatwierdz;
 
 	this.przelewDoUS = function(rachunekNadawcy, rachunekUrzeduSkarbowego, nazwaPlatnika, typIdentyfikatoraUzupelniajacego, numerIdentyfikatoraUzupelniajacego, symbolFormularza, typOkresu, numerOkresu, rokOkresu, identyfokacjaZobowiazania, dataRealizacji, kwota, hasloSms) {

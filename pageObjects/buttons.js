@@ -14,6 +14,8 @@ var buttons = function() {
 	this.szukaj = element(by.buttonText('Szukaj'));
 	this.zastrzez = element(by.buttonText('Zastrzeż'));
 	this.aktywuj = element(by.buttonText('Aktywuj'));
+	this.zamknij = element(by.buttonText('zamknij'));
+	this.dalejZMalej = element(by.buttonText('dalej'));
 
 };
 module.exports = new buttons();
