@@ -191,10 +191,12 @@ var przelewZus = function() {
 				fdataRealizacji.sendKeys(dataRealizacjiNew);
 			}
 			//kwoty
-			fubezpieczenieSpoleczne.click();
+			
 			if (kwotaUbezpieczenieSpoleczne != "") {
+				fubezpieczenieSpoleczne.click();
 				fkwotaUbezpieczenieSpoleczne.sendKeys(kwotaUbezpieczenieSpoleczne);
 			} else if (kwotaubezpieczenieZdrowotne == "" && kwotaUbezpieczenieSpoleczne == "" && kwotaubezpieczenieFPiFGSP == "" && kwotafunduszEmeryturPomostowych == "") {
+				fubezpieczenieSpoleczne.click();
 				fkwotaUbezpieczenieSpoleczne.sendKeys(kwotaUbezpieczenieSpoleczne);
 			}
 			if (kwotaubezpieczenieZdrowotne != "") {
