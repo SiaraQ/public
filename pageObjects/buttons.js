@@ -16,6 +16,8 @@ var buttons = function() {
 	this.aktywuj = element(by.buttonText('Aktywuj'));
 	this.zamknij = element(by.buttonText('zamknij'));
 	this.dalejZMalej = element(by.buttonText('dalej'));
+	this.wybieram = element(by.buttonText('wybieram'));
+	this.nieWybieram = element(by.buttonText('Nie, dziękuję'));
 
 };
 module.exports = new buttons();

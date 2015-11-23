@@ -37,5 +37,11 @@ var mobileMenu = function() {
 		helpers.clickSmallElement(this.ustawienia);
 	};
 
+	this.kliknijLokaty = function() {
+		helpers.waitUntilReady(this.menu);
+		this.menu.click();
+		helpers.clickSmallElement(this.lokaty);
+	};
+
 };
 module.exports = new mobileMenu();
