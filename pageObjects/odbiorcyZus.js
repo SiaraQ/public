@@ -101,7 +101,7 @@ var odbiorcyZus = function() {
 		browser.driver.sleep(2000);
 		helpers.waitUntilReady(zRachunku);
 		zRachunku.click();
-		helpers.wybierzElementZListyPoTekscie('accountItem in $select.items track by accountItem.accountNo', rachunekNadawcy);
+		helpers.wybierzElementZListyPoTekscie('accountItem in $select.items track by $index', rachunekNadawcy);
 		helpers.waitUntilReady(twojaNazwaOdbiorcy);
 		twojaNazwaOdbiorcy.sendKeys(nazwaOdbiorcy);
 		helpers.waitUntilReady(numerRachunku);
