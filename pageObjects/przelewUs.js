@@ -130,7 +130,8 @@ var payments = function() {
 		helpers.waitUntilReady(fzRachunku);
 		fzRachunku.click();
 		browser.driver.sleep(3000);
-		helpers.wybierzElementZListyPoTekscie('accountItem in $select.items track by accountItem.accountNo', rachunekNadawcy);
+		// accountItem in $select.items track by accountItem.accountNo
+		helpers.wybierzElementZListyPoTekscie('accountItem in $select.items track by $index', rachunekNadawcy);
 		// browser.driver.sleep(5000);
 		helpers.waitUntilReady(fdostepneSrodki);
 		helpers.wyliczSaldoOczekiwanePo(fdostepneSrodki, kwota).then(function(value) {

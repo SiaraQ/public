@@ -51,7 +51,7 @@ var payments = function() {
 		fprzelewWlasny.click();
 		helpers.waitUntilReady(fzRachunku);
 		fzRachunku.click();
-		helpers.wybierzElementZListyPoTekscie('accountItem in $select.items track by accountItem.accountNo', rachunekNadawcy);
+		helpers.wybierzElementZListyPoTekscie('accountItem in $select.items track by $index', rachunekNadawcy);
 		helpers.waitUntilReady(fdostepneSrodki);
 		helpers.wyliczSaldoOczekiwanePo(fdostepneSrodki, kwota).then(function(value) {
 			helpers.waitUntilReady(fnaRachunek);
@@ -62,7 +62,7 @@ var payments = function() {
 			} else {
 				//szuka konkretnego na liscie
 				browser.driver.sleep(2000);
-				helpers.wybierzElementZListyPoTekscie('accountItem in $select.items track by accountItem.accountNo', naRachunek);
+				helpers.wybierzElementZListyPoTekscie('accountItem in $select.items track by $index', naRachunek);
 			}
 			helpers.waitUntilReady(ftytul);
 			ftytul.clear();

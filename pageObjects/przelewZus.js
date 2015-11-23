@@ -155,7 +155,7 @@ var przelewZus = function() {
 		helpers.waitUntilReady(fzRachunku);
 		fzRachunku.click();
 		// browser.driver.sleep(5000);
-		helpers.wybierzElementZListyPoTekscie('accountItem in $select.items track by accountItem.accountNo', rachunekNadawcy);
+		helpers.wybierzElementZListyPoTekscie('accountItem in $select.items track by $index', rachunekNadawcy);
 		helpers.waitUntilReady(fnazwaOdbiorcy);
 		fnazwaOdbiorcy.sendKeys(nazwaOdbiorcy);
 		helpers.waitUntilReady(fdostepneSrodki);

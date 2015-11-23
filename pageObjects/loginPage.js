@@ -59,9 +59,8 @@ var loginPage = function() {
 	};
 
 	this.logOut = function() {
-		browser.sleep(settings.loadTimeout);
-		this.wyloguj.click();
-		expect(this.logoutMessage.getText()).toEqual('Nastąpiło pomyślne wylogowanie z serwisu internetowego');
+		browser.manage().deleteAllCookies();
+		browser.refresh();
 	};
 
 	this.napisZPrawej = function() {
