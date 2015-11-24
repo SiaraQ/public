@@ -46,14 +46,14 @@ var mifid = function() {
 	};
 
 	this.czyUzupelnione = function() {
-			buttons.wykonajPonownie().isPresent().then(function(result) {
+			buttons.wykonajPonownie.isPresent().then(function(result) {
 				if (result) {
-					buttons.wykonajPonownie().click();
+					buttons.wykonajPonownie.click();
 				} else {
 					//do nothing
 				}
 			});
-	}
+	};
 
 	this.uzupelnijMifid = function(czyRezygnacja) {
 		this.wybierzMifid();
