@@ -18,6 +18,6 @@ var buttons = function() {
 	this.dalejZMalej = element(by.buttonText('dalej'));
 	this.wybieram = element(by.buttonText('wybieram'));
 	this.nieWybieram = element(by.buttonText('Nie, dziękuję'));
-
+	this.wykonajPonownie = element(by.buttonText('wykonaj ponownie'));
 };
 module.exports = new buttons();

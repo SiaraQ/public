@@ -45,8 +45,19 @@ var mifid = function() {
 	
 	};
 
+	this.czyUzupelnione = function() {
+			buttons.wykonajPonownie().isPresent().then(function(result) {
+				if (result) {
+					buttons.wykonajPonownie().click();
+				} else {
+					//do nothing
+				}
+			});
+	}
+
 	this.uzupelnijMifid = function(czyRezygnacja) {
 		this.wybierzMifid();
+		this.czyUzupelnione();
 		checkbox1.click();
 		checkbox2.click();
 		if (czyRezygnacja) {
