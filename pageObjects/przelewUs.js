@@ -131,7 +131,7 @@ var payments = function() {
 		fzRachunku.click();
 		browser.driver.sleep(3000);
 		// accountItem in $select.items track by accountItem.accountNo
-		helpers.wybierzElementZListyPoTekscie('accountItem in $select.items track by $index', rachunekNadawcy);
+		platnosci.wybierzRachunekNadawcy(rachunekNadawcy);
 		// browser.driver.sleep(5000);
 		helpers.waitUntilReady(fdostepneSrodki);
 		helpers.wyliczSaldoOczekiwanePo(fdostepneSrodki, kwota).then(function(value) {
@@ -208,7 +208,7 @@ var payments = function() {
 		browser.driver.sleep(5000);
 		fzRachunku.click();
 		browser.driver.sleep(1000);
-		helpers.wybierzElementZListyPoTekscie('accountItem in $select.items track by accountItem.accountNo', rachunekNadawcy);
+		platnosci.wybierzRachunekNadawcy(rachunekNadawcy);
 		fnazwaPlatnika.sendKeys('adsads');
 		fnazwaPlatnika.clear().sendKeys('');
 		expect(fKomNazwaPlatnika.getText()).toEqual('Dane płatnika nie mogą być puste');
@@ -227,7 +227,7 @@ var payments = function() {
 		browser.driver.sleep(5000);
 		fzRachunku.click();
 		browser.driver.sleep(1000);
-		helpers.wybierzElementZListyPoTekscie('accountItem in $select.items track by accountItem.accountNo', rachunekNadawcy);
+		platnosci.wybierzRachunekNadawcy(rachunekNadawcy);
 		browser.driver.sleep(1000);
 		fRachunekUrzSkarb.click();
 		fnazwaPlatnika.click();
@@ -245,7 +245,7 @@ var payments = function() {
 		browser.driver.sleep(2000);
 		fzRachunku.click();
 		browser.driver.sleep(1000);
-		helpers.wybierzElementZListyPoTekscie('accountItem in $select.items track by accountItem.accountNo', rachunekNadawcy);
+		platnosci.wybierzRachunekNadawcy(rachunekNadawcy);
 		browser.driver.sleep(2000);
 		fRachunekUrzSkarb.click();
 		browser.driver.sleep(2000);
@@ -266,7 +266,7 @@ var payments = function() {
 		browser.driver.sleep(2000);
 		fzRachunku.click();
 		browser.driver.sleep(1000);
-		helpers.wybierzElementZListyPoTekscie('accountItem in $select.items track by accountItem.accountNo', rachunekNadawcy);
+		platnosci.wybierzRachunekNadawcy(rachunekNadawcy);
 		ftypIdentyfikatoraUzupelniajacego.click();
 		browser.driver.sleep(2000);
 		helpers.wybierzElementZListyPoNumerze(4);

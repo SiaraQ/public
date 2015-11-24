@@ -8,6 +8,7 @@ var odbiorcyUs = function() {
 	var deferred = protractor.promise.defer();
 	var promise = deferred.promise;
 	var params = browser.params;
+	var platnosci = require('../pageObjects/platnosci.js');
 
 	var platnosci = element(by.cssContainingText('.widget-tile__widget-header__title', 'Płatności'));
 	var platnosci2 = element(by.css('[ui-sref="payments.recipients.list"]'));
@@ -117,7 +118,7 @@ var odbiorcyUs = function() {
 		browser.driver.sleep(2000);
 		helpers.waitUntilReady(zRachunku);
 		zRachunku.click();
-		helpers.wybierzElementZListyPoTekscie('accountItem in $select.items track by $index', rachunekNadawcy);
+		platnosci.wybierzRachunekNadawcy(rachunekNadawcy);
 		helpers.waitUntilReady(twojaNazwaOdbiorcy);
 		twojaNazwaOdbiorcy.sendKeys(nazwaOdbiorcy);
 		helpers.waitUntilReady(rachunekUrzeduSkarb);

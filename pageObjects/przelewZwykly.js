@@ -81,7 +81,7 @@ var payments = function() {
 		// browser.driver.sleep(5000);
 		helpers.waitUntilReady(fzRachunku);
 		fzRachunku.click();
-		helpers.wybierzElementZListyPoTekscie('accountItem in $select.items track by $index', rachunekNadawcy);
+		platnosci.wybierzRachunekNadawcy(rachunekNadawcy);
 		helpers.waitUntilReady(fdostepneSrodki);
 		if (odbiorca) {
 			helpers.waitUntilReady(wybierzOdbiorce);

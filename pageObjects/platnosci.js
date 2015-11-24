@@ -33,6 +33,10 @@ var platnosci = function() {
 		ptypPlatnosci.click();
 	}
 
+	this.wybierzRachunekNadawcy = function(rachunekNadawcy) {
+		helpers.wybierzElementZListyPoTekscie('accountItem in $select.items track by $index', rachunekNadawcy);
+	}
+
 };
 
 module.exports = new platnosci();

@@ -7,6 +7,7 @@ var payments = function() {
 	var deferred = protractor.promise.defer();
 	var promise = deferred.promise;
 	var params = browser.params;
+	var platnosci = require('../pageObjects/platnosci.js');
 
 	var oplatnosci = element(by.cssContainingText('.widget-tile__widget-header__title', 'Płatności'));
 	var oplatnosci2 = element(by.css('[ui-sref="payments.recipients.list"]'));
@@ -100,11 +101,11 @@ var payments = function() {
 		}
 		var rachunekNadawcy = helpers.zamienRachunekNaNrbZeSpacjami(rachunekNadawcy);
 		winston.log('info', "Dane testu: rachunekNadawcy=" + rachunekNadawcy + " rachunekOdbiorcy=" + rachunekOdbiorcy + " daneOdbiorcy" + daneOdbiorcy + " tytulPrzelewu=" + tytulPrzelewu + " hasloSms=" + hasloSms);
-		wybieranieOdbiorcy();
+		this.this.wybieranieOdbiorcy();
 		browser.driver.sleep(2000);
 		helpers.waitUntilReady(ozRachunku);
 		ozRachunku.click();
-		helpers.wybierzElementZListyPoTekscie('accountItem in $select.items track by $index', rachunekNadawcy);
+		platnosci.wybierzRachunekNadawcy(rachunekNadawcy);
 		helpers.waitUntilReady(otwojaNazwaOdbiorcy);
 		otwojaNazwaOdbiorcy.sendKeys(nazwaOdbiorcy);
 		helpers.waitUntilReady(onumerRachunku);
@@ -212,7 +213,7 @@ var payments = function() {
 	}
 
 	this.dodajOdbiorceKrajowegoWalidacjaNazwaOdbiorcy = function() {
-		wybieranieOdbiorcy();
+		this.wybieranieOdbiorcy();
 		helpers.waitUntilReady(otwojaNazwaOdbiorcy);
 		otwojaNazwaOdbiorcy.sendKeys('123456789012345678901234567890123456');
 		helpers.waitUntilReady(otwojaNazwaOdbiorcyKomunikat);
@@ -227,7 +228,7 @@ var payments = function() {
 	};
 
 	this.dodajOdbiorceKrajowegoWalidacjaNumerRachunku = function() {
-		wybieranieOdbiorcy();
+		this.wybieranieOdbiorcy();
 		helpers.waitUntilReady(onumerRachunku);
 		onumerRachunku.sendKeys('83101010230000261395100000');
 		helpers.waitUntilReady(onumerRachunkuKomunikat);
@@ -242,7 +243,7 @@ var payments = function() {
 	};
 
 	this.dodajOdbiorceKrajowegoWalidacjaPolaDaneOdbiorcy = function() {
-		wybieranieOdbiorcy();
+		this.wybieranieOdbiorcy();
 		helpers.waitUntilReady(odaneOdbiorcy);
 		odaneOdbiorcy.sendKeys('123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901');
 		expect(odaneOdbiorcyKomunikat.getText()).toEqual('Dane odbiorcy nie mogą przekraczać 132 znaków i powinny zawierać wyłącznie litery, cyfry oraz znaki ! @ # $ % ^ & * ( ) - + [ ] { } : ; < > . ? \\ ~ ` \'  , /');
@@ -256,7 +257,7 @@ var payments = function() {
 	};
 
 	this.dodajOdbiorceKrajowegoWalidacjaPolaTytul = function() {
-		wybieranieOdbiorcy();
+		this.wybieranieOdbiorcy();
 		helpers.waitUntilReady(otytul);
 		otytul.sendKeys('123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901');
 		expect(oTytulKomunikat.getText()).toEqual('Dane odbiorcy mogą składać się maskymalnie ze 140 znaków');
