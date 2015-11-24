@@ -161,7 +161,7 @@ var payments = function() {
 		var rachunekOdbiorcyNew = "";
 		var daneOdbiorcyNew = "";
 		var tytulPrzelewuNew = "";
-		ododajOdbiorceKrajowego(rachunekNadawcyNew, nazwaOdbiorcyNew, rachunekOdbiorcyNew, daneOdbiorcyNew, tytulPrzelewuNew, hasloSms);
+		this.dodajOdbiorceKrajowego(rachunekNadawcyNew, nazwaOdbiorcyNew, rachunekOdbiorcyNew, daneOdbiorcyNew, tytulPrzelewuNew, hasloSms);
 		owyszukajOdbiorce(nazwaOdbiorcyNew);
 		oedytuj.click();
 		helpers.waitUntilReady(otwojaNazwaOdbiorcy);
@@ -199,7 +199,7 @@ var payments = function() {
 		var daneOdbiorcyNew = "Kowalski Stanisław"
 		var tytulPrzelewuNew = "tytul" + random;
 
-		ododajOdbiorceKrajowego(rachunekNadawcyNew, nazwaOdbiorcyNew, rachunekOdbiorcyNew, daneOdbiorcyNew, tytulPrzelewuNew, hasloSms);
+		this.dodajOdbiorceKrajowego(rachunekNadawcyNew, nazwaOdbiorcyNew, rachunekOdbiorcyNew, daneOdbiorcyNew, tytulPrzelewuNew, hasloSms);
 		owyszukajOdbiorce(nazwaOdbiorcyNew);
 		// osprawdzDaneOdbiorcy(rachunekNadawcyNew,nazwaOdbiorcyNew,rachunekOdbiorcyNew,daneOdbiorcyNew,tytulPrzelewuNew);
 		ousun.click();
