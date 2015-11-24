@@ -8,7 +8,7 @@ var odbiorcyZus = function() {
 	var deferred = protractor.promise.defer();
 	var promise = deferred.promise;
 	var params = browser.params;
-	var platnosci = require('../pageObjects/platnosci.js');
+	var platnoscif = require('../pageObjects/platnosci.js');
 
 	var platnosci = element(by.cssContainingText('.widget-tile__widget-header__title', 'Płatności'));
 	var platnosci2 = element(by.css('[ui-sref="payments.recipients.list"]'));
@@ -102,7 +102,7 @@ var odbiorcyZus = function() {
 		browser.driver.sleep(2000);
 		helpers.waitUntilReady(zRachunku);
 		zRachunku.click();
-		platnosci.wybierzRachunekNadawcy(rachunekNadawcy);
+		platnoscif.wybierzRachunekNadawcy(rachunekNadawcy);
 		helpers.waitUntilReady(twojaNazwaOdbiorcy);
 		twojaNazwaOdbiorcy.sendKeys(nazwaOdbiorcy);
 		helpers.waitUntilReady(numerRachunku);

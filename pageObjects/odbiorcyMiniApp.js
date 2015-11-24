@@ -7,7 +7,7 @@ var payments = function() {
 	var deferred = protractor.promise.defer();
 	var promise = deferred.promise;
 	var params = browser.params;
-	var platnosci = require('../pageObjects/platnosci.js');
+	var platnoscif = require('../pageObjects/platnosci.js');
 
 	var oplatnosci = element(by.cssContainingText('.widget-tile__widget-header__title', 'Płatności'));
 	var oplatnosci2 = element(by.css('[ui-sref="payments.recipients.list"]'));
@@ -23,7 +23,7 @@ var payments = function() {
 	// var onowyOdbiorca = element(by.css('[ng-click="onRecipientCreate()"]'));
 	var onowyOdbiorca = buttons.nowyOdbiorca;
 	var oszukajOdbiorcy = element(by.model('table.operationTitle'));
-	var oszukaj = element(by.css('[ng-click="table.tableControl.invalidate()"]'));
+	var oszukaj = element(by.css('[ng-click="searchRecipient()"]'));
 	var otypOdbiorcy = element(by.model('types.currentType'));
 	var ozRachunku = element(by.model('selection.account'));
 	var otwojaNazwaOdbiorcy = element(by.model('recipient.formData.customName'));
@@ -105,7 +105,7 @@ var payments = function() {
 		browser.driver.sleep(2000);
 		helpers.waitUntilReady(ozRachunku);
 		ozRachunku.click();
-		platnosci.wybierzRachunekNadawcy(rachunekNadawcy);
+		platnoscif.wybierzRachunekNadawcy(rachunekNadawcy);
 		helpers.waitUntilReady(otwojaNazwaOdbiorcy);
 		otwojaNazwaOdbiorcy.sendKeys(nazwaOdbiorcy);
 		helpers.waitUntilReady(onumerRachunku);

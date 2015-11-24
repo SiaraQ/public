@@ -31,11 +31,11 @@ var platnosci = function() {
 		pplatnosciPrzelewy.click();
 		helpers.waitUntilReady(ptypPlatnosci);
 		ptypPlatnosci.click();
-	}
+	};
 
 	this.wybierzRachunekNadawcy = function(rachunekNadawcy) {
 		helpers.wybierzElementZListyPoTekscie('accountItem in $select.items track by $index', rachunekNadawcy);
-	}
+	};
 
 };
 
