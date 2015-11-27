@@ -101,7 +101,7 @@ var payments = function() {
 		}
 		var rachunekNadawcy = helpers.zamienRachunekNaNrbZeSpacjami(rachunekNadawcy);
 		winston.log('info', "Dane testu: rachunekNadawcy=" + rachunekNadawcy + " rachunekOdbiorcy=" + rachunekOdbiorcy + " daneOdbiorcy" + daneOdbiorcy + " tytulPrzelewu=" + tytulPrzelewu + " hasloSms=" + hasloSms);
-		this.this.wybieranieOdbiorcy();
+		this.wybieranieOdbiorcy();
 		browser.driver.sleep(2000);
 		helpers.waitUntilReady(ozRachunku);
 		ozRachunku.click();
