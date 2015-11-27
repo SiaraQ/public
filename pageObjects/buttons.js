@@ -19,5 +19,7 @@ var buttons = function() {
 	this.wybieram = element(by.buttonText('wybieram'));
 	this.nieWybieram = element(by.buttonText('Nie, dziękuję'));
 	this.wykonajPonownie = element(by.buttonText('wykonaj ponownie'));
+	this.modyfikuj = element(by.buttonText('Modyfikuj'));
+	this.zerwij = element(by.buttonText('Zerwij'));
 };
 module.exports = new buttons();

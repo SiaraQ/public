@@ -117,7 +117,7 @@ var payments = function() {
 		odalej.click().then(function() {
 			winston.log('info', "Wybranie opcji Zatwierdź - przejście do strony drugiej");
 		});
-		osprawdzDaneOdbiorcyStronaDruga(rachunekNadawcy, nazwaOdbiorcy, rachunekOdbiorcy, daneOdbiorcy, tytulPrzelewu);
+		this.sprawdzDaneOdbiorcyStronaDruga(rachunekNadawcy, nazwaOdbiorcy, rachunekOdbiorcy, daneOdbiorcy, tytulPrzelewu);
 		helpers.waitUntilReady(okodSms);
 		okodSms.sendKeys(hasloSms);
 		ozatwierdz.click().then(function() {
@@ -161,8 +161,8 @@ var payments = function() {
 		var rachunekOdbiorcyNew = "";
 		var daneOdbiorcyNew = "";
 		var tytulPrzelewuNew = "";
-		this.dodajOdbiorceKrajowego(rachunekNadawcyNew, nazwaOdbiorcyNew, rachunekOdbiorcyNew, daneOdbiorcyNew, tytulPrzelewuNew, hasloSms);
-		owyszukajOdbiorce(nazwaOdbiorcyNew);
+		this.dodajOdbiorceKrajowego(	, nazwaOdbiorcyNew, rachunekOdbiorcyNew, daneOdbiorcyNew, tytulPrzelewuNew, hasloSms);
+		this.wyszukajOdbiorce(nazwaOdbiorcyNew);
 		oedytuj.click();
 		helpers.waitUntilReady(otwojaNazwaOdbiorcy);
 		otwojaNazwaOdbiorcy.clear();
@@ -180,7 +180,7 @@ var payments = function() {
 		odalej.click().then(function() {
 			winston.log('info', "Wybranie opcji Zatwierdź - przejście do strony drugiej");
 		});
-		osprawdzDaneOdbiorcyStronaDruga(rachunekNadawcy, nazwaOdbiorcy, rachunekOdbiorcy, daneOdbiorcy, tytulPrzelewu);
+		this.sprawdzDaneOdbiorcyStronaDruga(rachunekNadawcy, nazwaOdbiorcy, rachunekOdbiorcy, daneOdbiorcy, tytulPrzelewu);
 		helpers.waitUntilReady(okodSms);
 		okodSms.sendKeys(hasloSms);
 		ozatwierdz.click().then(function() {
@@ -200,10 +200,10 @@ var payments = function() {
 		var tytulPrzelewuNew = "tytul" + random;
 
 		this.dodajOdbiorceKrajowego(rachunekNadawcyNew, nazwaOdbiorcyNew, rachunekOdbiorcyNew, daneOdbiorcyNew, tytulPrzelewuNew, hasloSms);
-		owyszukajOdbiorce(nazwaOdbiorcyNew);
+		this.wyszukajOdbiorce(nazwaOdbiorcyNew);
 		// osprawdzDaneOdbiorcy(rachunekNadawcyNew,nazwaOdbiorcyNew,rachunekOdbiorcyNew,daneOdbiorcyNew,tytulPrzelewuNew);
 		ousun.click();
-		osprawdzDaneOdbiorcyStronaDruga(rachunekNadawcyNew, nazwaOdbiorcyNew, rachunekOdbiorcyNew, daneOdbiorcyNew, tytulPrzelewuNew);
+		this.sprawdzDaneOdbiorcyStronaDruga(rachunekNadawcyNew, nazwaOdbiorcyNew, rachunekOdbiorcyNew, daneOdbiorcyNew, tytulPrzelewuNew);
 		helpers.waitUntilReady(okodSms);
 		okodSms.sendKeys(hasloSms);
 		ousun.click();

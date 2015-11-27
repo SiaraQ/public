@@ -61,6 +61,12 @@ var lokaty = function() {
 		}
 	};
 
+	this.wyszukajLokateIWybierzOpcjeSzczegoly = function(nazwaLokaty) {
+		this.wybieranieLokat();
+		helpers.waitUntilReady(nowaLokata);
+		helpers.klinijPrzyciskPoWyszukaniuTekstu('deposit in depositsList.content', nazwaLokaty, 'Szczegóły');
+	};
+
 	this.zamknijBaner = function() {
 			var baner = element(by.css('[ng-click="closeModal()"]'));
 			baner.isPresent().then(function(result) {
@@ -73,17 +79,7 @@ var lokaty = function() {
 				}
 			});
 		};
-		// TODO
-	this.wyszukajLokate = function(daneDoSzukania) {
-		helpers.waitUntilReady(lokaty);
-		lokaty.click();
-		helpers.waitUntilReady(szukajPlatnika);
-		szukajPlatnika.sendKeys(daneDoSzukania);
-		helpers.waitUntilReady(szukajButton);
-		szukajButton.click();
-		helpers.waitUntilReady(pierwszyElementwTabeli);
-		pierwszyElementwTabeli.click();
-	};
+
 
 	this.sprawdzDanePlatnikaNaSczegolach = function(twojaNazwaPlatnika, typPlatnka, nazwaPlatnika, nipPlatnika, typIdentyfikatoraUzupelniajacego, numerIdentyfikatoraUzupelniajacego) {
 		if (typPlatnka === 1) {
@@ -178,12 +174,47 @@ var lokaty = function() {
 		expect(potwierdzenie.getText()).not.toContain("odrzuc");
 	};
 
-	this.edytujLokate = function(twojaNazwaPlatnika, typPlatnka, nazwaPlatnika, nipPlatnika, typIdentyfikatoraUzupelniajacego, numerIdentyfikatoraUzupelniajacego, hasloSms) {
-
+	this.edytujLokate = function(nazwaWlasnaLokaty, automatyczneOdnowienie, rachunekKwotyKapitalu, rachunekKwotyOdsetek) {
+		this.wyszukajLokateIWybierzOpcjeSzczegoly(nazwaWlasnaLokaty);
+		buttons.modyfikuj.click();
+		automatyczneOdnowienief.click();
+		if (automatyczneOdnowienie === "" || automatyczneOdnowienie === undefined || automatyczneOdnowienie === null) {
+			helpers.wybierzElementZListyPoNumerze(0);
+		} else {
+			helpers.wybierzElementZListyPoTekscie('item in $select.items', automatyczneOdnowienie);
+		}
+		rachunekKwotyKapitaluf.click();
+		if (rachunekKwotyKapitalu === "" || rachunekKwotyKapitalu === undefined || rachunekKwotyKapitalu === null) {
+			helpers.wybierzElementZListyPoNumerze(0);
+		} else {
+			helpers.wybierzElementZListyPoTekscie('accountItem in $select.items track by accountItem.accountNo', rachunekKwotyKapitalu);
+		}
+		rachunekKwotyOdsetekf.click();
+		if (rachunekKwotyOdsetek === "" || rachunekKwotyOdsetek === undefined || rachunekKwotyOdsetek === null) {
+			helpers.wybierzElementZListyPoNumerze(0);
+		} else {
+			helpers.wybierzElementZListyPoTekscie('accountItem in $select.items track by accountItem.accountNo', rachunekKwotyOdsetek);
+		}
+		buttons.dalej.click();
+		helpers.waitUntilReady(buttons.dalej);
+		buttons.dalej.isPresent().then(function(result) {
+				if (result) {
+							buttons.dalej.click();
+			} 
+			});
+		helpers.waitUntilReady(potwierdzenie);
+		expect(potwierdzenie.getText()).not.toContain("Zlecenie odrzucone");
+		expect(potwierdzenie.getText()).not.toContain("odrzuc");
+		expect(potwierdzenie.getText()).not.toContain("nie");
 	};
 
-	this.usunLokate = function(twojaNazwaPlatnika, typPlatnka, nazwaPlatnika, nipPlatnika, typIdentyfikatoraUzupelniajacego, numerIdentyfikatoraUzupelniajacego, hasloSms) {
-
+	this.zerwijLokate = function(nazwaWlasnaLokaty) {
+		this.wyszukajLokateIWybierzOpcjeSzczegoly(nazwaWlasnaLokaty);
+		buttons.zerwij.click();
+		buttons.dalej.click();
+		expect(potwierdzenie.getText()).not.toContain("Zlecenie odrzucone");
+		expect(potwierdzenie.getText()).not.toContain("odrzuc");
+		expect(potwierdzenie.getText()).not.toContain("nie");
 	};
 
 

@@ -5,6 +5,7 @@ var payments = function() {
 	var winston = require('winston');
 	var deferred = protractor.promise.defer();
 	var promise = deferred.promise;
+	var platnosciff = require('../pageObjects/platnosci.js');
 
 	var fplatnosci = element(by.cssContainingText('.widget-tile__widget-header__title', 'Płatności'));
 	var fMojBank = element(by.css('[class="rb-header__menu__content"]')).element(by.css('[ui-sref="dashboard"]'));
@@ -62,7 +63,7 @@ var payments = function() {
 			} else {
 				//szuka konkretnego na liscie
 				browser.driver.sleep(2000);
-				helpers.wybierzElementZListyPoTekscie('accountItem in $select.items track by $index', naRachunek);
+				platnosciff.wybierzRachunekNadawcy(rachunekNadawcy);
 			}
 			helpers.waitUntilReady(ftytul);
 			ftytul.clear();
