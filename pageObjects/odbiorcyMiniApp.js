@@ -161,7 +161,7 @@ var payments = function() {
 		var rachunekOdbiorcyNew = "";
 		var daneOdbiorcyNew = "";
 		var tytulPrzelewuNew = "";
-		this.dodajOdbiorceKrajowego(	, nazwaOdbiorcyNew, rachunekOdbiorcyNew, daneOdbiorcyNew, tytulPrzelewuNew, hasloSms);
+		this.dodajOdbiorceKrajowego(rachunekNadawcy, nazwaOdbiorcyNew, rachunekOdbiorcyNew, daneOdbiorcyNew, tytulPrzelewuNew, hasloSms);
 		this.wyszukajOdbiorce(nazwaOdbiorcyNew);
 		oedytuj.click();
 		helpers.waitUntilReady(otwojaNazwaOdbiorcy);
