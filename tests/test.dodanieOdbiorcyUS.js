@@ -1,6 +1,6 @@
 var odbiorcyUs = require('../pageObjects/odbiorcyUs.js');
 var winston = require('winston');
-
+var loginDane = require('../npm/DaneTestowe/login.json');
 describe('Odbiorcy Testy', function() {
 
 	it('Dodanie odbiorcy us', function() {
