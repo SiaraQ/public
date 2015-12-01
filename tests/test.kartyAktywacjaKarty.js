@@ -1,6 +1,6 @@
 var cards = require('../pageObjects/kartyAktywacjaKarty.js');
 var winston = require('winston');
-
+var loginDane = require('../npm/DaneTestowe/login.json');
 describe('Testy Kart', function() {
 
 it('Aktywacja karty', function() {
