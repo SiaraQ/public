@@ -1,6 +1,6 @@
 var odbiorcyZus = require('../pageObjects/odbiorcyZus.js');
 var winston = require('winston');
-
+var loginDane = require('../npm/DaneTestowe/login.json');
 describe('Odbiorcy Testy', function() {
 
 	it('Dodanie i edycja odbiorcy zus', function() {
