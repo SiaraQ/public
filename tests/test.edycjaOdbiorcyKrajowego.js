@@ -1,6 +1,6 @@
 var odbiorcy = require('../pageObjects/odbiorcyMiniApp.js');
 var winston = require('winston');
-
+var loginDane = require('../npm/DaneTestowe/login.json');
 describe('Odbiorcy Testy', function() {
 
 it('Edycja odbiorcy krajowego', function() {
