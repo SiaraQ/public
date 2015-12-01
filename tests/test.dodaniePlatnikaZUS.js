@@ -1,6 +1,6 @@
 var platnicy = require('../pageObjects/platnicy.js');
 var winston = require('winston');
-
+var loginDane = require('../npm/DaneTestowe/login.json');
 describe('Platnicy Testy', function() {
 
 	it('Dodanie platnika ZUS', function() {
